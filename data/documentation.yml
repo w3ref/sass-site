@@ -10,7 +10,7 @@ toc:
   - Объявления свойств: /documentation/style-rules/declarations
   - Родительский селектор: /documentation/style-rules/parent-selector
   - Селекторы-заполнители: /documentation/style-rules/placeholder-selectors
-- Variables: /documentation/variables
+- Переменные: /documentation/variables
 - Interpolation: /documentation/interpolation
 - At-Rules: /documentation/at-rules
   :children:
