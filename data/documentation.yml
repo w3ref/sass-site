@@ -5,11 +5,11 @@ toc:
   - Структура таблицы стилей: /documentation/syntax/structure
   - Комментарии: /documentation/syntax/comments
   - Специальные функции: /documentation/syntax/special-functions
-- Style Rules: /documentation/style-rules
+- Правила стиля: /documentation/style-rules
   :children:
-  - Property Declarations: /documentation/style-rules/declarations
-  - Parent Selector: /documentation/style-rules/parent-selector
-  - Placeholder Selectors: /documentation/style-rules/placeholder-selectors
+  - Объявления свойств: /documentation/style-rules/declarations
+  - Родительский селектор: /documentation/style-rules/parent-selector
+  - Селекторы-заполнители: /documentation/style-rules/placeholder-selectors
 - Variables: /documentation/variables
 - Interpolation: /documentation/interpolation
 - At-Rules: /documentation/at-rules

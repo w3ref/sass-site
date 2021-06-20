@@ -1,12 +1,10 @@
 ---
-title: Property Declarations
+title: Объявления свойств
 table_of_contents: true
 introduction: >
-  In Sass as in CSS, property declarations define how elements that match a
-  selector are styled. But Sass adds extra features to make them easier to write
-  and to automate. First and foremost, a declaration's value can be any
-  [SassScript expression](../syntax/structure#expressions), which will be
-  evaluated and included in the result.
+  В Sass, как и в CSS, объявления свойств определяют стиль элементов, соответствующих селектору.
+  Но Sass добавляет дополнительные функции, упрощающие их написание и автоматизацию.
+  Прежде всего, значением объявления может быть любое [выражение SassScript](../syntax/structure#expressions), которое будет вычислено и включено в результат.
 ---
 
 <% example do %>
@@ -24,11 +22,10 @@ introduction: >
     border-radius: $size * 0.5
 <% end %>
 
-## Interpolation
+## Интерполяция
 
-A property's name can include [interpolation][], which makes it possible to
-dynamically generate properties as needed. You can even interpolate the entire
-property name!
+Имя свойства может включать [интерполяцию][interpolation], что позволяет динамически генерировать свойства по мере необходимости.
+Вы даже можете интерполировать все название свойства!
 
 [interpolation]: ../interpolation
 
@@ -55,13 +52,12 @@ property name!
     @include prefix(filter, grayscale(50%), moz webkit)
 <% end %>
 
-## Nesting
+## Вложенность
 
-Many CSS properties start with the same prefix that acts as a kind of namespace.
-For example, `font-family`, `font-size`, and `font-weight` all start with
-`font-`. Sass makes this easier and less redundant by allowing property
-declarations to be nested. The outer property names are added to the inner,
-separated by a hyphen.
+Многие свойства CSS начинаются с одного и того же префикса, который действует как своего рода пространство имен.
+Например, `font-family`, `font-size` и `font-weight` начинаются с `font-`.
+Sass делает это проще и менее избыточным, позволяя вложить объявления свойств.
+Имена внешних свойств добавляются к внутренним через дефис.
 
 <% example do %>
   .enlarge {
@@ -86,9 +82,8 @@ separated by a hyphen.
       font-size: 36px
 <% end %>
 
-Some of these CSS properties have shorthand versions that use the namespace as
-the property name. For these, you can write both the shorthand value *and* the
-more explicit nested versions.
+Некоторые из этих свойств CSS имеют сокращенные версии, в которых пространство имен используется в качестве имени свойства.
+Для них вы можете записать как сокращенное значение, *так и* более явные вложенные версии.
 
 <% example do %>
   .info-page {
@@ -104,11 +99,10 @@ more explicit nested versions.
       top: 2px
 <% end %>
 
-## Hidden Declarations
+## Скрытые декларации
 
-Sometimes you only want a property declaration to show up some of the time. If a
-declaration's value is [`null`][] or an empty [unquoted string][], Sass won't
-compile that declaration to CSS at all.
+Иногда вам нужно, чтобы объявление свойства отображалось только время от времени.
+Если значением объявления является [`null`][] или пустая [строка без кавычек][unquoted string], Sass вообще не будет компилировать это объявление в CSS.
 
 [`null`]: ../values/null
 [unquoted string]: ../values/strings#unquoted
@@ -128,32 +122,26 @@ compile that declaration to CSS at all.
     border-radius: if($rounded-corners, 5px, null)
 <% end %>
 
-## Custom Properties
+## Настраиваемые свойства
 
 <% impl_status dart: true, libsass: '3.5.0', ruby: '3.5.0', feature: 'SassScript Syntax' do %>
-  Older versions of LibSass and Ruby Sass parsed custom property declarations
-  just like any other property declaration, allowing the full range of
-  SassScript expressions as values. Even when using these versions, it's
-  recommended that you use interpolation to inject SassScript values for
-  forwards-compatibility.
+  Более старые версии LibSass и Ruby Sass анализировали объявления настраиваемых свойств так же, как и любое другое объявление свойств, позволяя использовать полный диапазон выражений SassScript в качестве значений.
+  Даже при использовании этих версий рекомендуется использовать интерполяцию для внедрения значений SassScript для прямой совместимости.
 
-  See [the breaking change page][] for more details.
+  Смотрите [страницу критических изменений][the breaking change page] для получения более подробной информации.
 
   [the breaking change page]: ../breaking-changes/css-vars
 <% end %>
 
-[CSS custom properties][], also known as CSS variables, have an unusual
-declaration syntax: they allow almost any text at all in their declaration
-values. What's more, those values are accessible to JavaScript, so any value
-might potentially be relevant to the user. This includes values that would
-normally be parsed as SassScript.
+[Пользовательские свойства CSS][CSS custom properties], также известные как переменные CSS, имеют необычный синтаксис объявления: они допускают практически любой текст в значениях объявления.
+Более того, эти значения доступны для JavaScript, поэтому любое значение может иметь отношение к пользователю.
+Сюда входят значения, которые обычно анализируются как SassScript.
 
 [CSS Custom Properties]: https://developer.mozilla.org/en-US/docs/Web/CSS/--*
 
-Because of this, Sass parses custom property declarations differently than other
-property declarations. All tokens, including those that look like SassScript,
-are passed through to CSS as-is. The only exception is [interpolation][], which
-is the only way to inject dynamic values into a custom property.
+Из-за этого Sass анализирует объявления настраиваемых свойств иначе, чем объявления других свойств.
+Все токены, включая те, которые выглядят как SassScript, передаются в CSS как есть.
+Единственное исключение - [интерполяция][interpolation], единственный способ добавить динамические значения в настраиваемое свойство.
 
 <!-- TODO(nweiz): auto-generate this CSS once we're compiling with Dart Sass -->
 
@@ -167,8 +155,7 @@ is the only way to inject dynamic values into a custom property.
     --accent: #{$accent};
     --warn: #{$warn};
 
-    // Even though this looks like a Sass variable, it's valid CSS so it's not
-    // evaluated.
+    // Несмотря на то, что это похоже на переменную Sass, это действительный CSS, поэтому он не оценивается.
     --consumed-by-js: $primary;
   }
   ===
@@ -181,8 +168,7 @@ is the only way to inject dynamic values into a custom property.
     --accent: #{$accent}
     --warn: #{$warn}
 
-    // Even though this looks like a Sass variable, it's valid CSS so it's not
-    // evaluated.
+    // Несмотря на то, что это похоже на переменную Sass, это действительный CSS, поэтому он не оценивается.
     --consumed-by-js: $primary
   ===
   :root {
@@ -194,10 +180,7 @@ is the only way to inject dynamic values into a custom property.
 <% end %>
 
 <% heads_up do %>
-  Unfortunately, [interpolation][] removes quotes from strings, which makes it
-  difficult to use quoted strings as values for custom properties when they come
-  from Sass variables. As a workaround, you can use the [`meta.inspect()`
-  function][] to preserve the quotes.
+  К сожалению, [интерполяция][interpolation] удаляет кавычки из строк, что затрудняет использование строк в кавычках в качестве значений для настраиваемых свойств, когда они поступают из переменных Sass. В качестве обходного пути вы можете использовать функцию `meta.inspect()`][`meta.inspect()` function], чтобы сохранить кавычки.
 
   [interpolation]: ../interpolation
   [`meta.inspect()` function]: ../modules/meta#inspect

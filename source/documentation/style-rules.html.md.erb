@@ -1,11 +1,9 @@
 ---
-title: Style Rules
+title: Правила стиля
 table_of_contents: true
 introduction: >
-  Style rules are the foundation of Sass, just like they are for CSS. And they
-  work the same way: you choose which elements to style with a selector, and
-  [declare properties](style-rules/declarations) that affect how those elements
-  look.
+  Правила стиля являются основой Sass, как и CSS.
+  И они работают одинаково: вы выбираете, какие элементы следует стилизовать с помощью селектора, и [объявляете свойства](style-rules/declarations), которые влияют на внешний вид этих элементов.
 
 ---
 
@@ -24,26 +22,23 @@ introduction: >
     border: 1px solid #e1e4e8
 <% end %>
 
-## Nesting
+## Влаженность
 
-But Sass wants to make your life easier. Rather than repeating the same
-selectors over and over again, you can write one style rules inside another.
-Sass will automatically combine the outer rule's selector with the inner rule's.
+Но Sass хочет облегчить вашу жизнь.
+Вместо того, чтобы повторять одни и те же селекторы снова и снова, вы можете написать правила одного стиля внутри другого.
+Sass автоматически объединит селектор внешнего правила с селектором внутреннего правила.
 
 <%= partial "code-snippets/example-nesting.html.erb" %>
 
 <% heads_up do %>
-  Nested rules are super helpful, but they can also make it hard to visualize
-  how much CSS you're actually generating. The deeper you nest, the more
-  bandwidth it takes to serve your CSS and the more work it takes the browser to
-  render it. Keep those selectors shallow!
+  Вложенные правила очень полезны, но они также могут затруднить визуализацию того, сколько CSS вы на самом деле генерируете.
+  Чем глубже вложенные правила, тем больше пропускной способности требуется для обслуживания вашего CSS и тем больше работы требуется браузеру для его рендеринга.
+  Держите эти селекторы неглубокими!
 <% end %>
 
-### Selector Lists
+### Списки селекторов
 
-Nested rules are clever about handling selector lists (that is, comma-separated
-selectors). Each complex selector (the ones between the commas) is nested
-separately, and then they're combined back into a selector list.
+Вложенные правила хорошо подходят для обработки списков селекторов (то есть селекторов, разделенных запятыми). Каждый сложный селектор (те, что между запятыми) вкладывается отдельно, а затем они снова объединяются в список селекторов.
 
 <% example do %>
   .alert, .warning {
@@ -61,11 +56,10 @@ separately, and then they're combined back into a selector list.
       padding-bottom: 0
 <% end %>
 
-### Selector Combinators
+### Комбинаторы селекторов
 
-You can nest selectors that use [combinators][] as well. You can put the
-combinator at the end of the outer selector, at the beginning of the inner
-selector, or even all on its own in between the two.
+Вы можете вкладывать селекторы, которые также используют [комбинаторы][combinators].
+Вы можете поместить комбинатор в конец внешнего селектора, в начало внутреннего селектора или даже отдельно между ними.
 
 [combinators]: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors#Combinators#Combinators
 
@@ -108,20 +102,17 @@ selector, or even all on its own in between the two.
         opacity: 0.8
 <% end %>
 
-### Advanced Nesting
+### Продвинутая вложенность
 
-If you want to do more with your nested style rules than just combine them in
-order with the descendant combinator (that is, a plain space) separating them,
-Sass has your back. See the [parent selector documentation][] for more details.
+Если вы хотите сделать с вложенными правилами стиля нечто большее, чем просто объединить их по порядку с разделяющим их комбинатором потомков (то есть обычным пробелом), Sass прикроет вас.
+Подробнее смотрите в документации [родительский селектор][parent selector documentation].
 
 [parent selector documentation]: style-rules/parent-selector
 
-## Interpolation
+## Интерполяция
 
-You can use [interpolation][] to inject values from [expressions][] like
-variables and function calls into your selectors. This is particularly useful
-when you're writing [mixins][], since it allows you to create selectors from
-parameters your users pass in.
+Вы можете использовать [интерполяцию][interpolation] для вставки значений из [выражений][expressions], таких как переменные и вызовы функций, в ваши селекторы.
+Это особенно полезно, когда вы пишете [миксины][mixins], поскольку это позволяет вам создавать селекторы из параметров, передаваемых вашими пользователями.
 
 [interpolation]: interpolation
 [expressions]: syntax/structure#expressions
@@ -152,15 +143,12 @@ parameters your users pass in.
 <% end %>
 
 <% fun_fact do %>
-  Sass only parses selectors *after* interpolation is resolved. This means you
-  can safely use interpolation to generate any part of the selector without
-  worrying that it won't parse.
+  Sass анализирует селекторы *только после* интерполяции.
+  Это означает, что вы можете безопасно использовать интерполяцию для создания любой части селектора, не беспокоясь о том, что он не будет разбираться.
 <% end %>
 
-You can combine interpolation with the parent selector `&`, the [`@at-root`
-rule][], and [selector functions][] to wield some serious power when dynamically
-generating selectors. For more information, see the [parent selector
-documentation][].
+Вы можете комбинировать интерполяцию с родительским селектором `&`, [правилом `@at-root`][`@at-root`
+rule] и [функциями селектора][selector functions], чтобы получить серьезные возможности при динамическом создании селекторов. Для получения дополнительной информации смотрите [документацию по родительскому селектору][parent selector documentation].
 
 [`@at-root` rule]: at-rules/at-root
 [selector functions]: modules/selector

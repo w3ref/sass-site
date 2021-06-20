@@ -1,76 +1,65 @@
 ---
-title: Parent Selector
+title: Родительский селектор
 introduction: >
-  The parent selector, `&`, is a special selector invented by Sass that’s used
-  in [nested selectors](../style-rules#nesting) to refer to the outer selector.
-  It makes it possible to re-use the outer selector in more complex ways, like
-  adding a
-  [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes)
-  or adding a selector *before* the parent.
+  Родительский селектор `&` - это специальный селектор, изобретенный Sass, который используется в [вложенных селекторах](../style-rules#nesting) для ссылки на внешний селектор.
+  Это позволяет повторно использовать внешний селектор более сложными способами, например, добавляя [псевдокласс](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes) или добавление селектора *перед* родителем.
 ---
 
-When a parent selector is used in an inner selector, it's replaced with the
-corresponding outer selector. This happens instead of the normal nesting
-behavior.
+Когда родительский селектор используется во внутреннем селекторе, он заменяется соответствующим внешним селектором.
+Это происходит вместо обычного поведения вложения.
 
 <% example do %>
   .alert {
-    // The parent selector can be used to add pseudo-classes to the outer
-    // selector.
+    // Родительский селектор можно использовать для добавления псевдоклассов во внешний селектор.
     &:hover {
       font-weight: bold;
     }
 
-    // It can also be used to style the outer selector in a certain context, such
-    // as a body set to use a right-to-left language.
+    // Его также можно использовать для стилизации внешнего селектора в определенном контексте,
+    // например, для основного текста, использующего язык с письмом справа налево.
     [dir=rtl] & {
       margin-left: 0;
       margin-right: 10px;
     }
 
-    // You can even use it as an argument to pseudo-class selectors.
+    // Вы даже можете использовать его как аргумент для селекторов псевдоклассов.
     :not(&) {
       opacity: 0.8;
     }
   }
   ===
   .alert
-    // The parent selector can be used to add pseudo-classes to the outer
-    // selector.
+    // Родительский селектор можно использовать для добавления псевдоклассов во внешний селектор.
     &:hover
       font-weight: bold
 
 
-    // It can also be used to style the outer selector in a certain context, such
-    // as a body set to use a right-to-left language.
+    // Его также можно использовать для стилизации внешнего селектора в определенном контексте,
+    // например, для основного текста, использующего язык с письмом справа налево.
     [dir=rtl] &
       margin-left: 0
       margin-right: 10px
 
 
-    // You can even use it as an argument to pseudo-class selectors.
+    // Вы даже можете использовать его как аргумент для селекторов псевдоклассов.
     :not(&)
       opacity: 0.8
 <% end %>
 
 <% heads_up do %>
-  Because the parent selector could be replaced by a type selector like `h1`,
-  it's only allowed at the beginning of compound selectors where a type selector
-  would also be allowed. For example, `span&` is not allowed.
+  Поскольку родительский селектор может быть заменен селектором типа, таким как `h1`, он разрешен только в начале составных селекторов, где также разрешен селектор типа.
+  Например, использование `span&` недопустимо.
 
-  We're looking into loosening this restriction, though. If you'd like to help
-  make that happen, check out [this GitHub issue][].
+  Тем не менее, мы планируем ослабить это ограничение. Если вы хотите помочь в этом, ознакомьтесь с [этой проблемой GitHub][this GitHub issue].
 
   [this GitHub issue]: https://github.com/sass/sass/issues/1425
 <% end %>
 
-## Adding Suffixes
+## Добавление суффиксов
 
-You can also use the parent selector to add extra suffixes to the outer
-selector. This is particularly useful when using a methodology like [BEM][] that
-uses highly structured class names. As long as the outer selector ends with an
-alphanumeric name (like class, ID, and element selectors), you can use the
-parent selector to append additional text.
+Вы также можете использовать родительский селектор для добавления дополнительных суффиксов к внешнему селектору.
+Это особенно полезно при использовании такой методологии, как [БЭМ][BEM], в которой используются хорошо структурированные имена классов.
+Пока внешний селектор заканчивается буквенно-цифровым именем (например, селекторы классов, идентификаторов и элементов), вы можете использовать родительский селектор для добавления дополнительного текста.
 
 [BEM]: http://getbem.com/
 
@@ -115,13 +104,10 @@ parent selector to append additional text.
         display: block
 <% end %>
 
-## In SassScript
+## В SassScript
 
-The parent selector can also be used within SassScript. It's a special
-expression that returns the current parent selector in the same format used
-by [selector functions][]: a comma-separated list (the selector list) that
-contains space-separated lists (the complex selectors) that contain unquoted
-strings (the compound selectors).
+Родительский селектор также можно использовать в SassScript.
+Это специальное выражение, которое возвращает текущий родительский селектор в том же формате, что и [функции селектора][selector functions]: список, разделенный запятыми (список селектора), который содержит списки, разделенные пробелами (сложные селекторы), которые содержат строки без кавычек (составные селекторы).
 
 <% example do %>
   .main aside:hover,
@@ -140,31 +126,26 @@ strings (the compound selectors).
 
 [selector functions]: ../modules/selector#selector-values
 
-If the `&` expression is used outside any style rules, it returns `null`. Since
-`null` is [falsey][], this means you can easily use it to determine whether a
-mixin is being called in a style rule or not.
+Если выражение `&` используется вне каких-либо правил стиля, оно возвращает `null`.
+Поскольку `null` равен [falsey][], это означает, что вы можете легко использовать его, чтобы определить, вызывается ли миксин в правиле стиля или нет.
 
 [falsey]: ../at-rules/control/if#truthiness-and-falsiness
 
 <%= partial 'code-snippets/example-if-parent-selector' %>
 
-### Advanced Nesting
+### Продвинутая вложенность
 
-You can use `&` as a normal SassScript expression, which means you can pass it
-to functions or include it in interpolation—even in other selectors! Using it in
-combination with [selector functions][] and the [`@at-root` rule][] allows you
-to nest selectors in very powerful ways.
+Вы можете использовать `&` как обычное выражение SassScript, что означает, что вы можете передавать его функциям или включать в интерполяцию - даже в других селекторах!
+Использование его в сочетании с [функциями селектора][selector functions] и [правилом `@at-root`][`@at-root` rule] позволяет вам очень эффективно вкладывать селекторы.
 
 [`@at-root` rule]: ../at-rules/at-root
 
 <%= partial 'code-snippets/example-advanced-nesting' %>
 
 <% heads_up do %>
-  When Sass is nesting selectors, it doesn't know what interpolation was used to
-  generate them. This means it will automatically add the outer selector to the
-  inner selector *even if* you used `&` as a SassScript expression. That's why
-  you need to explicitly use the [`@at-root` rule][] to tell Sass not to include
-  the outer selector.
+  Когда Sass вкладывает селекторы, он не знает, какая интерполяция использовалась для их создания.
+  Это означает, что он автоматически добавит внешний селектор к внутреннему селектору, *даже если* вы использовали `&` в качестве выражения SassScript.
+  Вот почему вам нужно явно использовать [правило `@at-root`][`@at-root` rule], чтобы Sass не включал внешний селектор.
 
   [`@at-root` rule]: ../at-rules/at-root
 <% end %>
