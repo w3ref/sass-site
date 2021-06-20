@@ -11,7 +11,7 @@ toc:
   - Родительский селектор: /documentation/style-rules/parent-selector
   - Селекторы-заполнители: /documentation/style-rules/placeholder-selectors
 - Переменные: /documentation/variables
-- Interpolation: /documentation/interpolation
+- Интерполяция: /documentation/interpolation
 - At-Rules: /documentation/at-rules
   :children:
   - <code>@use</code>: /documentation/at-rules/use

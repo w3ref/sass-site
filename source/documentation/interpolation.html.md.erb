@@ -1,22 +1,21 @@
 ---
-title: Interpolation
+title: Интерполяция
 table_of_contents: true
 introduction: >
-  Interpolation can be used almost anywhere in a Sass stylesheet to embed the
-  result of a [SassScript expression](syntax/structure#expressions) into a chunk
-  of CSS. Just wrap an expression in `#{}` in any of the following places:
+  Интерполяцию можно использовать практически в любом месте таблицы стилей Sass, чтобы встроить результат [выражение SassScript](syntax/structure#expressions) в фрагмент CSS.
+  Просто заключите выражение в `#{}` в любом из следующих мест:
 ---
 
-* [Selectors in style rules](style-rules#interpolation)
-* [Property names in declarations](style-rules/declarations#interpolation)
-* [Custom property values](style-rules/declarations#custom-properties)
+* [Селекторы в правилах стиля](style-rules#interpolation)
+* [Имена свойств в объявлениях](style-rules/declarations#interpolation)
+* [Значения настраиваемых свойств](style-rules/declarations#custom-properties)
 * [CSS at-rules](at-rules/css)
-* [`@extend`s](at-rules/extend)
-* [Plain CSS `@import`s](at-rules/import#plain-css-imports)
-* [Quoted or unquoted strings](values/strings)
-* [Special functions](syntax/special-functions)
-* [Plain CSS function names](at-rules/function#plain-css-functions)
-* [Loud comments](syntax/comments)
+* [`@extend`](at-правила/extend)
+* [Обычный CSS `@import`ы](at-rules/import#plain-css-imports)
+* [Строки в кавычках или без кавычек](values/strings)
+* [Специальные функции](syntax/special-functions)
+* [Простые имена функций CSS](at-rules/function#plain-css-functions)
+* [Громкие комментарии](syntax/comments)
 
 <% example do %>
   @mixin corner-icon($name, $top-or-bottom, $left-or-right) {
@@ -42,21 +41,21 @@ introduction: >
   @include corner-icon("mail", top, right)
 <% end %>
 
-## In SassScript
+## В SassScript
 
 <% impl_status dart: true, libsass: false, ruby: '4.0.0 (unreleased)', feature: "Modern Syntax" do %>
-  LibSass and Ruby Sass currently use an older syntax for parsing interpolation
-  in SassScript. For most practical purposes it works the same, but it can
-  behave strangely around [operators][]. See [this document][] for details.
+  LibSass и Ruby Sass в настоящее время используют старый синтаксис для анализа интерполяции в SassScript.
+  Для большинства практических целей он работает так же, но может вести себя странно с [операторами][operators].
+  Смотрите [этот документ][this document] для получения подробной информации.
 
   [operators]: operators
   [this document]:   https://github.com/sass/language/blob/master/accepted/free-interpolation.md#old-interpolation-rules
 <% end %>
 
-Interpolation can be used in SassScript to inject SassScript into [unquoted
-strings][]. This is particularly useful when dynamically generating names (for
-example for animations), or when using [slash-separated values][]. Note that
-interpolation in SassScript always returns an unquoted string.
+В SassScript можно использовать интерполяцию для внедрения SassScript в [строки без кавычек][unquoted
+strings].
+Это особенно полезно при динамическом создании имен (например, для анимации) или при использовании [значений, разделенных косой чертой][slash-separated values].
+Обратите внимание, что интерполяция в SassScript всегда возвращает строку без кавычек.
 
 [unquoted strings]: values/strings#unquoted
 [slash-separated values]: operators/numeric#slash-separated-values
@@ -102,34 +101,27 @@ interpolation in SassScript always returns an unquoted string.
 <% end %>
 
 <% fun_fact do %>
-  Interpolation is useful for injecting values into strings, but other than that
-  it's rarely necessary in SassScript expressions. You definitely *don't* need
-  it to just use a variable in a property value. Instead of writing
-  `color: #{$accent}`, you can just write `color: $accent`!
+  Интерполяция полезна для вставки значений в строки, но в остальном она редко требуется в выражениях SassScript.
+  Вам определенно *не* нужно просто использовать переменную в значении свойства.
+  Вместо того, чтобы писать `color: #{$accent}`, вы можете просто написать `color: $accent`!
 <% end %>
 
 <% heads_up do %>
-  It's almost always a bad idea to use interpolation with numbers. Interpolation
-  returns unquoted strings that can't be used for any further math, and it
-  avoids Sass's built-in safeguards to ensure that units are used correctly.
+  Практически всегда использовать числовую интерполяцию - плохая идея.
+  Интерполяция возвращает строки без кавычек, которые нельзя использовать для дальнейших вычислений, и избегает встроенных мер безопасности Sass, чтобы гарантировать правильное использование единиц измерения.
 
-  Sass has powerful [unit arithmetic][] that you can use instead. For example,
-  instead of writing `#{$width}px`, write `$width * 1px`—or better yet, declare
-  the `$width` variable in terms of `px` to begin with. That way if `$width`
-  already has units, you'll get a nice error message instead of compiling bogus
-  CSS.
+  В Sass есть мощная [арифметика единиц][unit arithmetic], которую вы можете использовать вместо этого.
+  Например, вместо того, чтобы писать `#{$width}px`, напишите `$width * 1px` или, еще лучше, объявите переменную `$width` в терминах `px` для начала.
+  Таким образом, если у `$width` уже есть единицы измерения, вы получите красивое сообщение об ошибке вместо компиляции поддельного CSS.
 
   [unit arithmetic]: values/numbers#units
 <% end %>
 
-## Quoted Strings
+## Процитированные строки
 
-In most cases, interpolation injects the exact same text that would be used if
-the expression were used as a [property value][]. But there is one exception:
-the quotation marks around quoted strings are removed (even if those quoted
-strings are in lists). This makes it possible to write quoted strings that
-contain syntax that's not allowed in SassScript (like selectors) and interpolate
-them into style rules.
+В большинстве случаев интерполяция вводит тот же текст, который использовался бы, если бы выражение использовалось как [значение свойства][property value].
+Но есть одно исключение: кавычки вокруг цитируемых строк удаляются (даже если эти цитируемые строки находятся в списках).
+Это позволяет писать строки в кавычках, содержащие синтаксис, недопустимый в SassScript (например, селекторы), и интерполировать их в правила стиля.
 
 [property value]: style-rules/declarations
 
