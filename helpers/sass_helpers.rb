@@ -389,7 +389,7 @@ module SassHelpers
   # This takes an optional Markdown block that should provide more information
   # about the implementation differences or the old behavior.
   def impl_status(dart: nil, libsass: nil, ruby: nil, node: nil, feature: nil)
-    compatibility = feature ? "Compatibility (#{feature}):" : "Compatibility:"
+    compatibility = feature ? "Совместимость (#{feature}):" : "Совместимость:"
 
     contents = [content_tag(:div, compatibility, class: "compatibility")]
     contents << _impl_status_row('Dart Sass', dart) unless dart.nil?
