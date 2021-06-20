@@ -1,28 +1,19 @@
 ---
-title: Documentation
+title: Документация
 introduction: >
-  Sass is a stylesheet language that’s compiled to CSS. It allows you to use
-  [variables](/documentation/variables), [nested
-  rules](/documentation/style-rules#nesting),
-  [mixins](/documentation/at-rules/mixin),
-  [functions](/documentation/modules), and more, all with a fully
-  CSS-compatible syntax. Sass helps keep large stylesheets well-organized and
-  makes it easy to share design within and across projects.
+  Sass - это язык таблиц стилей, скомпилированный в CSS. Он позволяет использовать [переменные](/documentation/variables), [вложенные правила](/documentation/style-rules#nesting), [миксины](/documentation/at-rules/mixin), [функции](/documentation/modules) и многое другое, все с полностью совместимым с CSS синтаксисом. Sass помогает сохранять большие таблицы стилей хорошо организованными и упрощает совместное использование дизайна внутри и между проектами.
 overview: true
 ---
 
-* If you're looking for an introduction to Sass, check out [the
-  tutorial](/guide).
+* Если вы ищете введение в Sass, ознакомьтесь с [руководством](/guide).
 
-* If you want to look up a built-in Sass function, look no further than [the
-  built-in module reference](/documentation/modules).
+* Если вы хотите найти встроенную функцию Sass, не ищите ничего, кроме [справочника по встроенному модулю](/documentation/modules).
 
-* If you're calling Sass from JavaScript, you may want the [JS API
-  documentation][js].
+* Если вы вызываете Sass из JavaScript, вам может понадобиться [документация по JS API][js].
 
-* Or the [Dart API documentation][dart] if you're calling it from Dart.
+* Или [документация Dart API][dart], если вы вызываете ее из Dart.
 
-* Otherwise, use the table of contents for the language reference!
+* В противном случае используйте оглавление для справки по языку!
 
 [js]: https://github.com/sass/node-sass#usage
 [dart]: https://pub.dartlang.org/documentation/sass/latest/sass/sass-library.html

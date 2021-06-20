@@ -1,19 +1,19 @@
 function createSourceLinks() {
     $('.method_details_list .source_code').
-        before("<span class='showSource'>[<a href='#' class='toggleSource'>View source</a>]</span>");
+      before("<span class='showSource'>[<a href='#' class='toggleSource'>Посмотреть источник</a>]</span>");
     $('.toggleSource').toggle(function() {
        $(this).parent().nextAll('.source_code').slideDown(100);
-       $(this).text("Hide source");
+      $(this).text("Скрыть исходный код");
     },
     function() {
         $(this).parent().nextAll('.source_code').slideUp(100);
-        $(this).text("View source");
+      $(this).text("Посмотреть исходный код");
     });
 }
 
 function createDefineLinks() {
     var tHeight = 0;
-    $('.defines').after(" <a href='#' class='toggleDefines'>more...</a>");
+    $('.defines').after(" <a href='#' class='toggleDefines'>еще...</a>");
     $('.toggleDefines').toggle(function() {
         tHeight = $(this).parent().prev().height();
         $(this).prev().show();
@@ -23,7 +23,7 @@ function createDefineLinks() {
     function() {
         $(this).prev().hide();
         $(this).parent().prev().height(tHeight);
-        $(this).text("more...");
+        $(this).text("еще...");
     });
 }
 
@@ -32,13 +32,13 @@ function createFullTreeLinks() {
     $('.inheritanceTree').toggle(function() {
         tHeight = $(this).parent().prev().height();
         $(this).parent().toggleClass('showAll');
-        $(this).text("(hide)");
+        $(this).text("(скрыть)");
         $(this).parent().prev().height($(this).parent().height());
     },
     function() {
         $(this).parent().toggleClass('showAll');
         $(this).parent().prev().height(tHeight);
-        $(this).text("show all");
+      $(this).text("показать все");
     });
 }
 
@@ -185,7 +185,7 @@ function generateTOC() {
     lastTag = thisTag;
   });
   if (!show) return;
-  html = '<div id="toc"><p class="title"><a class="hide_toc" href="#"><strong>Table of Contents</strong></a> <small>(<a href="#" class="float_toc">left</a>)</small></p></div>';
+  html = '<div id="toc"><p class="title"><a class="hide_toc" href="#"><strong>Оглавление</strong></a> <small>(<a href="#" class="float_toc">left</a>)</small></p></div>';
   $('#content').prepend(html);
   $('#toc').append(_toc);
   $('#toc .hide_toc').toggle(function() {
