@@ -149,11 +149,11 @@ thead th { font-family: $sl-font-family--display; }
 
 h2,
 caption, {
-  font-size: $sl-font-size--large;
+  font-size: $sl-font-size--x-large;
 
   @include sl-breakpoint--medium { font-size: $sl-font-size--xx-large; }
 
-  @include sl-breakpoint--large { font-size: $sl-font-size--xxx-large; }
+  @include sl-breakpoint--large { font-size: $sl-font-size--xx-large; }
 }
 
 h3,
