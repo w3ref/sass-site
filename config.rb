@@ -88,7 +88,7 @@ before_render do |body, page, _, template_class|
     fragment.css("li > ul").each do |ul|
       a = ul.parent.elements.first
       a.add_class("section")
-      ul.elements.before('<li class="overview"><a>Overview</a></li>')
+      ul.elements.before('<li class="overview"><a>Обзор</a></li>')
       ul.elements.first.elements.first['href'] = a['href']
     end
 
@@ -121,7 +121,7 @@ after_render do |content, path, locs|
   content.gsub(%r{^<(h[0-6])(.*?)</\1>}m) do |header_text|
     header = Nokogiri::HTML::DocumentFragment.parse(header_text).children.first
     id = header.attr(:id)
-    header.children.before("<a class='anchor' href='##{id}'><span class='visuallyhidden'>#{header.text} permalink</span></a>") if id 
+    header.children.before("<a class='anchor' href='##{id}'><span class='visuallyhidden'>#{header.text} permalink</span></a>") if id
     header.to_html
   end
 end
