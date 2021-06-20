@@ -1,18 +1,16 @@
 ---
-title: Syntax
+title: Синтаксис
 introduction: >
-  Sass supports two different syntaxes. Each one can load the other, so it's
-  up to you and your team which one to choose.
+  Sass поддерживает два разных синтаксиса. 
+  Каждый может загружать другой, поэтому вам и вашей команде решать, какой из них выбрать.
 ---
 
 ## SCSS
 
-The SCSS syntax uses the file extension `.scss`. With a few small exceptions,
-it's a superset of CSS, which means essentially **all valid CSS is valid SCSS as
-well**. Because of its similarity to CSS, it's the easiest syntax to get used to
-and the most popular.
+Синтаксис SCSS использует расширение файла `.scss`. 
+За некоторыми небольшими исключениями, это надмножество CSS, что означает, по сути, **что весь действующий CSS также является действительным SCSS**. Из-за его сходства с CSS это самый простой и популярный синтаксис.
 
-SCSS looks like this:
+SCSS выглядит так:
 
 ```scss
 @mixin button-base() {
@@ -36,20 +34,17 @@ SCSS looks like this:
 }
 ```
 
-## The Indented Syntax
+## Синтаксис с отступом
 
-The indented syntax was Sass's original syntax, and so it uses the file
-extension `.sass`. Because of this extension, it's sometimes just called "Sass".
-The indented syntax supports all the same features as SCSS, but it uses
-indentation instead of curly braces and semicolons to describe the format of the
-document.
+Синтаксис с отступом был оригинальным синтаксисом Sass, поэтому он использует расширение файла `.sass`. 
+Из-за этого расширения его иногда называют просто «Sass».
+Синтаксис с отступом поддерживает все те же функции, что и SCSS, но он использует отступы вместо фигурных скобок и точек с запятой для описания формата документа.
 
-In general, any time you'd write curly braces in CSS or SCSS, you can just
-indent one level deeper in the indented syntax. And any time a line ends, that
-counts as a semicolon. There are also a few additional differences in the
-indented syntax that are noted throughout the reference.
+В общем, каждый раз, когда вы пишете фигурные скобки в CSS или SCSS, вы можете просто сделать отступ на один уровень глубже в синтаксисе с отступом. 
+И каждый раз, когда строка заканчивается, это считается точкой с запятой. 
+Есть также несколько дополнительных отличий в синтаксисе с отступом, которые отмечены в справочнике.
 
-The indented syntax looks like this:
+Синтаксис с отступом выглядит так:
 
 ```sass
 @mixin button-base()

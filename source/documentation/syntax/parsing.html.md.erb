@@ -1,48 +1,37 @@
 ---
-title: Parsing a Stylesheet
+title: Парсинг таблицы стилей
 introduction: >
-  A Sass stylesheet is parsed from a sequence of Unicode code points. It's
-  parsed directly, without first being converted to a token stream.
+  Таблица стилей Sass анализируется из последовательности кодовых точек Unicode.
+  Он анализируется напрямую, без предварительного преобразования в поток токенов.
 ---
 
 ## Input Encoding
 
 <% impl_status dart: false, libsass: true, ruby: true do %>
-  Dart Sass currently *only* supports the UTF-8 encoding. As such, it's safest
-  to encode all Sass stylesheets as UTF-8.
+  Dart Sass в настоящее время *поддерживает только* кодировку UTF-8.
+  Таким образом, безопаснее всего кодировать все таблицы стилей Sass как UTF-8.
 <% end %>
 
-It's often the case that a document is initially available only as a sequence of
-bytes, which must be decoded into Unicode. Sass performs this decoding as
-follows:
+Часто бывает, что документ изначально доступен только как последовательность байтов, которую необходимо декодировать в Unicode.
+Sass выполняет это декодирование следующим образом:
 
-* If the sequence of bytes begins with the UTF-8 or UTF-16 encoding of U+FEFF
-  BYTE ORDER MARK, the corresponding encoding is used.
+* Если последовательность байтов начинается с UTF-8 или UTF-16 кодировки U+FEFF BYTE ORDER MARK, используется соответствующая кодировка.
 
-* If the sequence of bytes begins with the plain ASCII string `@charset`, Sass
-  determines the encoding using step 2 of the CSS algorithm for
-  [determining the fallback encoding][].
+* Если последовательность байтов начинается с простой строки ASCII `@charset`, Sass определяет кодировку, используя шаг 2 алгоритма CSS для [определения резервной кодировки][determining the fallback encoding].
 
   [determining the fallback encoding]: https://drafts.csswg.org/css-syntax-3/#input-byte-stream
 
-* Otherwise, UTF-8 is used.
+* В противном случае используется UTF-8.
 
-## Parse Errors
+## Разбор ошибок
 
-When Sass encounters invalid syntax in a stylesheet, parsing will fail and an
-error will be presented to the user with information about the location of the
-invalid syntax and the reason it was invalid.
+Когда Sass обнаруживает недопустимый синтаксис в таблице стилей, синтаксический анализ завершается неудачно, и пользователю будет представлена ошибка с информацией о местонахождении недопустимого синтаксиса и причине, по которой он был недопустимым.
 
-Note that this is different than CSS, which specifies how to recover from most
-errors rather than failing immediately. This is one of the few cases where SCSS
-isn't *strictly* a superset of CSS. However, it's much more useful to Sass users
-to see errors immediately, rather than having them passed through to the CSS
-output.
+Обратите внимание, что это отличается от CSS, который указывает, как исправить большинство ошибок, а не сразу после сбоя. Это один из немногих случаев, когда SCSS не является *строго* надмножеством CSS.
+Однако пользователям Sass гораздо полезнее сразу видеть ошибки, а не передавать их в вывод CSS.
 
-The location of parse errors can be accessed through implementation-specific
-APIs. For example, in Dart Sass you can access [`SassException.span`][], and in
-Node Sass's and Dart Sass's JS API you can access the [`file`, `line`, and
-`column`][js error] properties.
+Доступ к местоположению ошибок синтаксического анализа можно получить через API, зависящие от реализации.
+Например, в Dart Sass вы можете получить доступ к [`SassException.span`][], а в Node Sass и Dart Sass JS API вы можете получить доступ к свойствам [`file`, `line` и `column`][js error].
 
 [`SassException.span`]: https://pub.dartlang.org/documentation/sass/latest/sass/SassException/span.html
 [js error]: https://github.com/sass/node-sass#error-object

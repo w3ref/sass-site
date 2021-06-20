@@ -1,28 +1,21 @@
 ---
-title: Special Functions
+title: Специальные функции
 table_of_contents: true
 introduction: >
-  CSS defines many functions, and most of them work just fine with Sass’s normal
-  function syntax. They’re parsed as function calls, resolved to [plain CSS
-  functions](../at-rules/function#plain-css-functions), and compiled as-is to
-  CSS. There are a few exceptions, though, which have special syntax that can’t
-  just be parsed as a [SassScript expression](structure#expressions). All
-  special function calls return [unquoted strings](../values/strings#unquoted).
+  CSS определяет множество функций, и большинство из них прекрасно работают с обычным синтаксисом функций Sass.
+  Они анализируются как вызовы функций, преобразуются в [простые функции CSS](../at-rules/function#plain-css-functions) и компилируются как есть в CSS.
+  Однако есть несколько исключений, которые имеют особый синтаксис, который нельзя просто проанализировать как [выражение SassScript](structure#expressions).
+  Все вызовы специальных функций возвращают [строки без кавычек](../values/strings#unquoted).
 ---
 
 ## `url()`
 
-The [`url()` function][] is commonly used in CSS, but its syntax is different
-than other functions: it can take either a quoted *or* unquoted URL. Because an
-unquoted URL isn't a valid SassScript expression, Sass needs special logic to
-parse it.
+Функция [`url()`][`url()` function] обычно используется в CSS, но ее синтаксис отличается от других функций: она может принимать либо цитируемый, *либо* URL без кавычек.
+Поскольку URL-адрес без кавычек не является допустимым выражением SassScript, Sass требует специальной логики для его анализа.
 
 [`url()` function]: https://developer.mozilla.org/en-US/docs/Web/CSS/url
 
-If the `url()`'s argument is a valid unquoted URL, Sass parses it as-is,
-although [interpolation][] may also be used to inject SassScript values. If it's
-not a valid unquoted URL—for example, if it contains [variables][] or [function
-calls][]—it's parsed as a normal [plain CSS function call][].
+Если аргумент `url()` является допустимым URL без кавычек, Sass анализирует его как есть, хотя [интерполяция][interpolation] также может использоваться для вставки значений SassScript. Если это недействительный URL без кавычек - например, если он содержит [переменные][variables] или [][функции вызова] — он анализируется как обычный [простой вызов функции CSS][plain CSS function call].
 
 [interpolation]: ../interpolation
 [variables]: ../variables
@@ -33,7 +26,7 @@ calls][]—it's parsed as a normal [plain CSS function call][].
   $roboto-font-path: "../fonts/roboto";
 
   @font-face {
-      // This is parsed as a normal function call that takes a quoted string.
+      // Это анализируется как обычный вызов функции, который принимает строку в кавычках.
       src: url("#{$roboto-font-path}/Roboto-Thin.woff2") format("woff2");
 
       font-family: "Roboto";
@@ -41,8 +34,7 @@ calls][]—it's parsed as a normal [plain CSS function call][].
   }
 
   @font-face {
-      // This is parsed as a normal function call that takes an arithmetic
-      // expression.
+      // Это анализируется как обычный вызов функции, который принимает арифметическое выражение.
       src: url($roboto-font-path + "/Roboto-Light.woff2") format("woff2");
 
       font-family: "Roboto";
@@ -50,7 +42,7 @@ calls][]—it's parsed as a normal [plain CSS function call][].
   }
 
   @font-face {
-      // This is parsed as an interpolated special function.
+      // Это анализируется как интерполированная специальная функция.
       src: url(#{$roboto-font-path}/Roboto-Regular.woff2) format("woff2");
 
       font-family: "Roboto";
@@ -60,7 +52,7 @@ calls][]—it's parsed as a normal [plain CSS function call][].
   $roboto-font-path: "../fonts/roboto"
 
   @font-face
-      // This is parsed as a normal function call that takes a quoted string.
+      // Это анализируется как обычный вызов функции, который принимает строку в кавычках.
       src: url("#{$roboto-font-path}/Roboto-Thin.woff2") format("woff2")
 
       font-family: "Roboto"
@@ -68,8 +60,7 @@ calls][]—it's parsed as a normal [plain CSS function call][].
 
 
   @font-face
-      // This is parsed as a normal function call that takes an arithmetic
-      // expression.
+      // Это анализируется как обычный вызов функции, который принимает арифметическое выражение.
       src: url($roboto-font-path + "/Roboto-Light.woff2") format("woff2")
 
       font-family: "Roboto"
@@ -77,7 +68,7 @@ calls][]—it's parsed as a normal [plain CSS function call][].
 
 
   @font-face
-      // This is parsed as an interpolated special function.
+      // Это анализируется как интерполированная специальная функция.
       src: url(#{$roboto-font-path}/Roboto-Regular.woff2) format("woff2")
 
       font-family: "Roboto"
@@ -87,32 +78,25 @@ calls][]—it's parsed as a normal [plain CSS function call][].
 ## `calc()`, `clamp()`, `element()`, `progid:...()`, and `expression()`
 
 <% impl_status dart: "1.31.0", libsass: false, ruby: false, feature: "clamp()" do %>
-  LibSass, Ruby Sass, and older versions of Dart Sass treat `clamp()` as a
-  [plain CSS function] rather than supporting special syntax within it.
+  LibSass, Ruby Sass и более старые версии Dart Sass рассматривают `clamp()` как [простую функцию CSS][plain CSS function], а не поддерживают в ней специальный синтаксис.
 
   [plain CSS function]: ../at-rules/function#plain-css-functions
 <% end %>
 
-The [`calc()`], [`clamp()`] and [`element()`] functions are defined in the CSS
-spec. Because `calc()`'s mathematical expressions conflict with Sass's
-arithmetic, and `element()`'s IDs could be parsed as colors, they need special
-parsing.
+Функции [`calc()`], [`clamp()`] и [`element()`] определены в спецификации CSS.
+Поскольку математические выражения `calc()` конфликтуют с арифметикой Sass, а идентификаторы `element()` могут быть проанализированы как цвета, они нуждаются в специальном анализе.
 
 [`calc()`]: https://developer.mozilla.org/en-US/docs/Web/CSS/calc
 [`clamp()`]: https://developer.mozilla.org/en-US/docs/Web/CSS/clamp
 [`element()`]: https://developer.mozilla.org/en-US/docs/Web/CSS/element
 
-[`expression()`][] and functions beginning with [`progid:`][] are legacy
-Internet Explorer features that use non-standard syntax. Although they're no
-longer supported by recent browsers, Sass continues to parse them for backwards
-compatibility.
+[`expression()`][] и функции, начинающиеся с [`progid:`][] являются устаревшими функциями Internet Explorer, которые используют нестандартный синтаксис.
+Хотя последние версии браузеров больше не поддерживают их, Sass продолжает анализировать их на предмет обратной совместимости.
 
 [`expression()`]: https://blogs.msdn.microsoft.com/ie/2008/10/16/ending-expressions/
 [`progid:`]: https://blogs.msdn.microsoft.com/ie/2009/02/19/the-css-corner-using-filters-in-ie8/
 
-Sass allows *any text* in these function calls, including nested parentheses.
-Nothing is interpreted as a SassScript expression, with the exception that
-[interpolation][] can be used to inject dynamic values.
+Sass допускает *любой текст* в этих вызовах функций, включая вложенные круглые скобки. Ничто не интерпретируется как выражение SassScript, за исключением того, что [интерполяция][interpolation] может использоваться для вставки динамических значений.
 
 <% example do %>
   @use "sass:math";
@@ -144,33 +128,20 @@ Nothing is interpreted as a SassScript expression, with the exception that
   }
 <% end %>
 
-## `min()` and `max()`
+## `min()` и `max()`
 
 <% impl_status dart: "1.11.0", libsass: false, ruby: false do %>
-  LibSass and Ruby Sass currently *always* parse `min()` and `max()` as Sass
-  functions. To create a plain CSS `min()` or `max()` call for those
-  implementations, you can write something like `unquote("min(#{$padding},
-  env(safe-area-inset-left))")` instead.
+  LibSass и Ruby Sass в настоящее время *всегда* воспринимает `min()` и `max()` как функции Sass. Чтобы создать простой вызов CSS `min()` или `max()` для этих реализаций, вы можете написать что-то вроде `unquote("min(#{$padding}, env(safe-area-inset-left))")` вместо.
 <% end %>
 
-CSS added support for [`min()` and `max()` functions][] in Values and Units
-Level 4, from where they were quickly adopted by Safari [to support the
-iPhoneX][]. But Sass supported its own [`min()`][] and [`max()`][] functions
-long before this, and it needed to be backwards-compatible with all those
-existing stylesheets. This led for the need for extra-special syntactic
-cleverness.
+CSS добавил поддержку [функций `min()` и `max()`][`min()` and `max()` functions] в Values и Units Level 4, откуда они были быстро приняты Safari [для поддержки iPhoneX][to support the iPhoneX]. Но Sass поддерживал свои собственные функции [`min()`][] и [`max()`][] задолго до этого, и он должен был быть обратно совместимым со всеми существующими таблицами стилей. Это привело к необходимости особой синтаксической смекалки.
 
 [`min()` and `max()` functions]: https://drafts.csswg.org/css-values-4/#calc-notation
 [to support the iPhoneX]: https://webkit.org/blog/7929/designing-websites-for-iphone-x/
 [`min()`]: ../modules/math#min
 [`max()`]: ../modules/math#max
 
-If a `min()` or `max()` function call is valid plain CSS, it will be compiled to
-a CSS `min()` or `max()` call. "Plain CSS" includes nested calls to
-[`calc()`][], [`env()`][], [`var()`][], `min()`, or `max()`, as well as
-[interpolation][]. As soon as any part of the call contains a SassScript feature
-like [variables][] or [function calls][], though, it's parsed as a call to
-Sass's core `min()` or `max()` function instead.
+Если вызов функции `min()` или `max()` является допустимым простым CSS, он будет скомпилирован в вызов CSS `min()` или `max()`. "Обычный CSS" включает вложенные вызовы [`calc()`][], [`env()`][], [`var()`][], `min()` или `max()`, также как и [интерполяция][interpolation]. Однако, как только какая-либо часть вызова содержит функцию SassScript, например [переменные][variables] или [вызовы функций][function calls], вместо этого она анализируется как вызов основной функции Sass `min()` или `max()`.
 
 [`env()`]: https://developer.mozilla.org/en-US/docs/Web/CSS/env
 [`var()`]: https://developer.mozilla.org/en-US/docs/Web/CSS/var
@@ -181,15 +152,15 @@ Sass's core `min()` or `max()` function instead.
   $padding: 12px;
 
   .post {
-    // Since these max() calls don't use any Sass features other than
-    // interpolation, they're compiled to CSS max() calls.
+    // Поскольку эти вызовы max() не используют никаких функций Sass,
+    // кроме интерполяции, они компилируются в вызовы CSS max().
     padding-left: max(#{$padding}, env(safe-area-inset-left));
     padding-right: max(#{$padding}, env(safe-area-inset-right));
   }
 
   .sidebar {
-    // Since these refer to a Sass variable without interpolation, they call
-    // Sass's built-in max() function.
+    // Поскольку они ссылаются на переменную Sass без интерполяции,
+    // они вызывают встроенную в Sass функцию max().
     padding-left: max($padding, 20px);
     padding-right: max($padding, 20px);
   }
@@ -197,15 +168,15 @@ Sass's core `min()` or `max()` function instead.
   $padding: 12px
 
   .post
-    // Since these max() calls don't use any Sass features other than
-    // interpolation, they're compiled to CSS max() calls.
+    // Поскольку эти вызовы max() не используют никаких функций Sass,
+    // кроме интерполяции, они компилируются в вызовы CSS max().
     padding-left: max(#{$padding}, env(safe-area-inset-left))
     padding-right: max(#{$padding}, env(safe-area-inset-right))
 
 
   .sidebar
-    // Since these refer to a Sass variable without interpolation, they call
-    // Sass's built-in max() function.
+    // Поскольку они ссылаются на переменную Sass без интерполяции,
+    // они вызывают встроенную в Sass функцию max().
     padding-left: max($padding, 20px)
     padding-right: max($padding, 20px)
   ===

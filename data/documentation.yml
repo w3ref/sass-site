@@ -1,10 +1,10 @@
 toc:
-- Syntax: /documentation/syntax
+- Синтаксис: /documentation/syntax
   :children:
-  - Parsing a Stylesheet: /documentation/syntax/parsing
-  - Structure of a Stylesheet: /documentation/syntax/structure
-  - Comments: /documentation/syntax/comments
-  - Special Functions: /documentation/syntax/special-functions
+  - Парсинг таблицы стилей: /documentation/syntax/parsing
+  - Структура таблицы стилей: /documentation/syntax/structure
+  - Комментарии: /documentation/syntax/comments
+  - Специальные функции: /documentation/syntax/special-functions
 - Style Rules: /documentation/style-rules
   :children:
   - Property Declarations: /documentation/style-rules/declarations
