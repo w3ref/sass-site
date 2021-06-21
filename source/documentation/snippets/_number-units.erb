@@ -1,11 +1,9 @@
-## Units
+## Единицы
 
-Sass has powerful support for manipulating units based on how
-[real-world unit calculations][] work. When two numbers are multiplied, their
-units are multiplied as well. When one number is divided by another, the result
-takes its numerator units from the first number and its denominator units from
-the second. A number can have any number of units in the numerator and/or
-denominator.
+Sass имеет мощную поддержку для управления юнитами в зависимости от того, как работают [вычисления реальных юнитов][real-world unit calculations].
+Когда два числа умножаются, их единицы также умножаются.
+Когда одно число делится на другое, результат берет единицы числителя из первого числа и его единицы знаменателя из второго.
+Число может иметь любое количество единиц в числителе и/или знаменателе.
 
 [real-world unit calculations]: https://en.wikipedia.org/wiki/Unit_of_measurement#Calculations_with_units_of_measurement
 
@@ -14,7 +12,7 @@ denominator.
   @debug math.div(5px, 2s); // 2.5px/s (read "pixels per second")
 
   // 3.125px*deg/s*em (read "pixel-degrees per second-em")
-  @debug 5px * math.div(math.div(30deg, 2s), 24em); 
+  @debug 5px * math.div(math.div(30deg, 2s), 24em);
 
   $degrees-per-second: math.div(20deg, 1s);
   @debug $degrees-per-second; // 20deg/s
@@ -24,30 +22,25 @@ denominator.
   @debug math.div(5px, 2s)  // 2.5px/s (read "pixels per second")
 
   // 3.125px*deg/s*em (read "pixel-degrees per second-em")
-  @debug 5px * math.div(math.div(30deg, 2s), 24em)  
+  @debug 5px * math.div(math.div(30deg, 2s), 24em)
 
-  $degrees-per-second: math.div(20deg, 1s) 
+  $degrees-per-second: math.div(20deg, 1s)
   @debug $degrees-per-second  // 20deg/s
   @debug math.div(1, $degrees-per-second)  // 0.05s/deg
 <% end %>
 
 <% heads_up do %>
-  Because CSS doesn't support complex units like square pixels, using a number
-  with complex units as a [property value][] will produce an error. This is a
-  feature in disguise, though; if you aren't ending up with the right unit, it
-  usually means that something's wrong with your calculations! And remember, you
-  can always use the [`@debug` rule][] to check out the units of any variable or
-  [expression][].
+  Поскольку CSS не поддерживает сложные единицы измерения, такие как квадратные пиксели, использование числа со сложными единицами измерения в качестве [значения свойства][property value] приведет к ошибке.
+  Однако это замаскированная особенность; если у вас не получается подходящая единица измерения, это обычно означает, что что-то не так с вашими расчетами!
+  И помните, вы всегда можете использовать [правило `@debug`][`@debug` rule], чтобы проверить единицы любой переменной или [выражение][expression].
 
   [property value]: /documentation/style-rules/declarations
   [`@debug` rule]: /documentation/at-rules/debug
   [expression]: /documentation/syntax/structure#expressions
 <% end %>
 
-Sass will automatically convert between compatible units, although which unit it
-will choose for the result depends on which implementation of Sass you're
-using.If you try to combine incompatible units, like `1in + 1em`, Sass will
-throw an error.
+Sass будет автоматически конвертировать между совместимыми модулями, хотя, какой модуль он выберет для результата, зависит от того, какую реализацию Sass вы используете.
+Если вы попытаетесь объединить несовместимые модули, такие как `1in + 1em`, Sass выдаст ошибку.
 
 <% example(autogen_css: false) do %>
   // CSS defines one inch as 96 pixels.
@@ -65,12 +58,8 @@ throw an error.
   // Error: Incompatible units s and in.
 <% end %>
 
-As in real-world unit calculations, if the numerator contains units that are
-compatible with units in the denominator (like `math.div(96px, 1in)`), they'll
-cancel out. This makes it easy to define a ratio that you can use for converting
-between units. In the example below, we set the desired speed to one second per
-50 pixels, and then multiply that by the number of pixels the transition covers
-to get the time it should take.
+Как и в реальных расчетах единиц измерения, если числитель содержит единицы, совместимые с единицами знаменателя (например, `math.div(96px, 1in)`), они будут отменены.
+Это упрощает определение отношения, которое можно использовать для преобразования единиц. В приведенном ниже примере мы устанавливаем желаемую скорость равной одной секунде на 50 пикселей, а затем умножаем ее на количество пикселей, охватываемых переходом, чтобы получить необходимое время.
 
 <%# TODO(nweiz): auto-generate this CSS once we're compiling with Dart Sass %>
 
@@ -117,16 +106,14 @@ to get the time it should take.
 <% end %>
 
 <% heads_up do %>
-  If your arithmetic gives you the wrong unit, you probably need to check your
-  math. You may be leaving off units for a quantity that should have them!
-  Staying unit-clean allows Sass to give you helpful errors when something isn't
-  right.
+  Если ваша арифметика дает неправильную единицу, вам, вероятно, нужно проверить свои математические данные.
+  Возможно, вы отказываетесь от единиц для того количества, в котором они должны быть!
+  Чистота модулей позволяет Sass выдавать полезные ошибки, когда что-то не так.
 
-  You should especially avoid using interpolation like `#{$number}px`. This
-  doesn't actually create a number! It creates an [unquoted string][] that
-  *looks* like a number, but won't work with any [number operations][] or
-  [functions][]. Try to make your math unit-clean so that `$number` already has
-  the unit `px`, or write `$number * 1px`.
+  Особенно следует избегать использования интерполяции типа `#{$number}px`.
+  На самом деле это не создает числа!
+  Он создает [строку без кавычек][unquoted string], которая *выглядит* как число, но не будет работать ни с какими [числовыми операциями][number operations] или [функциями][functions].
+  Попробуйте сделать вашу математическую единицу чистой, чтобы в `$number` уже была единица `px`, или напишите `$number * 1px`.
 
   [unquoted string]: /documentation/values/strings#unquoted
   [number operations]: /documentation/operators/numeric
@@ -134,16 +121,13 @@ to get the time it should take.
 <% end %>
 
 <% heads_up do %>
-  Percentages in Sass work just like every other unit. They are *not*
-  interchangeable with decimals, because in CSS decimals and percentages mean
-  different things. For example, `50%` is a number with `%` as its unit, and
-  Sass considers it different than the number `0.5`.
+  Проценты в Sass работают так же, как и все остальные единицы.
+  Они *не* взаимозаменяемы с десятичными знаками, потому что в CSS десятичные дроби и проценты означают разные вещи.
+  Например, `50%` - это число, единицей измерения которого является `%`, и Sass считает, что оно отличается от числа `0.5`.
 
-  You can convert between decimals and percentages using unit arithmetic.
-  `math.div($percentage, 100%)` will return the corresponding decimal, and
-  `$decimal * 100%` will return the corresponding percentage. You can also use
-  the [`math.percentage()` function][] as a more explicit way of writing
-  `$decimal * 100%`.
+  Вы можете преобразовывать десятичные дроби в проценты, используя арифметику единиц измерения.
+  `math.div($percentage, 100%)` вернет соответствующее десятичное число, а `$decimal * 100%` вернет соответствующий процент.
+  Вы также можете использовать [функцию `math.percentage()`][`math.percentage()` function] как более явный способ записи `$decimal * 100%`.
 
   [`math.percentage()` function]: /documentation/modules/math#percentage
 <% end %>

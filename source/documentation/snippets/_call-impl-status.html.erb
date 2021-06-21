@@ -1,11 +1,8 @@
 <% impl_status dart: true, libsass: '3.5.0', ruby: '3.5.0', feature: 'Argument Type' do %>
-  In older versions of LibSass and Ruby Sass, the [`call()` function][] took a
-  string representing a function's name. This was changed to take a function
-  value instead in preparation for a new module system where functions are no
-  longer global and so a given name may not always refer to the same function.
+  В более старых версиях LibSass и Ruby Sass функция [`call()` function][] принимала строку, представляющую имя функции.
+  Это было изменено, чтобы вместо этого принимать значение функции при подготовке к новой модульной системе, где функции больше не являются глобальными, и поэтому данное имя не всегда может относиться к одной и той же функции.
 
   [`call()` function]: /documentation/modules/meta#call
 
-  Passing a string to `call()` still works in all implementations, but it's
-  deprecated and will be disallowed in future versions.
+  Передача строки в `call()` по-прежнему работает во всех реализациях, но она устарела и будет запрещена в будущих версиях.
 <% end %>
