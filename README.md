@@ -1,9 +1,8 @@
-# Sass Site
+# Сайт Sass
 
-The Sass website is open source. See a typo? Have a UX improvement? Check out
-the [Contributing guide][contrib]! Also, check out the [Style Guide][sg].
+Веб-сайт Sass имеет открытый исходный код. Видите опечатку? Есть улучшения UX? Ознакомьтесь с [Руководством по участию][contrib]! Также ознакомьтесь с [Руководством по стилю][sg].
 
-Thanks!
+Спасибо!
 
 [contrib]: https://github.com/sass/sass-site/blob/master/CONTRIBUTING.md
 [sg]:      http://sass-lang.com/styleguide
