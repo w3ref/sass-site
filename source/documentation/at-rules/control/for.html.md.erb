@@ -1,13 +1,9 @@
 ---
 title: "@for"
 introduction: >
-  The `@for` rule, written `@for <variable> from <expression> to <expression>
-  { ... }` or `@for <variable> from <expression> through <expression> { ... }`,
-  counts up or down from one number (the result of the first
-  [expression](../../syntax/structure#expressions)) to another (the result of
-  the second) and evaluates a block for each number in between. Each number
-  along the way is assigned to the given variable name. If `to` is used, the
-  final number is excluded; if `through` is used, it's included.
+  Правило `@for`, записанное `@for <variable> from <expression> to <expression> { ... }` или `@for <variable> from <expression> through <expression> { ... }`, считает вверх или вниз от одного числа (результат первого [выражения](../../syntax/structure#expressions)) до другого (результат второго) и оценивает блок для каждого числа между ними.
+  Каждому номеру по пути присваивается имя данной переменной.
+  Если используется `to`, окончательное число исключается; если используется `through`, он включается.
 ---
 
 <% example do %>

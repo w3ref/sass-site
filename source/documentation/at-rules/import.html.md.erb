@@ -2,61 +2,48 @@
 title: "@import"
 table_of_contents: true
 introduction: >
-  Sass extends CSS's [`@import`
-  rule](https://developer.mozilla.org/en-US/docs/Web/CSS/@import) with the
-  ability to import Sass and CSS stylesheets, providing access to
-  [mixins](mixin), [functions](function), and [variables](../variables) and
-  combining multiple stylesheets' CSS together. Unlike plain CSS imports, which
-  require the browser to make multiple HTTP requests as it renders your page,
-  Sass imports are handled entirely during compilation.
+  Sass расширяет CSS [правило `@import`](https://developer.mozilla.org/en-US/docs/Web/CSS/@import) возможностью импортировать таблицы стилей Sass и CSS, обеспечивая доступ к [миксинам](mixin), [функциям](function) и [переменным](../variables) и объединение CSS нескольких таблиц стилей вместе.
+  В отличие от простого импорта CSS, который требует, чтобы браузер выполнял несколько HTTP-запросов при отображении вашей страницы, импорт Sass полностью обрабатывается во время компиляции.
 ---
 
-Sass imports have the same syntax as CSS imports, except that they allow
-multiple imports to be separated by commas rather than requiring each one to
-have its own `@import`. Also, in the [indented syntax][], imported URLs aren't
-required to have quotes.
+Импорт Sass имеет тот же синтаксис, что и импорт CSS, за исключением того, что он позволяет разделять несколько операций импорта запятыми, а не требует, чтобы каждый из них имел собственный `@import`.
+Кроме того, в [синтаксисе с отступом][indented syntax] импортированные URL-адреса не обязательно должны иметь кавычки.
 
 [indented syntax]: ../syntax#the-indented-syntax
 
 <% heads_up do %>
-  The Sass team discourages the continued use of the `@import` rule. Sass will
-  [gradually phase it out][] over the next few years, and eventually remove it
-  from the language entirely. Prefer the [`@use` rule][] instead. (Note that
-  only Dart Sass currently supports `@use`. Users of other implementations must
-  use the `@import` rule instead.)
+  Команда Sass не рекомендует продолжать использовать правило `@import`.
+  Sass будет [постепенно отказываться от него][gradually phase it out] в течение следующих нескольких лет и в конечном итоге полностью удалит его из языка.
+  Вместо этого предпочтите [правило `@use`][`@use` rule].
+  (Обратите внимание, что только Dart Sass в настоящее время поддерживает `@use`.
+  Пользователи других реализаций должны вместо этого использовать правило `@import`.)
 
   [gradually phase it out]: https://github.com/sass/sass/blob/master/accepted/module-system.md#timeline
   [`@use` rule]: use
 
-  #### What's Wrong With `@import`?
+  #### Что не так с `@import`?
 
-  The `@import` rule has a number of serious issues:
+  Правило `@import` имеет ряд серьезных проблем:
 
-  * `@import` makes all variables, mixins, and functions globally accessible.
-    This makes it very difficult for people (or tools) to tell where anything is
-    defined.
+  * `@import` делает все переменные, миксины и функции глобально доступными.
+    Из-за этого людям (или инструментам) очень сложно сказать, где что-то определено.
 
-  * Because everything's global, libraries must prefix to all their members to
-    avoid naming collisions.
+  * Поскольку все глобально, библиотеки должны добавлять префиксы ко всем своим участникам, чтобы избежать конфликтов имен.
 
-  * [`@extend` rules][] are also global, which makes it difficult to predict
-    which style rules will be extended.
+  * [Правила `@extend`][`@extend` rules] также являются глобальными, что затрудняет прогнозирование того, какие правила стиля будут расширены.
 
     [`@extend` rules]: extend
 
-  * Each stylesheet is executed and its CSS emitted *every time* it's
-    `@import`ed, which increases compilation time and produces bloated output.
+  * Каждая таблица стилей выполняется и ее CSS генерируется *каждый раз* при добавлении `@import`, что увеличивает время компиляции и приводит к раздутому выводу.
 
-  * There was no way to define private members or placeholder selectors that
-    were inaccessible to downstream stylesheets.
+  * Не было способа определить частные участники или селекторы заполнителей, которые были недоступны для последующих таблиц стилей.
 
-  The new module system and the `@use` rule address all these problems.
+  Новая модульная система и правило `@use` решают все эти проблемы.
 
-  #### How Do I Migrate?
+  #### Как мне мигрировать?
 
-  We've written a [migration tool][] that automatically converts most
-  `@import`-based code to `@use`-based code in a flash. Just point it at your
-  entrypoints and let it run!
+  Мы написали [инструмент миграции][migration tool] который автоматически преобразует большую часть кода на основе `@import` в код на основе `@use` в мгновение ока.
+  Просто наведите его на свои точки входа и позвольте ему работать!
 
   [migration tool]: /documentation/cli/migrator
 
@@ -115,68 +102,54 @@ required to have quotes.
   }
 <% end %>
 
-When Sass imports a file, that file is evaluated as though its contents appeared
-directly in place of the `@import`. Any [mixins][], [functions][], and
-[variables][] from the imported file are made available, and all its CSS is
-included at the exact point where the `@import` was written. What's more, any
-mixins, functions, or variables that were defined before the `@import`
-(including from other `@import`s) are available in the imported stylesheet.
+Когда Sass импортирует файл, этот файл оценивается так, как если бы его содержимое появилось непосредственно вместо `@import`.
+Любые [примеси][mixins], [функции][functions] и [переменные][variables] из импортированного файла становятся доступными, и весь его CSS включается в тот момент, когда был написан `@import`.
+Более того, любые миксины, функции или переменные, которые были определены до `@import` (в том числе из других `@import`), доступны в импортированной таблице стилей.
 
 [mixins]: mixin
 [functions]: function
 [variables]: ../variables
 
 <% heads_up do %>
-  If the same stylesheet is imported more than once, it will be evaluated again
-  each time. If it just defines functions and mixins, this usually isn't a big
-  deal, but if it contains style rules they'll be compiled to CSS more than
-  once.
+  Если одна и та же таблица стилей импортируется более одного раза, она будет оцениваться каждый раз заново.
+  Если он просто определяет функции и миксины, это обычно не имеет большого значения, но если он содержит правила стиля, они будут скомпилированы в CSS более одного раза.
 <% end %>
 
-## Finding the File
+## Поиск файла
 
-It wouldn't be any fun to write out absolute URLs for every stylesheet you
-import, so Sass's algorithm for finding a file to import makes it a little
-easier. For starters, you don't have to explicitly write out the extension of
-the file you want to import; `@import "variables"` will automatically load
-`variables.scss`, `variables.sass`, or `variables.css`.
+Было бы неинтересно записывать абсолютные URL-адреса для каждой импортируемой таблицы стилей, поэтому алгоритм Sass для поиска файла для импорта делает это немного проще.
+Во-первых, вам не нужно явно указывать расширение файла, который вы хотите импортировать; `@import "variables"` автоматически загрузит `variables.scss`, `variables.sass` или `variables.css`.
 
 <% heads_up do %>
-  To ensure that stylesheets work on every operating system, Sass imports files
-  by *URL*, not by *file path*. This means you need to use forward slashes, not
-  backslashes, even when you're on Windows.
+  Чтобы таблицы стилей работали в каждой операционной системе, Sass импортирует файлы по *URL*, а не по *пути к файлу*.
+  Это означает, что вам нужно использовать косую черту, а не обратную косую черту, даже если вы работаете в Windows.
 <% end %>
 
-### Load Paths
+### Загрузка путей
 
-All Sass implementations allow users to provide *load paths*: paths on the
-filesystem that Sass will look in when resolving imports. For example, if you
-pass `node_modules/susy/sass` as a load path, you can use `@import "susy"` to
-load `node_modules/susy/sass/susy.scss`.
+Все реализации Sass позволяют пользователям указывать *пути загрузки*: пути в файловой системе, которые Sass будет искать при разрешении импорта.
+Например, если вы передаете `node_modules/susy/sass` в качестве пути загрузки, вы можете использовать `@import "susy"` для загрузки `node_modules/susy/sass/susy.scss`.
 
-Imports will always be resolved relative to the current file first, though. Load
-paths will only be used if no relative file exists that matches the import. This
-ensures that you can't accidentally mess up your relative imports when you add a
-new library.
+Однако импорт всегда будет сначала разрешаться относительно текущего файла.
+Пути загрузки будут использоваться только в том случае, если не существует относительного файла, соответствующего импорту.
+Это гарантирует, что вы не сможете случайно испортить относительный импорт при добавлении новой библиотеки.
 
 <% fun_fact do %>
-  Unlike some other languages, Sass doesn't require that you use `./` for
-  relative imports. Relative imports are always available.
+  В отличие от некоторых других языков, Sass не требует, чтобы вы использовали `./` для относительного импорта.
+  Относительный импорт всегда доступен.
 <% end %>
 
-### Partials
+### Частичные
 
-As a convention, Sass files that are only meant to be imported, not compiled on
-their own, begin with `_` (as in `_code.scss`). These are called *partials*, and
-they tell Sass tools not to try to compile those files on their own. You can
-leave off the `_` when importing a partial.
+По соглашению, файлы Sass, которые предназначены только для импорта, а не для компиляции, начинаются с `_` (как в `_code.scss`).
+Они называются *частичными*, и они говорят инструментам Sass не пытаться скомпилировать эти файлы самостоятельно.
+Вы можете не использовать символ `_` при импорте частичного файла.
 
-### Index Files
+### Индексные файлы
 
 <% impl_status dart: true, libsass: '3.6.0', ruby: '3.6.0' %>
 
-If you write an `_index.scss` or `_index.sass` in a folder, when the folder
-itself is imported that file will be loaded in its place.
+Если вы напишете в папке `_index.scss` или `_index.sass`, то при импорте самой папки этот файл будет загружен на свое место.
 
 <% example do %>
   // foundation/_code.scss
@@ -237,19 +210,15 @@ itself is imported that file will be loaded in its place.
   }
 <% end %>
 
-### Custom Importers
+### Пользовательские импортеры
 
-All Sass implementations provide a way to define custom importers, which control
-how `@import`s locate stylesheets:
+Все реализации Sass предоставляют способ определения пользовательских импортеров, которые управляют тем, как `@import` находит таблицы стилей:
 
-* [Node Sass][] and [Dart Sass on npm][] provide an [`importer` option][] as
-  part of their JS API.
+* [Node Sass][] и [Dart Sass on npm][] предоставляют [параметр `importer`][`importer` option] как часть своего JS API.
 
-* [Dart Sass on pub][] provides an abstract [`Importer` class][] that can be
-  extended by a custom importer.
+* [Dart Sass on pub][] предоставляет абстрактный [класс `Importer`][`Importer` class], который может быть расширен пользовательским импортером.
 
-* [Ruby Sass][] provides an abstract [`Importers::Base` class][] that can be
-  extended by a custom importer.
+* [Ruby Sass][] предоставляет абстрактный [класс `Importers::Base`][`Importers::Base` class], который может быть расширен пользовательским импортером.
 
 [Node Sass]: https://npmjs.com/package/node-sass
 [Dart Sass on npm]: https://npmjs.com/package/sass
@@ -259,14 +228,12 @@ how `@import`s locate stylesheets:
 [Ruby Sass]: /ruby-sass
 [`Importers::Base` class]: https://www.rubydoc.info/gems/sass/Sass/Importers/Base
 
-## Nesting
+## Вложенность
 
-Imports are usually written at the top level of a stylesheet, but they don't
-have to be. They can nested within [style rules][] or [plain CSS at-rules][] as
-well. The imported CSS is nested in that context, which makes nested imports
-useful for scoping a chunk of CSS to a particular element or media query. Note
-that top-level [mixins][], [functions][], and [variables][] defined in the
-nested import are still defined globally, though.
+Импорт обычно записывается на верхнем уровне таблицы стилей, но это не обязательно.
+Они также могут быть вложены в [правила стиля][style rules] или [простые правила CSS][plain CSS at-rules].
+Импортированный CSS вложен в этот контекст, что делает вложенный импорт полезным для привязки фрагмента CSS к определенному элементу или медиа-запросу.
+Обратите внимание, что [примеси][mixins], [функции][functions] и [переменные][variables] верхнего уровня, определенные во вложенном импорте, по-прежнему определены глобально.
 
 [style rules]: ../style-rules
 [plain CSS at-rules]: css
@@ -299,19 +266,14 @@ nested import are still defined globally, though.
 <% end %>
 
 <% fun_fact do %>
-  Nested imports are very useful for scoping third-party stylesheets, but if
-  you're the author of the stylesheet you're importing, it's usually a better
-  idea to write your styles in a [mixin][] and include that mixin in the nested
-  context. A mixin can be used in more flexible ways, and it's clearer when
-  looking at the imported stylesheet how it's intended to be used.
+  Вложенный импорт очень полезен для определения сторонних таблиц стилей, но если вы являетесь автором импортируемой таблицы стилей, обычно лучше записать свои стили в [примесь][mixin] и включить этот миксин во вложенные контекст.
+  Примесь можно использовать более гибкими способами, и при взгляде на импортированную таблицу стилей становится понятнее, как она предназначена для использования.
 
   [mixin]: mixin
 <% end %>
 
 <% heads_up do %>
-  The CSS in nested imports is evaluated like a mixin, which means that any
-  [parent selectors][] will refer to the selector in which the stylesheet is
-  nested.
+  CSS во вложенном импорте оценивается как миксин, что означает, что любые [родительские селекторы][parent selectors] будут ссылаться на селектор, в который вложена таблица стилей.
 
   [parent selectors]: ../style-rules/parent-selector
 
@@ -356,18 +318,15 @@ nested import are still defined globally, though.
   <% end %>
 <% end %>
 
-## Importing CSS
+## Импорт CSS
 
 <% impl_status dart: '1.11.0', libsass: :partial, ruby: false do %>
-  LibSass supports importing files with the extension `.css`, but contrary to
-  the specification they're treated as SCSS files rather than being parsed as
-  CSS. This behavior has been deprecated, and an update is in the works to
-  support the behavior described below.
+  LibSass поддерживает импорт файлов с расширением `.css`, но вопреки спецификации они обрабатываются как файлы SCSS, а не анализируются как CSS.
+  Это поведение устарело, и в настоящее время разрабатывается обновление для поддержки поведения, описанного ниже.
 <% end %>
 
-In addition to importing `.sass` and `.scss` files, Sass can import plain old
-`.css` files. The only rule is that the import *must not* explicitly include the
-`.css` extension, because that's used to indicate a [plain CSS `@import`][].
+Помимо импорта файлов `.sass` и `.scss`, Sass может импортировать простые старые файлы `.css`.
+Единственное правило состоит в том, что импорт *не должен* явно включать расширение `.css`, потому что оно используется для обозначения [простого CSS `@import`][plain CSS `@import`].
 
 [plain CSS `@import`]: #plain-css-imports
 
@@ -396,33 +355,30 @@ In addition to importing `.sass` and `.scss` files, Sass can import plain old
   }
 <% end %>
 
-CSS files imported by Sass don't allow any special Sass features. In order to
-make sure authors don't accidentally write Sass in their CSS, all Sass features
-that aren't also valid CSS will produce errors. Otherwise, the CSS will be
-rendered as-is. It can even be [extended][]!
+Файлы CSS, импортированные Sass, не поддерживают никаких специальных функций Sass.
+Чтобы гарантировать, что авторы случайно не напишут Sass в своем CSS, все функции Sass, которые также не являются корректным CSS, будут вызывать ошибки.
+В противном случае CSS будет отображаться как есть.
+Его можно даже [расширить][extended]!
 
 [extended]: extend
 
-## Plain CSS `@import`s
+## Простой CSS `@import`
 
 <% impl_status dart: true, libsass: :partial, ruby: true do %>
-  By default, LibSass handles plain CSS imports correctly. However, any [custom
-  importers][] will incorrectly apply to plain-CSS `@import` rules, making it
-  possible for those rules to load Sass files.
+  По умолчанию LibSass правильно обрабатывает простой импорт CSS.
+  Однако любые [пользовательские импортеры][custom importers] будут неправильно применяться к правилам простого CSS `@import`, что позволяет этим правилам загружать файлы Sass.
 
   [custom importers]: ../js-api#importer
 <% end %>
 
 
-Because `@import` is also defined in CSS, Sass needs a way of compiling plain
-CSS `@import`s without trying to import the files at compile time. To accomplish
-this, and to ensure SCSS is as much of a superset of CSS as possible, Sass will
-compile any `@import`s with the following characteristics to plain CSS imports:
+Поскольку `@import` также определен в CSS, Sass нужен способ компиляции простого CSS `@import` без попытки импортировать файлы во время компиляции.
+Чтобы добиться этого и гарантировать, что SCSS является как можно большей частью надмножества CSS, Sass будет компилировать любой `@import` со следующими характеристиками в простой импорт CSS:
 
-* Imports where the URL ends with `.css`.
-* Imports where the URL begins `http://` or `https://`.
-* Imports where the URL is written as a `url()`.
-* Imports that have media queries.
+* Импортирует, где URL заканчивается на `.css`.
+* Импортирует, где URL начинается с `http://` или `https://`.
+* Импортирует, где URL-адрес записан как `url()`.
+* Импорт с медиа-запросами.
 
 <% example do %>
   @import "theme.css";
@@ -436,12 +392,10 @@ compile any `@import`s with the following characteristics to plain CSS imports:
   @import "landscape" screen and (orientation: landscape)
 <% end %>
 
-### Interpolation
+### Интерполяция
 
-Although Sass imports can't use [interpolation][] (to make sure it's always
-possible to tell where [mixins][], [functions][], and [variables][] come from),
-plain CSS imports can. This makes it possible to dynamically generate imports,
-for example based on mixin parameters.
+Хотя при импорте Sass нельзя использовать [интерполяцию][interpolation] (чтобы всегда можно было определить, откуда берутся [примеси][mixins], [функции][functions] и [переменные][variables]), простой импорт CSS может.
+Это позволяет динамически генерировать импорт, например, на основе параметров миксина.
 
 [interpolation]: ../interpolation
 
@@ -459,52 +413,41 @@ for example based on mixin parameters.
   @include google-font("Droid Sans")
 <% end %>
 
-## Import and Modules
+## Импорт и модули
 
 <%= partial '../snippets/module-system-status' %>
 
-Sass's [module system][] integrates seamlessly with `@import`, whether you're
-importing a file that contains `@use` rules or loading a file that contains
-imports as a module. We want to make the transition from `@import` to `@use` as
-smooth as possible.
+[Модульная система][module system] Sass легко интегрируется с `@import`, импортируете ли вы файл, содержащий правила `@use`, или загружаете файл, содержащий импорт, как модуль.
+Мы хотим сделать переход от `@import` к `@use` как можно более плавным.
 
 [module system]: use
 
-### Importing a Module-System File
+### Импорт файла модуля-системы
 
-When you import a file that contains `@use` rules, the importing file has access
-to all members (even private members) defined directly in that file, but *not*
-any members from modules that file has loaded. However, if that file contains
-[`@forward` rules][], the importing file will have access to forwarded members.
-This means that you can import a library that was written to be used with the
-module system.
+Когда вы импортируете файл, содержащий правила `@use`, импортирующий файл имеет доступ ко всем участникам (даже частным участникам), определенным непосредственно в этом файле, но *не* ни к каким участникам из модулей, загруженных этим файлом.
+Однако, если этот файл содержит [правила `@forward`][`@forward` rules], импортируемый файл будет иметь доступ к перенаправленным участникам. Это означает, что вы можете импортировать библиотеку, которая была написана для использования с модульной системой.
 
 [`@forward` rules]: forward
 
 <% heads_up do %>
-  When a file with `@use` rules is imported, all the CSS transitively loaded by
-  those is included in the resulting stylesheet, even if it's already been
-  included by another import. If you're not careful, this can result in bloated
-  CSS output!
+  Когда импортируется файл с правилами `@use`, весь CSS, транзитивно загруженный ими, включается в результирующую таблицу стилей, даже если он уже был включен другим импортом.
+  Если вы не будете осторожны, это может привести к раздуванию вывода CSS!
 <% end %>
 
-#### Import-Only Files
+#### Файлы только для импорта
 
-An API that makes sense for `@use` might not make sense for `@import`. For
-example, `@use` adds a namespace to all members by default so you can safely use
-short names, but `@import` doesn't so you might need something longer. If you're
-a library author, you may be concerned that if you update your library to use
-the new module system, your existing `@import`-based users will break.
+API, который имеет смысл для `@use`, может не иметь смысла для `@import`.
+Например, `@use` по умолчанию добавляет пространство имен всем участникам, так что вы можете безопасно использовать короткие имена, но `@import` не делает, поэтому вам может понадобиться что-то более длинное.
+Если вы являетесь автором библиотеки, вы можете быть обеспокоены тем, что если вы обновите свою библиотеку для использования новой системы модулей, ваши существующие пользователи, основанные на `@import`, сломаются.
 
-To make this easier, Sass also supports *import-only files*. If you name a file
-`<name>.import.scss`, it will only be loaded for imports, not for `@use`s. This
-way, you can retain compatibility for `@import` users while still providing a
-nice API for users of the new module system.
+Чтобы упростить эту задачу, Sass также поддерживает *файлы только для импорта*.
+Если вы назовете файл `<name>.import.scss`, он будет загружен только для импорта, а не для `@use`.
+Таким образом, вы можете сохранить совместимость для пользователей `@import`, в то же время предоставляя удобный API для пользователей новой модульной системы.
 
 <% example(autogen_css: false) do %>
   // _reset.scss
 
-  // Module system users write `@include reset.list()`.
+  // Пользователи системы модулей пишут `@include reset.list()`.
   @mixin list() {
     ul {
       margin: 0;
@@ -515,12 +458,12 @@ nice API for users of the new module system.
   ---
   // _reset.import.scss
 
-  // Legacy import users can keep writing `@include reset-list()`.
+  // Устаревшие пользователи импорта могут продолжать писать `@include reset-list()`.
   @forward "reset" as reset-*;
   ===
   // _reset.sass
 
-  // Module system users write `@include reset.list()`.
+  // Пользователи системы модулей пишут `@include reset.list()`.
   @mixin list()
     ul
       margin: 0
@@ -529,16 +472,15 @@ nice API for users of the new module system.
   ---
   // _reset.import.sass
 
-  // Legacy import users can keep writing `@include reset-list()`.
+  // Устаревшие пользователи импорта могут продолжать писать `@include reset-list()`.
   @forward "reset" as reset-*
 <% end %>
 
-#### Configuring Modules Through Imports
+#### Настройка модулей с помощью импорта
 
 <% impl_status dart: '1.24.0', libsass: false, ruby: false %>
 
-You can [configure modules][] that are loaded through an `@import` by defining
-global variables prior the `@import` that first loads that module.
+Вы можете [настроить модули][configure modules], которые загружаются через `@import`, определяя глобальные переменные до `@import`, который первым загружает этот модуль.
 
 [configure modules]: use#configuration
 
@@ -575,19 +517,12 @@ global variables prior the `@import` that first loads that module.
 <% end %>
 
 <% heads_up do %>
-  Modules are only loaded once, so if you change the configuration after you
-  `@import` a module for the first time (even indirectly), the change will be
-  ignored if you `@import` the module again.
+  Модули загружаются только один раз, поэтому, если вы измените конфигурацию после того, как вы `@import` модуля в первый раз (даже косвенно), изменение будет проигнорировано, если вы `@import` модуль снова.
 <% end %>
 
-### Loading a Module That Contains Imports
+### Загрузка модуля, содержащего импорт
 
-When you use `@use` (or `@forward`) load a module that uses `@import`, that
-module will contain all the public members defined by the stylesheet you load
-*and* everything that stylesheet transitively imports. In other words,
-everything that's imported is treated as though it were written in one big
-stylesheet.
+Когда вы используете `@use` (или `@forward`), загружаете модуль, который использует `@import`, этот модуль будет содержать все открытые участники, определенные таблицей стилей, которую вы загружаете, *и* все, что таблица стилей транзитивно импортирует. Другими словами, все, что импортируется, обрабатывается так, как если бы оно было записано в одной большой таблице стилей.
 
-This makes it easy to convert start using `@use` in a stylesheet even before all
-the libraries you depend on have converted to the new module system. Be aware,
-though, that if they do convert their APIs may well change!
+Это упрощает преобразование start с использованием `@use` в таблице стилей даже до того, как все библиотеки, от которых вы зависите, будут преобразованы в новую модульную систему.
+Однако имейте в виду, что если они все-таки конвертируют, их API-интерфейсы могут измениться!

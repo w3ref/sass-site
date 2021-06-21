@@ -1,16 +1,13 @@
 ---
 title: "@while"
 introduction: >
-  The `@while` rule, written `@while <expression> { ... }`, evaluates its block
-  if its [expression](../../syntax/structure#expressions) returns `true`. Then,
-  if its expression still returns `true`, it evaluates its block again. This
-  continues until the expression finally returns `false`.
+  Правило `@while`, записанное `@while <expression> { ... }`, оценивает свой блок, если его [выражение](../../syntax/structure#expressions) возвращает `true`. Затем, если его выражение все еще возвращает `true`, он снова оценивает свой блок. Это продолжается до тех пор, пока выражение, наконец, не вернет `false`.
 ---
 
 <% example do %>
   @use "sass:math";
 
-  /// Divides `$value` by `$ratio` until it's below `$base`.
+  /// Делит `$value` на `$ratio` , пока оно не станет меньше `$base`.
   @function scale-below($value, $base, $ratio: 1.618) {
     @while $value > $base {
       $value: math.div($value, $ratio);
@@ -25,7 +22,7 @@ introduction: >
   ===
   @use "sass:math"
 
-  /// Divides `$value` by `$ratio` until it's below `$base`.
+  /// Делит `$value` на `$ratio` , пока оно не станет меньше `$base`.
   @function scale-below($value, $base, $ratio: 1.618)
     @while $value > $base
       $value: math.div($value, $ratio)
@@ -43,9 +40,7 @@ introduction: >
 <% end %>
 
 <% heads_up do %>
-  Although `@while` is necessary for a few particularly complex stylesheets, you're
-  usually better of using either [`@each`][] or [`@for`][] if either of them will
-  work. They're clearer for the reader, and often faster to compile as well.
+  Хотя `@while` необходим для нескольких особенно сложных таблиц стилей, обычно лучше использовать [`@each`][] или [`@for`][], если любой из них будет работать. Они более понятны для читателя и часто быстрее компилируются.
 
   [`@each`]: each
   [`@for`]: for

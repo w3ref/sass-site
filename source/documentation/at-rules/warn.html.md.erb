@@ -1,16 +1,11 @@
 ---
 title: "@warn"
 introduction: >
-  When writing [mixins](mixin) and [functions](function), you may want to
-  discourage users from passing certain arguments or certain values. They may be
-  passing legacy arguments that are now deprecated, or they may be calling your
-  API in a way that’s not quite optimal.
+  При написании [примесей](mixin) и [функций](function) вы можете захотеть отговорить пользователей от передачи определенных аргументов или определенных значений.
+  Они могут передавать устаревшие аргументы, которые теперь не рекомендуются, или они могут вызывать ваш API не совсем оптимальным способом.
 ---
 
-The `@warn` rule is designed just for that. It's written `@warn <expression>`
-and it prints the value of the [expression][] (usually a string) for the user,
-along with a stack trace indicating how the current mixin or function was
-called. Unlike the [`@error` rule][], though, it doesn't stop Sass entirely.
+Правило `@warn` предназначено именно для этого. Он пишется `@warn <expression>` и выводит значение [выражение][expression] (обычно строку) для пользователя вместе с трассировкой стека, указывающей, как был вызван текущий миксин или функция. Однако, в отличие от правила [`@error` rule][], оно не останавливает Sass полностью.
 
 [expression]: ../syntax/structure#expressions
 [`@error` rule]: error
@@ -30,7 +25,7 @@ called. Unlike the [`@error` rule][], though, it doesn't stop Sass entirely.
   }
 
   .tilt {
-    // Oops, we typo'd "webkit" as "wekbit"!
+    // Ой, мы опечатали "webkit" как "wekbit"!
     @include prefix(transform, rotate(15deg), wekbit ms);
   }
   ===
@@ -48,12 +43,12 @@ called. Unlike the [`@error` rule][], though, it doesn't stop Sass entirely.
 
 
   .tilt
-    // Oops, we typo'd "webkit" as "wekbit"!
+    // Ой, мы опечатали "webkit" как "wekbit"!
     @include prefix(transform, rotate(15deg), wekbit ms)
 <% end %>
 
-The exact format of the warning and stack trace varies from implementation to
-implementation. This is what it looks like in Dart Sass:
+Точный формат предупреждения и трассировки стека варьируется от реализации к реализации.
+Вот как это выглядит в Dart Sass:
 
 ```
 Warning: Unknown prefix wekbit.

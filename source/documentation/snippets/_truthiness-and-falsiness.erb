@@ -1,21 +1,16 @@
-## Truthiness and Falsiness
+## Истинность и ложность
 
-Anywhere `true` or `false` are allowed, you can use other values as well. The
-values `false` and [`null`][] are *falsey*, which means Sass considers them to
-indicate falsehood and cause conditions to fail. Every other value is considered
-*truthy*, so Sass considers them to work like `true` and cause conditions to
-succeed.
+Везде, где разрешены `true` или `false`, вы также можете использовать другие значения.
+Значения `false` и [`null`][] равны *файльшивому*, что означает, что Sass считает, что они указывают на ложность и вызывают невыполнение условий.
+Все остальные значения считаются *истинными*, поэтому Sass считает, что они работают как `true` и вызывают выполнение условий.
 
 [`null`]: /documentation/values/null
 
-For example, if you want to check if a string contains a space, you can just
-write `string.index($string, " ")`. The [`string.index()` function][] returns
-`null` if the string isn't found and a number otherwise.
+Например, если вы хотите проверить, содержит ли строка пробел, вы можете просто написать `string.index($string, " ")`. [Функция `string.index()`][`string.index()` function] возвращает `null`, если строка не найдена, и число в противном случае.
 
 [`string.index()` function]: /documentation/modules/string#index
 
 <% heads_up do %>
-  Some languages consider more values falsey than just `false` and `null`. Sass
-  isn't one of those languages! Empty strings, empty lists, and the number `0`
-  are all truthy in Sass.
+  Некоторые языки считают ложными больше значений, чем просто `false` и `null`. Sass - не один из таких языков!
+  Пустые строки, пустые списки и число `0` - все это истинно в Sass.
 <% end %>

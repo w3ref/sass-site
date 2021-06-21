@@ -2,20 +2,14 @@
 title: "@if and @else"
 table_of_contents: true
 introduction: >
-  The `@if` rule is written `@if <expression> { ... }`, and it controls whether
-  or not its block gets evaluated (including emitting any styles as CSS). The
-  [expression](../../syntax/structure#expressions) usually returns either
-  [`true` or `false`](../../values/booleans)—if the expression returns `true`,
-  the block is evaluated, and if the expression returns `false` it’s not.
+  Правило `@if` записывается как `@if <expression> { ... }`, и оно контролирует, оценивается ли его блок (включая выдачу любых стилей как CSS). [Выражение](../../syntax/structure#expressions) обычно возвращает либо [`true` или `false`](../../values/booleans) — если выражение возвращает `true`, блок оценивается, и если выражение возвращает `false`, это не так.
 ---
 
 <%= partial 'code-snippets/example-if' %>
 
 ## `@else`
 
-An `@if` rule can optionally be followed by an `@else` rule, written
-`@else { ... }`. This rule's block is evaluated if the `@if` expression returns
-`false`.
+За правилом `@if` может дополнительно следовать правило `@else`, написанное как `@else { ... }`. Блок этого правила оценивается, если выражение `@if` возвращает `false`.
 
 <% example do %>
   $light-background: #f2ece4;
@@ -63,15 +57,12 @@ An `@if` rule can optionally be followed by an `@else` rule, written
 
 ### `@else if`
 
-You can also choose whether to evaluate an `@else` rule's block by writing it
-`@else if <expression> { ... }`. If you do, the block is evaluated only if the
-preceding `@if`'s expression returns `false` *and* the `@else if`'s expression
-returns `true`.
+Вы также можете выбрать, оценивать ли блок правила `@else`, написав его `@else if <expression> { ... }`.
+Если вы это сделаете, блок будет оценен только в том случае, если предыдущее выражение `@if` возвращает `false` *а* выражение `@else if` возвращает `true`.
 
-In fact, you can to chain as many `@else if`s as you want after an `@if`. The
-first block in the chain whose expression returns `true` will be evaluated, and
-no others. If there's a plain `@else` at the end of the chain, its block will be
-evaluated if every other block fails.
+Фактически, вы можете связать столько `@else if`, сколько захотите, после `@if`.
+Будет оценен первый блок в цепочке, выражение которого возвращает `true`, и никакие другие.
+Если в конце цепочки есть простой `@else`, его блок будет оценен, если любой другой блок выйдет из строя.
 
 <% example do %>
   @use "sass:math";

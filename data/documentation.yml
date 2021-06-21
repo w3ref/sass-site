@@ -12,7 +12,7 @@ toc:
   - Селекторы-заполнители: /documentation/style-rules/placeholder-selectors
 - Переменные: /documentation/variables
 - Интерполяция: /documentation/interpolation
-- At-Rules: /documentation/at-rules
+- At-Правила: /documentation/at-rules
   :children:
   - <code>@use</code>: /documentation/at-rules/use
   - <code>@forward</code>: /documentation/at-rules/forward
@@ -24,13 +24,13 @@ toc:
   - <code>@warn</code>: /documentation/at-rules/warn
   - <code>@debug</code>: /documentation/at-rules/debug
   - <code>@at-root</code>: /documentation/at-rules/at-root
-  - Flow Control: /documentation/at-rules/control
+  - Управление потоком: /documentation/at-rules/control
     :children:
     - <code>@if</code> and <code>@else</code>: /documentation/at-rules/control/if
     - <code>@each</code>: /documentation/at-rules/control/each
     - <code>@for</code>: /documentation/at-rules/control/for
     - <code>@while</code>: /documentation/at-rules/control/while
-  - From CSS: /documentation/at-rules/css
+  - Из CSS: /documentation/at-rules/css
 - Values: /documentation/values
   :children:
   - Numbers: /documentation/values/numbers

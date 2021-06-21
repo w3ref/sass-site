@@ -1,37 +1,27 @@
 ---
 title: "@at-root"
 introduction: >
-  The `@at-root` rule is usually written `@at-root <selector> { ... }` and
-  causes everything within it to be emitted at the root of the document instead
-  of using the normal nesting. It's most often used when doing [advanced
-  nesting](../style-rules/parent-selector#advanced-nesting) with the [SassScript
-  parent selector](../style-rules/parent-selector#in-sassscript) and [selector
-  functions](../modules/selector).
+  Правило `@at-root` обычно записывается как `@at-root <selector> { ... }` и заставляет все, что находится внутри него, выводиться в корень документа вместо использования обычного вложения.
+  Чаще всего используется при выполнении [расширенного вложения](../style-rules/parent-selector#advanced-nesting) с [родительским селектором SassScript](../style-rules/parent-selector#in-sassscript) и [селекторные функции](../modules/selector).
 ---
 
 <%= partial 'code-snippets/example-advanced-nesting' %>
 
-The `@at-root` rule is necessary here because Sass doesn't know what
-interpolation was used to generate a selector when it's performing selector
-nesting. This means it will automatically add the outer selector to the inner
-selector *even if* you used `&` as a SassScript expression. The `@at-root`
-explicitly tells Sass not to include the outer selector.
+Правило `@at-root` здесь необходимо, потому что Sass не знает, какая интерполяция использовалась для генерации селектора при выполнении вложенности селекторов.
+Это означает, что он автоматически добавит внешний селектор к внутреннему селектору, *даже если* вы использовали `&` в качестве выражения SassScript.
+`@at-root` явно указывает Sass не включать внешний селектор.
 
 <% fun_fact do %>
-The `@at-root` rule can also be written `@at-root { ... }` to put multiple style
-rules at the root of the document. In fact, `@at-root <selector> { ... }` is
-just a shorthand for `@at-root { <selector> { ... } }`!
+Правило `@at-root` также можно записать как `@at-root { ... }`, чтобы поместить несколько правил стиля в корень документа.
+Фактически, `@at-root <selector> { ... }` - это просто сокращение от `@at-root { <selector> { ... } }`!
 <% end %>
 
-## Beyond Style Rules
+## За пределами правил стиля
 
-On its own, `@at-root` only gets rid of [style rules][]. Any at-rules like
-[`@media`][] or [`@supports`][] will be left in. If this isn't what you want,
-though, you can control exactly what it includes or includes using syntax like
-[media query features][], written `@at-root (with: <rules...>) { ... }` or
-`@at-root (without: <rules...>) { ... }`. The `(without: ...)` query tells Sass
-which rules should be excluded; the `(with: ...)` query excludes all rules
-*except* those that are listed.
+Сам по себе `@at-root` избавляется только от [правил стиля][style rules].
+Любые at-правила, такие как [`@media`][] или [`@supports`][], будут оставлены.
+Если это не то, что вы хотите, вы можете точно контролировать, что они включают или включают, используя синтаксис, например [функции медиа-запроса][media query features], записывается как `@at-root (with: <rules...>) { ... }` или `@at-root (without: <rules...>) { ... }`.
+Запрос `(without: ...)` сообщает Sass, какие правила следует исключить; запрос `(with: ...)` исключает все правила *кроме* перечисленных.
 
 [style rules]: ../style-rules
 [`@media`]: css#media
@@ -65,10 +55,8 @@ which rules should be excluded; the `(with: ...)` query excludes all rules
         font-size: 1.2em
 <% end %>
 
-In addition to the names of at-rules, there are two special values that can be
-used in queries:
+Помимо имен at-правил, в запросах можно использовать два специальных значения:
 
-* `rule` refers to style rules. For example, `@at-root (with: rule)` excludes
-  all at-rules but preserves style rules.
+* `rule` относится к правилам стиля. Например, `@at-root (with: rule)` исключает все at-правила, но сохраняет правила стиля.
 
-* `all` refers to all at-rules *and* style rules should be excluded.
+* `all` относится ко всем at-rules *и* правила стиля должны быть исключены.

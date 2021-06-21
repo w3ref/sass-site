@@ -2,12 +2,9 @@
 title: "@extend"
 table_of_contents: true
 introduction: >
-  There are often cases when designing a page when one class should have all the
-  styles of another class, as well as its own specific styles. For example, the
-  [BEM methodology](http://getbem.com/naming/) encourages modifier classes that
-  go on the same elements as block or element classes. But this can create
-  cluttered HTML, it's prone to errors from forgetting to include both classes,
-  and it can bring non-semantic style concerns into your markup.
+  При разработке страницы часто возникают случаи, когда один класс должен иметь все стили другого класса, а также свои собственные специфические стили.
+  Например, [методология БЭМ](http://getbem.com/naming/) поощряет классы-модификаторы, которые относятся к тем же элементам, что и классы блоков или элементов.
+  Но это может создать загроможденный HTML, склонный к ошибкам из-за того, что забыли включить оба класса, и может внести несемантические проблемы стиля в вашу разметку.
 ---
 
 <%# TODO(jina): I think these code blocks should be side-by-side %>
@@ -29,8 +26,8 @@ introduction: >
 }
 ```
 
-Sass's `@extend` rule solves this. It's written `@extend <selector>`, and it
-tells Sass that one selector should inherit the styles of another.
+Правило Sass `@extend` решает эту проблему.
+Он написан `@extend <selector>` и сообщает Sass, что один селектор должен наследовать стили другого.
 
 <% example do %>
   .error {
@@ -52,16 +49,13 @@ tells Sass that one selector should inherit the styles of another.
       border-width: 3px
 <% end %>
 
-When one class extends another, Sass styles all elements that match the extender
-as though they also match the class being extended. When one class selector
-extends another, it works exactly as though you added the extended class to
-every element in your HTML that already had the extending class. You can just
-write `class="error--serious"`, and Sass will make sure it's styled as though it
-had `class="error"` as well.
+Когда один класс расширяет другой, Sass стилизует все элементы, которые соответствуют расширителю, как если бы они также соответствовали расширяемому классу.
+Когда один селектор класса расширяет другой, он работает точно так же, как если бы вы добавили расширенный класс к каждому элементу в вашем HTML, который уже имел расширяющийся класс.
+Вы можете просто написать `class="error--serious"`, и Sass позаботится о том, чтобы он был оформлен так, как если бы он также имел `class="error"`.
 
-Of course, selectors aren't just used on their own in style rules. Sass knows to
-extend *everywhere* the selector is used. This ensures that your elements are
-styled exactly as if they matched the extended selector.
+Конечно, селекторы используются не только сами по себе в правилах стиля.
+Sass знает, что нужно расширять *везде*, где используется селектор.
+Это гарантирует, что ваши элементы будут стилизованы точно так, как если бы они соответствовали расширенному селектору.
 
 <% example do %>
   .error:hover {
@@ -83,39 +77,31 @@ styled exactly as if they matched the extended selector.
 <% end %>
 
 <% heads_up do %>
-  Extends are resolved after the rest of your stylesheet is compiled. In
-  particular, it happens after [parent selectors][] are resolved. This means that
-  if you `@extend .error`, it won't affect the inner selector in
-  `.error { &__icon { ... } }`. It also means that [parent selectors in
-  SassScript][] can't see the results of extend.
+  Расширения разрешаются после компиляции остальной части вашей таблицы стилей.
+  В частности, это происходит после разрешения [родительских селекторов][parent selectors].
+  Это означает, что если вы используете `@extend .error`, это не повлияет на внутренний селектор в `.error { &__icon { ... } }`.
+  Это также означает, что [родительские селекторы в SassScript][parent selectors in SassScript] не могут видеть результаты расширения.
 
   [parent selectors]: ../style-rules/parent-selector
   [parent selectors in SassScript]: ../style-rules/parent-selector#in-sassscript
 <% end %>
 
-## How It Works
+## Как это работает
 
-Unlike [mixins][], which copy styles into the current style rule, `@extend`
-updates style rules that contain the extended selector so that they contain the
-extending selector as well. When extending selectors, Sass does *intelligent
-unification*:
+В отличие от [миксин][mixins], которые копируют стили в текущее правило стиля, `@extend` обновляет правила стиля, содержащие расширенный селектор, так что они также содержат расширяющий селектор.
+При расширении селекторов Sass выполняет *интеллектуальную унификацию*:
 
 [mixins]: mixin
 
-* It never generates selectors like `#main#footer` that can't possibly match
-  any elements.
+* Он никогда не генерирует селекторы вроде `#main#footer`, которые не могут соответствовать никаким элементам.
 
-* It ensures that complex selectors are interleaved so that they work no matter
-  which order the HTML elements are nested.
+* Это гарантирует, что сложные селекторы чередуются, так что они работают независимо от того, в каком порядке вложены элементы HTML.
 
-* It trims redundant selectors as much as possible, while still ensuring that
-  the specificity is greater than or equal to that of the extender.
+* Он максимально сокращает избыточные селекторы, при этом гарантируя, что специфичность больше или равна специфичности расширителя.
 
-* It knows when one selector matches everything another does, and can combine
-  them together.
+* Он знает, когда один селектор совпадает со всем, что делает другой, и может комбинировать их вместе.
 
-* It intelligently handles [combinators][], [universal selectors][], and
-  [pseudo-classes that contain selectors][].
+* Он разумно обрабатывает [комбинаторы][combinators], [универсальные селекторы][universal selectors] и [псевдоклассы, содержащие селекторы][pseudo-classes that contain selectors].
 
 [combinators]: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors#Combinators
 [pseudo-classes that contain selectors]: https://developer.mozilla.org/en-US/docs/Web/CSS/:not
@@ -126,20 +112,20 @@ unification*:
     @extend .info;
   }
 
-  // This won't be extended, because `p` is incompatible with `nav`.
+  // Это не будет расширено, потому что `p` несовместимо с `nav`.
   p.info {
     background-color: #dee9fc;
   }
 
-  // There's no way to know whether `<div class="guide">` will be inside or
-  // outside `<div class="content">`, so Sass generates both to be safe.
+  // Невозможно узнать, будет ли `<div class="guide">` внутри или снаружи
+  // `<div class="content">`, поэтому Sass генерирует оба, чтобы быть в безопасности.
   .guide .info {
     border: 1px solid rgba(#000, 0.8);
     border-radius: 2px;
   }
 
-  // Sass knows that every element matching "main.content" also matches ".content"
-  // and avoids generating unnecessary interleaved selectors.
+  // Sass знает, что каждый элемент, соответствующий "main.content", также соответствует
+  // ".content" и избегает создания ненужных чередующихся селекторов.
   main.content .info {
     font-size: 0.8em;
   }
@@ -148,29 +134,26 @@ unification*:
     @extend .info
 
 
-  // This won't be extended, because `p` is incompatible with `nav`.
+  // Это не будет расширено, потому что `p` несовместимо с `nav`.
   p.info
     background-color: #dee9fc
 
 
-  // There's no way to know whether `<div class="guide">` will be inside or
-  // outside `<div class="content">`, so Sass generates both to be safe.
+  // Невозможно узнать, будет ли `<div class="guide">` внутри или снаружи
+  // `<div class="content">`, поэтому Sass генерирует оба, чтобы быть в безопасности.
   .guide .info
     border: 1px solid rgba(#000, 0.8)
     border-radius: 2px
 
 
-  // Sass knows that every element matching "main.content" also matches ".content"
-  // and avoids generating unnecessary interleaved selectors.
+  // Sass знает, что каждый элемент, соответствующий "main.content", также соответствует
+  // ".content" и избегает создания ненужных чередующихся селекторов.
   main.content .info
     font-size: 0.8em
 <% end %>
 
 <% fun_fact do %>
-  You can directly access Sass's intelligent unification using [selector
-  functions][]! The [`selector.unify()` function][] returns a selector that
-  matches the intersection of two selectors, while the [`selector.extend()`
-  function][] works just like `@extend`, but on a single selector.
+  Вы можете напрямую получить доступ к интеллектуальной унификации Sass, используя [функции выбора][selector functions]! [Функция `selector.unify()`][`selector.unify()` function] возвращает селектор, который соответствует пересечению двух селекторов, в то время как [функция `selector.extend()`][`selector.extend()` function] работает так же, как `@extend`, но с одним селектором.
 
   [selector functions]: ../modules/selector
   [`selector.unify()` function]: ../modules/selector#unify
@@ -178,124 +161,94 @@ unification*:
 <% end %>
 
 <% heads_up do %>
-  Because `@extend` updates style rules that contain the extended selector, their
-  styles have precedence in [the cascade][] based on where the extended selector's
-  style rules appear, *not* based on where the `@extend` appears. This can be
-  confusing, but just remember: this is the same precedence those rules would have
-  if you added the extended class to your HTML!
+  Поскольку `@extend` обновляет правила стиля, которые содержат расширенный селектор, их стили имеют приоритет в [каскаде][the cascade] в зависимости от того, где появляются правила стиля расширенного селектора, *а не* в зависимости от того, где появляется `@extend`.
+  Это может сбивать с толку, но помните: это тот же приоритет, который имели бы эти правила, если бы вы добавили расширенный класс в свой HTML!
 
   [the cascade]: https://developer.mozilla.org/en-US/docs/Web/CSS/Cascade
 <% end %>
 
-## Placeholder Selectors
+## Селекторы заполнителей
 
-Sometimes you want to write a style rule that's *only* intended to be extended.
-In that case, you can use [placeholder selectors][], which look like class
-selectors that start with `%` instead of `.`. Any selectors that include
-placeholders aren't included in the CSS output, but selectors that extend them
-are.
+Иногда вы хотите написать правило стиля, которое *только* предназначено для расширения.
+В этом случае вы можете использовать [селекторы-заполнители][placeholder selectors], которые выглядят как селекторы классов, начинающиеся с `%` вместо `.`.
+Любые селекторы, которые включают заполнители, не включаются в вывод CSS, но расширяют их.
 
 [placeholder selectors]: ../style-rules/placeholder-selectors
 
 <%= partial "code-snippets/example-placeholder" %>
 
-### Private Placeholders
+### Частные заполнители
 
-Like [module members][], a placeholder selector can be marked private by
-starting its name with either `-` or `_`. A private placeholder selector can
-only be extended within the stylesheet that defines it. To any other
-stylesheets, it will look as though that selector doesn't exist.
+Как и [участники модуля][module members], селектор-заполнитель можно пометить как частный, начав его имя с `-` или `_`.
+Селектор частного заполнителя может быть расширен только внутри таблицы стилей, которая его определяет.
+Для любых других таблиц стилей это будет выглядеть так, как будто этого селектора не существует.
 
 [module members]: use#private-members
 
-## Extension Scope
+## Область расширения
 
-When one stylesheet extends a selector, that extension will only affect style
-rules written in *upstream* modules—that is, modules that are loaded by that
-stylesheet using the [`@use` rule][] or the [`@forward` rule][], modules loaded
-by *those* modules, and so on. This helps make your `@extend` rules more
-predictable, ensuring that they affect only the styles you were aware of when
-you wrote them.
+Когда одна таблица стилей расширяет селектор, это расширение будет влиять только на правила стиля, написанные в *восходящих* модулях, то есть на модули, которые загружаются этой таблицей стилей с помощью [правила `@use`][`@use` rule] или [правилоа `@forward`][`@forward` rule], модули, загруженные *этими* модулями, и так далее.
+Это помогает сделать ваши правила `@extend` более предсказуемыми, гарантируя, что они влияют только на стили, о которых вы знали, когда их писали.
 
 [`@use` rule]: use
 [`@forward` rule]: forward
 
 <% heads_up do %>
-  Extensions aren't scoped at all if you're using the [`@import` rule][]. Not
-  only will they affect every stylesheet you import, they'll affect every
-  stylesheet that imports your stylesheet, everything else those stylesheets
-  import, and so on. Without `@use`, extensions are *global*.
+  Расширения вообще не имеют области видимости, если вы используете [правило `@import`][`@import` rule].
+  Они не только повлияют на каждую импортируемую вами таблицу стилей, но и повлияют на каждую таблицу стилей, которая импортирует вашу таблицу стилей, все остальное, что эти таблицы стилей импортируют, и так далее.
+  Без `@use`, расширения будут *глобальными*.
 
   [`@import` rule]: import
 <% end %>
 
-## Mandatory and Optional Extends
+## Обязательные и необязательные расширения
 
-Normally, if an `@extend` doesn't match any selectors in the stylesheet, Sass
-will produce an error. This helps protect from typos or from renaming a selector
-without renaming the selectors that inherit from it. Extends that require that
-the extended selector exists are *mandatory*.
+Обычно, если `@extend` не соответствует ни одному селектору в таблице стилей, Sass выдаст ошибку.
+Это помогает защитить от опечаток или переименования селектора без переименования селекторов, которые от него наследуются.
+Расширения, требующие наличия расширенного селектора, являются *обязательными*.
 
-This may not always be what you want, though. If you want the `@extend` to do
-nothing if the extended selector doesn't exist, just add `!optional` to the end.
+Однако это не всегда может быть тем, что вам нужно.
+Если вы хотите, чтобы `@extend` не выполнял никаких действий, если расширенный селектор не существует, просто добавьте в конец `!optional`.
 
-## Extends or Mixins?
+## Расширения или Миксины?
 
-Extends and [mixins][] are both ways of encapsulating and re-using styles in
-Sass, which naturally raises the question of when to use which one. Mixins are
-obviously necessary when you need to configure the styles using [arguments][],
-but what if they're just a chunk of styles?
+Расширения и [примеси][mixins] - это способы инкапсуляции и повторного использования стилей в Sass, что, естественно, поднимает вопрос о том, когда какой из них использовать.
+Миксины, очевидно, необходимы, когда вам нужно настроить стили с помощью [аргументов][arguments], но что, если они всего лишь фрагменты стилей?
 
 [arguments]: mixin#arguments
 
-As a rule of thumb, extends are the best option when you're expressing a
-relationship between semantic classes (or other semantic selectors). Because an
-element with class `.error--serious` *is an* error, it makes sense for it to
-extend `.error`. But for non-semantic collections of styles, writing a mixin can
-avoid cascade headaches and make it easier to configure down the line.
+Как показывает опыт, расширения - лучший вариант, когда вы выражаете отношения между семантическими классами (или другими семантическими селекторами). Поскольку элемент с классом `.error--serious` *является* ошибкой, для него имеет смысл расширить `.error`.
+Но для несемантических коллекций стилей написание миксина может избежать каскадных головных болей и упростить настройку в дальнейшем.
 
 <% fun_fact do %>
-  Most web servers compress the CSS they serve using an algorithm that's very good
-  at handling repeated chunks of identical text. This means that, although mixins
-  may produce more CSS than extends, they probably won't substantially increase
-  the amount your users need to download. So choose the feature that makes the
-  most sense for your use-case, not the one that generates the least CSS!
+  Большинство веб-серверов сжимают обслуживаемый ими CSS, используя алгоритм, который очень хорошо обрабатывает повторяющиеся фрагменты идентичного текста.
+  Это означает, что, хотя миксины могут создавать больше CSS, чем расширять, они, вероятно, не существенно увеличат объем, необходимый вашим пользователям для загрузки.
+  Так что выбирайте ту функцию, которая больше всего подходит для вашего варианта использования, а не ту, которая генерирует меньше всего CSS!
 
   [gzip]: https://en.wikipedia.org/wiki/Gzip
 <% end %>
 
-## Limitations
+## Ограничения
 
-### Disallowed Selectors
+### Запрещенные селекторы
 
 <% impl_status dart: true, libsass: false, ruby: false, feature: "No Compound Extensions" do %>
-  LibSass and Ruby Sass currently allow compound selectors like `.message.info`
-  to be extended. However, this behavior doesn't match the definition of
-  `@extend`: instead of styling elements that match the extending selector as
-  though it had `class="message info"`, which would be affected by style rules
-  that included either `.message` *or* `.info`, it only styled them with rules
-  that included both `.message` *and* `info`.
+  LibSass и Ruby Sass в настоящее время позволяют расширять составные селекторы, такие как `.message.info`.
+  Однако это поведение не соответствует определению `@extend`: вместо стилизованных элементов, которые соответствуют расширяющему селектору, как если бы он имел `class="message info"`, на который бы повлияли правила стиля, которые включали либо `.message` *или* `.info`, он стилизовал их только с помощью правил, включающих как `.message` *и* `info`.
 
-  In order to keep the definition of `@extend` straightforward and
-  understandable, and to keep the implementation clean and efficient, that
-  behavior is now deprecated and will be removed from future versions.
+  Для того чтобы определение `@extend` было прямым и понятным, а реализация была чистой и эффективной, такое поведение теперь устарело и будет удалено из будущих версий.
 
-  See [the breaking change page][] for more details.
+  Смотрите [страницу критических изменений][the breaking change page] для получения более подробной информации.
 
   [the breaking change page]: ../breaking-changes/extend-compound
 <% end %>
 
-Only *simple selectors*—individual selectors like `.info` or `a`—can be
-extended. If `.message.info` could be extended, the definition of `@extend` says
-that elements matching the extender would be styled as though they matched
-`.message.info`. That's just the same as matching both `.message` and `.info`,
-so there wouldn't be any benefit in writing that instead of
-`@extend .message, .info`.
+Только *простые селекторы* - отдельные селекторы, такие как `.info` или `a` могут быть расширены.
+Если бы `.message.info` мог быть расширен, определение `@extend` говорит, что элементы, соответствующие расширителю, будут иметь такой стиль, как если бы они соответствовали `.message.info`.
+Это то же самое, что и сопоставление `.message` и `.info`, поэтому писать это вместо `@extend .message, .info` не принесет никакой пользы.
 
-Similarly, if `.main .info` could be extended, it would do (almost) the same
-thing as extending `.info` on its own. The subtle differences aren't worth the
-confusion of looking like it's doing something substantially different, so this
-isn't allowed either.
+Точно так же, если бы `.main .info` можно было расширить, он бы делал (почти) то же самое, что и расширение `.info` самостоятельно.
+Тонкие различия не стоят того, чтобы выглядеть так, будто он делает что-то существенно другое, так что это тоже недопустимо.
 
 <% example(autogen_css: false) do %>
   .alert {
@@ -318,14 +271,11 @@ isn't allowed either.
     // Error: write @extend .info instead.
 <% end %>
 
-### HTML Heuristics
+### HTML-эвристика
 
-When `@extend` [interleaves complex selectors][], it doesn't generate all
-possible combinations of ancestor selectors. Many of the selectors it could
-generate are unlikely to actually match real HTML, and generating them all would
-make stylesheets way too big for very little real value. Instead, it uses
-a [heuristic][]: it assumes that each selector's ancestors will be
-self-contained, without being interleaved with any other selector's ancestors.
+Когда `@extend` [чередует сложные селекторы][interleaves complex selectors], он не генерирует все возможные комбинации селекторов предков.
+Многие из селекторов, которые он мог бы сгенерировать, вряд ли действительно будут соответствовать реальному HTML, и создание их всех сделало бы таблицы стилей слишком большими для очень небольшой реальной ценности.
+Вместо этого он использует [эвристику][heuristic]: он предполагает, что предки каждого селектора будут самодостаточными, без чередования с предками других селекторов.
 
 [interleaves complex selectors]: #how-it-works
 [heuristic]: https://en.wikipedia.org/wiki/Heuristic
@@ -336,7 +286,7 @@ self-contained, without being interleaved with any other selector's ancestors.
   }
 
   aside .notice dd {
-    // Sass doesn't generate CSS to match the <dd> in
+    // Sass не генерирует CSS для соответствия <dd> в
     //
     // <header>
     //   <aside>
@@ -348,8 +298,8 @@ self-contained, without being interleaved with any other selector's ancestors.
     //   </aside>
     // </header>
     //
-    // because matching all elements like that would require us to generate nine
-    // new selectors instead of just two.
+    // потому что сопоставление всех таких элементов потребовало бы,
+    // чтобы мы сгенерировали девять новых селекторов вместо двух.
     @extend li;
   }
   ===
@@ -358,7 +308,7 @@ self-contained, without being interleaved with any other selector's ancestors.
 
 
   aside .notice dd
-    // Sass doesn't generate CSS to match the <dd> in
+    // Sass не генерирует CSS для соответствия <dd> в
     //
     // <header>
     //   <aside>
@@ -370,18 +320,15 @@ self-contained, without being interleaved with any other selector's ancestors.
     //   </aside>
     // </header>
     //
-    // because matching all elements like that would require us to generate nine
-    // new selectors instead of just two.
+    // потому что сопоставление всех таких элементов потребовало бы,
+    // чтобы мы сгенерировали девять новых селекторов вместо двух.
     @extend li
 <% end %>
 
-### Extend in `@media`
+### Расширить в `@media`
 
-While `@extend` is allowed within [`@media` and other CSS at-rules][], it's not
-allowed to extend selectors that appear outside its at-rule. This is because the
-extending selector only applies within the given media context, and there's no
-way to make sure that restriction is preserved in the generated selector without
-duplicating the entire style rule.
+Хотя `@extend` разрешен в [`@media` и других at-правилах CSS][`@media` and other CSS at-rules], не разрешено расширять селекторы, которые появляются вне его at-правила.
+Это связано с тем, что расширяемый селектор применяется только в пределах данного медиа-контекста, и нет способа убедиться, что ограничение сохраняется в сгенерированном селекторе без дублирования всего правила стиля.
 
 [`@media` and other CSS at-rules]: css
 
