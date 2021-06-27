@@ -1,14 +1,12 @@
 ---
-title: Functions
+title: Функции
 ---
 
 <%= partial 'documentation/snippets/call-impl-status' %>
 
-[Functions][] can be values too! You can't directly write a function as a value,
-but you can pass a function's name to the [`meta.get-function()` function][] to
-get it as a value. Once you have a function value, you can pass it to the
-[`meta.call()` function][] to call it. This is useful for writing *higher-order
-functions* that call other functions.
+[Функции][Functions] тоже могут быть значениями! Вы не можете напрямую записать функцию как значение, но вы можете передать имя [функции `meta.get-function()`][`meta.get-function()` function], чтобы получить его как значение.
+Когда у вас есть значение функции, вы можете передать его [функции `meta.call()`][`meta.call()` function], чтобы вызвать ее.
+Это полезно для написания *функций высшего порядка*, которые вызывают другие функции.
 
 [Functions]: ../at-rules/function
 [`meta.get-function` function]: ../modules/meta#get-function

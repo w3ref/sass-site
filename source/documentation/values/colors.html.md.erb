@@ -1,20 +1,16 @@
 ---
-title: Colors
+title: Цвета
 ---
 
 <% impl_status dart: '1.14.0', libsass: '3.6.0', ruby: '3.6.0', feature: 'Level 4 Syntax' do %>
-  LibSass and older versions of Dart or Ruby Sass don't support [hex colors with
-  an alpha channel][].
+  LibSass и более старые версии Dart или Ruby Sass не поддерживают [шестнадцатеричные цвета с альфа-каналом][hex colors with an alpha channel].
 
   [hex colors with an alpha channel]: https://drafts.csswg.org/css-color/#hex-notation
 <% end %>
 
-Sass has built-in support for color values. Just like CSS colors, they represent
-points in the [sRGB color space][], although many Sass [color functions][]
-operate using [HSL coordinates][] (which are just another way of expressing sRGB
-colors). Sass colors can be written as hex codes (`#f2ece4` or `#b37399aa`),
-[CSS color names][] (`midnightblue`, `transparent`), or the functions
-[`rgb()`][], [`rgba()`][], [`hsl()`][], and [`hsla()`][].
+Sass имеет встроенную поддержку значений цвета.
+Как и цвета CSS, они представляют точки в [цветовом пространстве sRGB][sRGB color space], хотя многие [функции цвета][color functions] Sass работают с использованием [координат HSL][HSL coordinates] (которые являются просто еще одним способом выражения цветов sRGB).
+Цвета Sass могут быть записаны как шестнадцатеричные коды (`#f2ece4` или `#b37399aa`), [имена цветов CSS][CSS color names] (`midnightblue`, `transparent`) или функции [`rgb()`][], [`rgba()`][], [`hsl()`][] и [`hsla()`][].
 
 [sRGB color space]: https://en.wikipedia.org/wiki/SRGB
 [color functions]: ../modules/color
@@ -44,22 +40,16 @@ colors). Sass colors can be written as hex codes (`#f2ece4` or `#b37399aa`),
 <% end %>
 
 <% fun_fact do %>
-  No matter how a Sass color is originally written, it can be used with both
-  HSL-based and RGB-based functions!
+  Независимо от того, как изначально был написан цвет Sass, его можно использовать как с функциями на основе HSL, так и с функциями на основе RGB!
 <% end %>
 
-CSS supports many different formats that can all represent the same color: its
-name, its hex code, and [functional notation][]. Which format Sass chooses to
-compile a color to depends on the color itself, how it was written in the
-original stylesheet, and the current output mode. Because it can vary so much,
-stylesheet authors shouldn't rely on any particular output format for colors
-they write.
+CSS поддерживает множество различных форматов, которые могут представлять один и тот же цвет: его имя, его шестнадцатеричный код и [функциональная нотация][functional notation].
+Какой формат Sass выбирает для компиляции цвета, зависит от самого цвета, от того, как он был написан в исходной таблице стилей, и от текущего режима вывода.
+Поскольку они могут сильно различаться, авторам таблиц стилей не следует полагаться на какой-либо конкретный формат вывода для цветов, которые они пишут.
 
 [functional notation]: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
 
-Sass supports many useful [color functions][] that can be used to create new
-colors based on existing ones by [mixing colors together][] or [scaling their
-hue, saturation, or lightness][].
+Sass поддерживает множество полезных [цветовых функций][color functions], которые можно использовать для создания новых цветов на основе существующих, [смешивая цвета вместе][mixing colors together] или [масштабируя их оттенок, насыщенность или яркость][scaling their hue, saturation, or lightness].
 
 [mixing colors together]: ../modules/color#mix
 [scaling their hue, saturation, or lightness]: ../modules/color#scale

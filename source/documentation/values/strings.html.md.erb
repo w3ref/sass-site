@@ -1,19 +1,13 @@
 ---
-title: Strings
+title: Строки
 table_of_contents: true
 introduction: >
-  Strings are sequences of characters (specifically [Unicode code
-  points](https://en.wikipedia.org/wiki/Code_point)). Sass supports two kinds of
-  strings whose internal structure is the same but which are rendered
-  differently: [quoted strings](#quoted), like `"Helvetica Neue"`, and [unquoted
-  strings](#unquoted) (also known as *identifiers*), like `bold`. Together,
-  these cover the different kinds of text that appear in CSS.
+  Строки - это последовательности символов (в частности, [кодовые точки Unicode](https://en.wikipedia.org/wiki/Code_point)).
+  Sass поддерживает два типа строк, внутренняя структура которых одинакова, но которые отображаются по-разному: [строки в кавычках](#quoted), например: `"Helvetica Neue"`, и [строки без кавычек](#unquoted) (также известные как *идентификаторы*), например, `bold`. Вместе они охватывают различные типы текста, которые появляются в CSS.
 ---
 
 <% fun_fact do %>
-  You can convert a quoted string to an unquoted string using the
-  [`string.unquote()` function][], and you can convert an unquoted string to a
-  quoted string using the [`string.quote()` function][].
+  Вы можете преобразовать строку в кавычках в строку без кавычек, используя [функцию `string.unquote()`][`string.unquote()` function], и вы можете преобразовать строку без кавычек в строку в кавычках, используя [функцию `string.quote()`][`string.quote()` function].
 
   [`string.unquote()` function]: ../modules/string#unquote
   [`string.quote()` function]: ../modules/string#quote
@@ -31,19 +25,16 @@ introduction: >
   <% end %>
 <% end %>
 
-## Escapes
+## Экранирования
 
-All Sass strings support the standard CSS [escape codes][]:
+Все строки Sass поддерживают стандартные CSS [коды экранирования][escape codes]:
 
 [escape codes]: https://developer.mozilla.org/en-US/docs/Web/CSS/string#Syntax
 
-* Any character other than a letter from A to F or a number from 0 to 9 (even a
-  newline!) can be included as part of a string by writing `\` in front of it.
+* Любой символ, кроме буквы от A до F или числа от 0 до 9 (даже новая строка!) может быть включен как часть строки, написав перед ним `\`.
 
-* Any character can be included as part of a string by writing `\` followed by
-  its [Unicode code point number][] written in [hexadecimal][]. You can
-  optionally include a space after the code point number to indicate where the
-  Unicode number ends.
+* Любой символ может быть включен как часть строки, написав `\`, за которым следует его [номер кодовой точки Unicode][Unicode code point number], записанный в [шестнадцатеричном формате][hexadecimal].
+При желании вы можете включить пробел после номера кодовой точки, чтобы указать, где заканчивается номер Unicode.
 
 [Unicode code point number]: https://en.wikipedia.org/wiki/List_of_Unicode_characters
 [hexadecimal]: https://en.wikipedia.org/wiki/Hexadecimal
@@ -63,29 +54,23 @@ All Sass strings support the standard CSS [escape codes][]:
 <% end %>
 
 <% fun_fact do %>
-  For characters that are allowed to appear in strings, writing the Unicode
-  escape produces exactly the same string as writing the character itself.
+  Для символов, которым разрешено появляться в строках, запись escape-последовательности Unicode дает в точности ту же строку, что и запись самого символа.
 <% end %>
 
-## Quoted
+## С кавычками
 
-Quoted strings are written between either single or double quotes, as in
-`"Helvetica Neue"`. They can contain [interpolation][], as well as any unescaped
-character except for:
+Строки в кавычках заключаются в одинарные или двойные кавычки, как в `"Helvetica Neue"`.
+Они могут содержать [интерполяцию][interpolation], а также любой неэкранированный символ, кроме:
 
 [interpolation]: ../interpolation
 
-* `\`, which can be escaped as `\\`;
-* `'` or `"`, whichever was used to define that string, which can be escaped as
-  `\'` or `\"`;
-* newlines, which can be escaped as `\a ` (including a trailing space).
+* `\`, который может быть экранирован как `\\`;
+* `'` or `"`, в зависимости от того, что было использовано для определения этой строки, которая может быть экранирована как `\'` или `\"`;
+* символы новой строки, которые могут быть экранированы как `\a ` (включая конечный пробел).
 
-Quoted strings are guaranteed to be compiled to CSS strings that have the same
-contents as the original Sass strings. The exact format may vary based on the
-implementation or configuration—a string containing a double quote may be
-compiled to `"\""` or `'"'`, and a non-[ASCII][] character may or may not be
-escaped. But that should be parsed the same in any standards-compliant CSS
-implementation, including all browsers.
+Строки в кавычках гарантированно будут скомпилированы в строки CSS, которые имеют то же содержимое, что и исходные строки Sass.
+Точный формат может варьироваться в зависимости от реализации или конфигурации - строка, содержащая двойные кавычки, может быть скомпилирована в `"\""` или `'"'`, а символ, отличный от [ASCII][], может быть или не быть сбежал.
+Но это должно быть проанализировано одинаково в любой соответствующей стандартам реализации CSS, включая все браузеры.
 
 [ASCII]: https://en.wikipedia.org/wiki/ASCII
 
@@ -108,15 +93,13 @@ implementation, including all browsers.
 <% end %>
 
 <% fun_fact do %>
-  When a quoted string is injected into another value via interpolation, [its
-  quotes are removed][]! This makes it easy to write strings containing
-  selectors, for example, that can be injected into style rules without adding
-  quotes.
+  Когда строка в кавычках вставляется в другое значение посредством интерполяции, [ее кавычки удаляются][its quotes are removed]!
+  Это упрощает написание строк, содержащих, например, селекторы, которые можно вставлять в правила стиля без добавления кавычек.
 
   [its quotes are removed]: ../interpolation#quoted-strings
 <% end %>
 
-## Unquoted
+## Без кавычек
 
 Unquoted strings are written as CSS [identifiers][], following the syntax
 diagram below. They may include [interpolation][] anywhere.
@@ -145,12 +128,12 @@ diagram below. They may include [interpolation][] anywhere.
 <% end %>
 
 <% heads_up do %>
-  Not all identifiers are parsed as unquoted strings:
+  Не все идентификаторы анализируются как строки без кавычек:
 
-  * [CSS color names][] are parsed as [colors][].
-  * `null` is parsed as [Sass's `null` value][].
-  * `true` and `false` are parsed as [Booleans][].
-  * `not`, `and`, and `or` are parsed as [Boolean operators][].
+  * [Названия цветов CSS][CSS color names] анализируются как [цвета][colors].
+  * `null` анализируются как [значение Sass `null`][Sass's `null` value].
+  * `true` и `false` анализируются как [Booleans][].
+  * `not`, `and` и `or` анализируются как [логические операторы][Boolean operators].
 
   [CSS color names]: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#Color_keywords
   [colors]: colors
@@ -158,33 +141,27 @@ diagram below. They may include [interpolation][] anywhere.
   [Booleans]: booleans
   [Boolean operators]: ../operators/boolean
 
-  Because of this, it's generally a good idea to write quoted strings unless
-  you're specifically writing the value of a CSS property that uses unquoted
-  strings.
+  Из-за этого, как правило, рекомендуется писать строки в кавычках, если вы специально не пишете значение свойства CSS, которое использует строки без кавычек.
 <% end %>
 
-### Escapes in Unquoted Strings
+### Экранирование в строках без кавычек
 
 <% impl_status dart: '1.11.0', libsass: false, ruby: false, feature: 'Normalization' do %>
-  LibSass, Ruby Sass, and older versions of Dart Sass don't normalize escapes in
-  identifiers. Instead, the text in the unquoted string is the exact text the
-  user wrote. For example, `\1F46D` and `👭` are not considered equivalent.
+  LibSass, Ruby Sass и более старые версии Dart Sass не нормализуют escape-последовательности в идентификаторах.
+  Вместо этого текст в строке без кавычек - это точный текст, написанный пользователем.
+  Например, `\1F46D` и `👭` не считаются эквивалентными.
 <% end %>
 
-When an unquoted string is parsed, the literal text of escapes are parsed as
-part of the string. For example, `\a ` is parsed as the characters `\`, `a`, and
-space. In order to ensure that unquoted strings that have the same meanings in
-CSS are parsed the same way, though, these escapes are *normalized*. For each
-code point, whether it's escaped or unescaped:
+Когда анализируется строка без кавычек, буквальный текст escape-символов анализируется как часть строки.
+Например, `\a ` разбирается как символы `\`, `a` и пробел.
+Тем не менее, чтобы гарантировать, что строки без кавычек, которые имеют одинаковое значение в CSS, анализируются одинаково, эти escape-последовательности *нормализованы*.
+Для каждой кодовой точки, вне зависимости от того, экранирован он или нет:
 
-* If it's a valid identifier character, it's included unescaped in the unquoted
-  string. For example, `\1F46D` returns the unquoted string `👭`.
+* Если это действительный символ идентификатора, он включается без экранирования в строку без кавычек. Например, `\1F46D` возвращает строку `👭` без кавычек.
 
-* If it's a printable character other than a newline or a tab, it's included
-  after a `\`. For example, `\21 ` returns the unquoted string `\!`.
+* Если это печатный символ, отличный от новой строки или табуляции, он включается после символа `\`. Например, `\21 ` возвращает строку `\!` без кавычек.
 
-* Otherwise, the lowercase Unicode escape is included with a trailing space. For
-  example, `\7Fx` returns the unquoted string `\7f x`.
+* В противном случае escape-последовательность Unicode в нижнем регистре включается с завершающим пробелом. Например, `\7Fx` возвращает строку `\7f x` без кавычек.
 
 <% example(autogen_css: false) do %>
   @use "sass:string";
@@ -202,14 +179,12 @@ code point, whether it's escaped or unescaped:
   @debug string.length(\7Fx)  // 5
 <% end %>
 
-## String Indexes
+## Строковые индексы
 
-Sass has a number of [string functions][] that take or return numbers, called
-*indexes*, that refer to the characters in a string. The index 1 indicates the
-first character of the string. Note that this is different than many programming
-languages where indexes start at 0! Sass also makes it easy to refer to the end
-of a string. The index -1 refers to the last character in a string, -2 refers to
-the second-to-last, and so on.
+В Sass есть ряд [строковых функций][string functions], которые принимают или возвращают числа, называемые *индексами*, которые относятся к символам в строке.
+Индекс 1 указывает на первый символ строки. Обратите внимание, что это отличается от многих языков программирования, где индексы начинаются с 0!
+Sass также упрощает обращение к концу строки.
+Индекс -1 относится к последнему символу в строке, -2 относится к предпоследнему и так далее.
 
 [string functions]: ../modules/string
 

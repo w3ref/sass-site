@@ -1,98 +1,81 @@
 ---
-title: Lists
+title: Списки
 table_of_contents: true
 ---
 
 <% impl_status dart: true, libsass: '3.5.0', ruby: '3.5.0', feature: 'Square Brackets' do %>
-  Older implementations of LibSass and Ruby Sass didn't support lists with
-  square brackets.
+  Старые реализации LibSass и Ruby Sass не поддерживали списки с квадратными скобками.
 <% end %>
 
-Lists contain a sequence of other values. In Sass, elements in lists can be
-separated by commas (`Helvetica, Arial, sans-serif`), spaces (`10px 15px 0 0`),
-or [slashes] as long as it's consistent within the list. Unlike most other
-languages, lists in Sass don't require special brackets; any [expressions]
-separated with spaces or commas count as a list. However, you're allowed to
-write lists with square brackets (`[line1 line2]`), which is useful when using
-[`grid-template-columns`].
+Списки содержат последовательность других значений.
+В Sass элементы в списках могут быть разделены запятыми (`Helvetica, Arial, sans-serif`), пробелами (`10px 15px 0 0`) или [косой чертой][slashes], если это согласуется со списком.
+В отличие от большинства других языков, списки в Sass не требуют специальных скобок; любые [выражения][expressions], разделенные пробелами или запятыми, считаются списком. Однако вы можете писать списки в квадратных скобках (`[line1 line2]`), что полезно при использовании [`grid-template-columns`].
 
 [slashes]: #slash-separated-lists
 [expressions]: ../syntax/structure#expressions
 [`grid-template-columns`]: https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-columns
 
-Sass lists can contain one or even zero elements. A single-element list can be
-written either `(<expression>,)` or `[<expression>]`, and a zero-element list
-can be written either `()` or `[]`. Also, all [list functions][] will treat
-individual values that aren't in lists as though they're lists containing that
-value, which means you rarely need to explicitly create single-element lists.
+Списки Sass могут содержать один или даже ноль элементов.
+Одноэлементный список может быть записан как `(<expression>,)` или `[<expression>]`, а список без элементов может быть записан как `()` или `[]`.
+Кроме того, все [функции списка][list functions] будут обрабатывать отдельные значения, которых нет в списках, как если бы они были списками, содержащими это значение, что означает, что вам редко нужно явно создавать одноэлементные списки.
 
 [list functions]: ../modules/list
 
 <% heads_up do %>
-  Empty lists without brackets aren't valid CSS, so Sass won't let you use one
-  in a property value.
+  Пустые списки без скобок не являются допустимым CSS, поэтому Sass не позволит вам использовать их в значении свойства.
 <% end %>
 
-## Slash-Separated Lists
+## Списки, разделенные косой чертой
 
-Lists in Sass can be separated by slashes, to represent values like the `font:
-12px/30px` shorthand for setting `font-size` and `line-height` or the `hsl(80
-100% 50% / 0.5)` syntax for creating a color with a given opacity value.
-However, **slash-separated lists can't currently be written literally.** Sass
-historically used the `/` character to indicate division, so while existing
-stylesheets transition to using [`math.div()`] slash-separated lists can only be
-written using [`list.slash()`].
+Списки в Sass могут быть разделены косой чертой для представления таких значений, как сокращение `font: 12px/30px` для установки `font-size` и `line-height` или синтаксиса `hsl(80 100% 50% / 0.5)` для создания цвета с заданным значением непрозрачности.
+Однако **списки, разделенные косой чертой, в настоящее время не могут быть записаны буквально**.
+Sass исторически использовал символ `/` для обозначения деления, поэтому существующие таблицы стилей переходят на использование списков, разделенных косой чертой [`math.div()`] может быть записано только с использованием [`list.slash()`].
 
 [`math.div()`]: ../modules/math#div
 [`list.slash()`]: ../modules/list#slash
 
-For more details, see [Breaking Change: Slash as Division].
+Для получения дополнительной информации смотрите [Критическое изменение: слэш как разделение][Breaking Change: Slash as Division].
 
 [Breaking Change: Slash as Division]: ../breaking-changes/slash-div
 
-## Using Lists
+## Использование списков
 
-Sass provides a handful of [functions][] that make it possible to use lists to
-write powerful style libraries, or to make your app's stylesheet cleaner and
-more maintainable.
+Sass предоставляет несколько [функций][functions], которые позволяют использовать списки для написания мощных библиотек стилей или сделать таблицу стилей вашего приложения более чистой и удобной в обслуживании.
 
 [functions]: ../modules/list
 
-### Indexes
+### Индексы
 
-Many of these functions take or return numbers, called *indexes*, that refer to
-the elements in a list. The index 1 indicates the first element of the list.
-Note that this is different than many programming languages where indexes start
-at 0! Sass also makes it easy to refer to the end of a list. The index -1 refers
-to the last element in a list, -2 refers to the second-to-last, and so on.
+Многие из этих функций принимают или возвращают числа, называемые *индексами*, которые относятся к элементам в списке.
+Индекс 1 указывает на первый элемент списка.
+Обратите внимание, что это отличается от многих языков программирования, где индексы начинаются с 0!
+Sass также упрощает обращение к концу списка.
+Индекс -1 относится к последнему элементу в списке, -2 относится к предпоследнему и так далее.
 
-### Access an Element
+### Доступ к элементу
 
-Lists aren't much use if you can't get values out of them. You can use the
-[`list.nth($list, $n)` function][] to get the element at a given index in a
-list. The first argument is the list itself, and the second is the index of the
-value you want to get out.
+Списки бесполезны, если вы не можете извлечь из них значения.
+Вы можете использовать [функцию `list.nth($list, $n)`][`list.nth($list, $n)` function], чтобы получить элемент по заданному индексу в списке.
+Первый аргумент - это сам список, а второй - индекс значения, которое вы хотите получить.
 
 [`list.nth($list, $n)` function]: ../modules/list#nth
 
 <%= partial 'code-snippets/example-list-nth' %>
 
-### Do Something for Every Element
+### Сделайте что-нибудь для каждого элемента
 
-This doesn't actually use a function, but it's still one of the most common ways
-to use lists. The [`@each` rule][] evaluates a block of styles for each element
-in a list, and assigns that element to a variable.
+На самом деле здесь не используется функция, но это по-прежнему один из наиболее распространенных способов использования списков.
+[Правило `@each`][`@each` rule] оценивает блок стилей для каждого элемента в списке и назначает этот элемент переменной.
 
 [`@each` rule]: ../at-rules/control/each
 
 <%= partial 'code-snippets/example-each-list' %>
 
-### Add to a List
+### Добавить в список
 
-It's also useful to add elements to a list. The [`list.append($list, $val)`
-function][] takes a list and a value, and returns a copy of the list with the value
-added to the end. Note that because Sass lists are [immutable][], it doesn't
-modify the original list.
+Также полезно добавлять элементы в список.
+[Функция `list.append($list, $val)`][`list.append($list, $val)` function] принимает список и значение и возвращает копию списка со значением, добавленным в конец.
+Обратите внимание: поскольку списки Sass [неизменяемые][immutable], они не изменяют исходный список.
 
 [`list.append($list, $val)` function]: ../modules/list#append
 [immutable]: #immutability
@@ -105,19 +88,17 @@ modify the original list.
   @debug append([col1-line1], col1-line2)  // [col1-line1, col1-line2]
 <% end %>
 
-### Find an Element in a List
+### Найти элемент в списке
 
-If you need to check if an element is in a list or figure out what index it's
-at, use the [`list.index($list, $value)` function][]. This takes a list and a value
-to locate in that list, and returns the index of that value.
+Если вам нужно проверить, находится ли элемент в списке или выяснить, по какому индексу он находится, используйте [функцию `list.index($list, $value)`][`list.index($list, $value)` function].
+Он принимает список и значение, которое нужно найти в этом списке, и возвращает индекс этого значения.
 
 [`list.index($list, $value)` function]: ../modules/list#index
 
 <%= partial 'code-snippets/example-list-index' %>
 
-If the value isn't in the list at all, `list.index()` returns [`null`][]. Because
-`null` is [falsey][], you can use `list.index()` with [`@if`][] or [`if()`][] to
-check whether a list does or doesn't contain a given value.
+Если значение отсутствует в списке, `list.index()` возвращает [`null`][].
+Поскольку `null` равен [falsey][], вы можете использовать `list.index()` с [`@if`][] или [`if()`][], чтобы проверить, соответствует ли список содержат заданное значение.
 
 [`null`]: null
 [falsey]: ../at-rules/control/if#truthiness-and-falsiness
@@ -149,16 +130,14 @@ check whether a list does or doesn't contain a given value.
     // ...
 <% end %>
 
-## Immutability
+## Неизменность
 
-Lists in Sass are *immutable*, which means that the contents of a list value
-never changes. Sass's list functions all return new lists rather than modifying
-the originals. Immutability helps avoid lots of sneaky bugs that can creep in
-when the same list is shared across different parts of the stylesheet.
+Списки в Sass *неизменяемы*, что означает, что содержимое значения списка никогда не изменяется.
+Все функции списков Sass возвращают новые списки, а не изменяют исходные.
+Неизменяемость помогает избежать множества скрытых ошибок, которые могут закрасться, когда один и тот же список используется в разных частях таблицы стилей.
 
-You can still update your state over time by assigning new lists to the same
-variable, though. This is often used in functions and mixins to collect a bunch
-of values into one list.
+Однако вы все равно можете обновлять свое состояние с течением времени, назначая новые списки той же переменной.
+Это часто используется в функциях и миксинах для сбора группы значений в один список.
 
 <% example(autogen_css: false) do %>
   @use "sass:list";
@@ -192,13 +171,10 @@ of values into one list.
   @debug prefixes-for-browsers("firefox" "ie")  // moz ms
 <% end %>
 
-## Argument Lists
+## Списки аргументов
 
-When you declare a mixin or function that takes [arbitrary arguments][], the
-value you get is a special list known as an *argument list*. It acts just like a
-list that contains all the arguments passed to the mixin or function, with one
-extra feature: if the user passed keyword arguments, they can be accessed as a
-map by passing the argument list to the [`meta.keywords()` function][].
+Когда вы объявляете миксин или функцию, которая принимает [произвольные аргументы][arbitrary arguments], вы получаете значение в виде специального списка, известного как *список аргументов*.
+Он действует так же, как список, содержащий все аргументы, переданные в миксин или функцию, с одной дополнительной функцией: если пользователь передал аргументы ключевого слова, к ним можно получить доступ как к карте, передав список аргументов в [функцию `meta.keywords()`][`meta.keywords()` function].
 
 <%= partial 'code-snippets/example-mixin-arbitrary-keyword-arguments' %>
 

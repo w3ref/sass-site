@@ -1,10 +1,10 @@
 ---
-title: Numbers
+title: Числа
 introduction: >
-  Numbers in Sass have two components: the number itself, and its units. For
-  example, in `16px` the number is `16` and the unit is `px`. Numbers can have
-  no units, and they can have complex units. See [Units](#units) below for more
-  details.
+  Числа в Sass состоят из двух компонентов: самого числа и его единиц.
+  Например, в `16px` число равно `16`, а единица измерения `px`.
+  В числах не может быть единиц измерения, а могут быть сложные единицы.
+  Смотрите [единицы](#units) ниже для более подробной информации.
 ---
 
 <% example(autogen_css: false) do %>
@@ -19,10 +19,7 @@ introduction: >
   @debug 5px * 2px  // 10px*px (read "square pixels")
 <% end %>
 
-Sass numbers support the same formats as CSS numbers, including [scientific
-notation][], which is written with an `e` between the number and its power
-of 10. Because support for scientific notation in browsers has historically
-been spotty, Sass always compiles it to fully expanded numbers.
+Числа Sass поддерживают те же форматы, что и числа CSS, в том числе [научная нотация][scientific notation], которая записывается с помощью `e` между числом и его степенью 10. Поскольку поддержка научной нотации в браузерах исторически была неоднородной, Sass всегда компилируется это до полностью развернутых чисел.
 
 [scientific notation]: https://en.wikipedia.org/wiki/Scientific_notation
 
@@ -35,34 +32,25 @@ been spotty, Sass always compiles it to fully expanded numbers.
 <% end %>
 
 <% heads_up do %>
-  Sass doesn't distinguish between whole numbers and decimals, so for example
-  `math.div(5, 2)` returns `2.5` rather than `2`. This is the same behavior as
-  JavaScript, but different than many other programming languages.
+  Sass не делает различий между целыми и десятичными числами, поэтому, например, `math.div(5, 2)` возвращает `2.5`, а не `2`. Это то же поведение, что и JavaScript, но отличается от многих других языков программирования.
 <% end %>
 
 <%= partial 'documentation/snippets/number-units' %>
 
-## Precision
+## Точность
 
 <% impl_status dart: true, libsass: false, ruby: '3.5.0', feature: '10 Digit Default' do %>
-  LibSass and older versions of Ruby Sass default to 5 digits of numeric
-  precision, but can be configured to use a different number. It's recommended
-  that users configure them for 10 digits for greater accuracy and
-  forwards-compatibility.
+  В LibSass и более ранних версиях Ruby Sass по умолчанию используется 5-значная числовая точность, но можно настроить использование другого числа.
+  Рекомендуется, чтобы пользователи настраивали их на 10 цифр для большей точности и прямой совместимости.
 <% end %>
 
-Sass numbers support up to 10 digits of precision after the decimal point. This
-means a few different things:
+Числа Sass поддерживают до 10 знаков точности после десятичной точки. Это означает несколько разных вещей:
 
-* Only the first ten digits of a number after the decimal point will be included
-  in the generated CSS.
+* Только первые десять цифр числа после десятичной точки будут включены в сгенерированный CSS.
 
-* Operations like [`==`][] and [`>=`][] will consider two numbers equivalent if
-  they're the same up to the tenth digit after the decimal point.
+* Операции типа [`==`][] и [`>=`][] будут считать два числа эквивалентными, если они совпадают до десятой цифры после десятичной точки.
 
-* If a number is less than `0.0000000001` away from an integer, it's considered
-  to be an integer for the purposes of functions like [`list.nth()`][] that require
-  integer arguments.
+* Если число меньше `0.0000000001` от целого числа, оно считается целым числом для таких функций, как [`list.nth()`][], которые требуют целочисленных аргументов.
 
 [`==`]: ../operators/equality
 [`>=`]: ../operators/relational
@@ -81,8 +69,6 @@ means a few different things:
 <% end %>
 
 <% fun_fact do %>
-  Numbers are rounded to 10 digits of precision *lazily* when they're used in a
-  place where precision is relevant. This means that math functions will work
-  with the full number value internally to avoid accumulating extra rounding
-  errors.
+  Числа округляются до 10 цифр точности *отложено*, когда они используются там, где точность важна.
+  Это означает, что математические функции будут внутренне работать с полным числовым значением, чтобы избежать накопления дополнительных ошибок округления.
 <% end %>

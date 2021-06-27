@@ -5,8 +5,7 @@
   @use "sass:meta";
   @use "sass:string";
 
-  /// Return a copy of $list with all elements for which $condition returns `true`
-  /// removed.
+  /// Вернуть копию $list со всеми удаленными элементами, для которых $condition возвращает `true`.
   @function remove-where($list, $condition) {
     $new-list: ();
     $separator: list.separator($list);
@@ -31,8 +30,7 @@
   @use "sass:meta"
   @use "sass:string"
 
-  /// Return a copy of $list with all elements for which $condition returns `true`
-  /// removed.
+  /// Вернуть копию $list со всеми удаленными элементами, для которых $condition возвращает `true`.
   @function remove-where($list, $condition)
     $new-list: ()
     $separator: list.separator($list)

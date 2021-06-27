@@ -1,37 +1,29 @@
 ---
-title: Values
+title: Значения
 introduction: >
-  Sass supports a number of value types, most of which come straight from CSS.
-  Every [expression](syntax/structure#expressions) produces a value,
-  [variables](variables) hold values. Most value types come straight from CSS:
+  Sass поддерживает ряд типов значений, большинство из которых прямо из CSS.
+  Каждое [выражение](syntax/structure#expressions) производит значение, [переменные](variables) содержат значения. 
+  Большинство типов значений взяты прямо из CSS:
 overview: true
 ---
 
-* [Numbers](values/numbers), which may or may not have units, like `12` or
-  `100px`.
+* [Числа](values/numbers), которые могут иметь или не иметь единиц, таких как `12` или `100px`.
 
-* [Strings](values/strings), which may or may not have quotes, like
-  `"Helvetica Neue"` or `bold`.
+* [Строки](values/strings), которые могут иметь кавычки, а могут и не иметь, например, `"Helvetica Neue"` или `bold`.
 
-* [Colors](values/colors), which can be referred to by their hex representation
-  or by name, like `#c6538c` or `blue`, or returned from functions, like
-  `rgb(107, 113, 127)` or `hsl(210, 100%, 20%)`.
+* [Цвета](values/colors), на которые можно ссылаться по их шестнадцатеричному представлению или по имени, например: `#c6538c` или `blue`, или возвращаемым из функций, например, `rgb(107, 113, 127)` или `hsl(210, 100%, 20%)`.
 
-* [Lists of values](values/lists), which may be separated by spaces or commas
-  and which may be enclosed in square brackets or no brackets at all, like
-  `1.5em 1em 0 2em`, `Helvetica, Arial, sans-serif`, or `[col1-start]`.
+* [Списки значений](values/lists), которые могут быть разделены пробелами или запятыми и которые могут быть заключены в квадратные скобки или вообще без скобок, например: `1.5em 1em 0 2em`, `Helvetica, Arial, sans-serif`, или `[col1-start]`.
 
-A few more are specific to Sass:
+Еще несколько специфичных для Sass:
 
-* The [boolean](values/booleans) values `true` and `false`.
+* [Логические](values/booleans) значения `true` и `false`.
 
-* The singleton [`null`](values/null) value.
+* Однозначное значение [`null`](values/null).
 
-* [Maps](values/maps) that associate values with keys, like
-  `("background": red, "foreground": pink)`.
+* [Карты](values/maps) которые связывают значения с ключами, например: `("background": red, "foreground": pink)`.
 
-* [Function references](values/functions) returned by [`get-function()`][] and
-  called with [`call()`][].
+* [Справочник функций](values/functions), возвращаемые [`get-function()`][] и вызываемые [`call()`][].
 
 [`get-function()`]: modules/meta#get-function
 [`call()`]: modules/meta#call

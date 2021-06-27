@@ -1,11 +1,8 @@
 ---
-title: Booleans
+title: Логические
 introduction: >
-  Booleans are the logical values `true` and `false`. In addition their literal
-  forms, booleans are returned by [equality](../operators/equality) and
-  [relational](../operators/relational) operators, as well as many built-in
-  functions like [`math.comparable()`](../modules/math#comparable) and
-  [`map.has-key()`](../modules/map#has-key).
+  Логические значения - это логические значения `true` и `false`.
+  В дополнение к их буквальным формам, логические значения возвращаются операторами [равенства](../operators/equality) и [реляционные](../operators/relational), а также многие встроенные функции, такие как [`math.comparable()`](../modules/math#comparable) и [`map.has-key()`](../modules/map#has-key).
 ---
 
 <% example(autogen_css: false) do %>
@@ -24,10 +21,9 @@ introduction: >
   @debug math.comparable(100px, 3in)  // true
 <% end %>
 
-You can work with booleans using [boolean operators][]. The `and` operator
-returns `true` if *both* sides are `true`, and the `or` operator returns `true`
-if *either* side is `true`. The `not` operator returns the opposite of a single
-boolean value.
+Вы можете работать с логическими значениями, используя [логические операторы][boolean operators].
+Оператор `and` возвращает `true` если *обе* стороны равны `true`, а оператор `or` возвращает `true`, если *любая* сторона имеет значение `true`.
+Оператор `not` возвращает противоположность одиночному логическому значению.
 
 [boolean operators]: ../operators/boolean
 
@@ -51,17 +47,16 @@ boolean value.
   @debug not false  // true
 <% end %>
 
-## Using Booleans
+## Использование логических значений
 
-You can use booleans to choose whether or not to do various things in Sass. The
-[`@if` rule][] evaluates a block of styles if its argument is `true`:
+Вы можете использовать логические значения, чтобы выбрать, выполнять ли какие-либо действия в Sass.
+[Правило `@if`][`@if` rule] оценивает блок стилей, если его аргумент равен `true`:
 
 [`@if` rule]: ../at-rules/control/if
 
 <%= partial 'code-snippets/example-if' %>
 
-The [`if()` function][] returns one value if its argument is `true` and
-another if its argument is `false`:
+[Функция `if()`][`if()` function] возвращает одно значение, если его аргумент равен `true` и другое, если его аргумент равен `false`:
 
 [`if()` function]: ../modules#if
 

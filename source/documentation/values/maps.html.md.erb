@@ -1,75 +1,69 @@
 ---
-title: Maps
+title: Карты
 table_of_contents: true
 ---
 
-Maps in Sass hold pairs of keys and values, and make it easy to look up a value
-by its corresponding key. They're written `(<expression>: <expression>,
-<expression>: <expression>)`. The [expression](../syntax/structure#expressions)
-before the `:` is the key, and the expression after is the value associated with
-that key. The keys must be unique, but the values may be duplicated. Unlike
-[lists](lists), maps *must* be written with parentheses around them. A map with
-no pairs is written `()`.
+Карты в Sass содержат пары ключей и значений и упрощают поиск значения по соответствующему ключу.
+Они записываются как `(<expression>: <expression>, <expression>: <expression>)`.
+[Выражение](../syntax/structure#expressions) перед `:` - это ключ, а выражение после него - это значение, связанное с этим ключом.
+Ключи должны быть уникальными, но значения могут дублироваться.
+В отличие от [списков](lists), карты *необходимо* записывать в круглые скобки.
+Карта без пар пишется `()`.
 
 <% fun_fact do %>
-  Astute readers may note that an empty map, `()`, is written the same as an
-  empty list. That's because it counts as both a map and a list. In fact, *all*
-  maps count as lists! Every map counts as a list that contains a two-element
-  list for each key/value pair. For example, `(1: 2, 3: 4)` counts as `(1 2, 3
-  4)`.
+  Проницательные читатели могут заметить, что пустая карта, `()`, записывается так же, как пустой список.
+  Это потому, что он считается и картой, и списком.
+  Фактически, *все* карты считаются списками!
+  Каждая карта считается списком, который содержит список из двух элементов для каждой пары ключ/значение.
+  Например, `(1: 2, 3: 4)` считается как `(1 2, 3 4)`.
 <% end %>
 
-Maps allow any Sass values to be used as their keys. The [`==` operator][] is
-used to determine whether two keys are the same.
+Карты позволяют использовать любые значения Sass в качестве своих ключей.
+[Оператор ][`==` operator] используется, чтобы определить, являются ли два ключа одинаковыми.
 
 [`==` operator]: ../operators/equality
 
 <% heads_up do %>
-  Most of the time, it's a good idea to use [quoted strings][] rather than
-  [unquoted strings][] for map keys. This is because some values, such as color
-  names, may *look* like unquoted strings but actually be other types. To avoid
-  confusing problems down the line, just use quotes!
+  В большинстве случаев рекомендуется использовать [строки в кавычках][quoted strings], а не [строки без кавычек][unquoted strings] для ключей карты.
+  Это связано с тем, что некоторые значения, такие как названия цветов, могут *выглядеть* как строки без кавычек, но на самом деле быть другими типами.
+  Чтобы избежать запутанных проблем, просто используйте кавычки!
 
   [quoted strings]: strings#quoted
   [unquoted strings]: strings#unquoted
 <% end %>
 
-## Using Maps
+## Использование карт
 
-Since maps aren't valid CSS values, they don't do much of anything on their own.
-That's why Sass provides a bunch of [functions][] to create maps and access the
-values they contain.
+Поскольку карты не являются допустимыми значениями CSS, они ничего не делают сами по себе.
+Вот почему Sass предоставляет набор [функций][functions] для создания карт и доступа к содержащимся в них значениям.
 
 [functions]: ../modules/map
 
-### Look Up a Value
+### Поиск значения
 
-Maps are all about associating keys and values, so naturally there's a way to
-get the value associated with a key: the [`map.get($map, $key)` function][]!
-This function returns the value in the map associated with the given key. It
-returns [`null`][] if the map doesn't contain the key.
+Карты предназначены для связывания ключей и значений, поэтому, естественно, есть способ получить значение, связанное с ключом: [функция `map.get($map, $key)`][`map.get($map, $key)`]!
+Эта функция возвращает значение на карте, связанное с данным ключом.
+Он возвращает [`null`][], если карта не содержит ключа.
 
 [`map.get($map, $key)` function]: ../modules/map#get
 [`null`]: null
 
 <%= partial 'code-snippets/example-map-get' %>
 
-### Do Something for Every Pair
+### Сделайте что-нибудь для каждой пары
 
-This doesn't actually use a function, but it's still one of the most common ways
-to use maps. The [`@each` rule][] evaluates a block of styles for each key/value
-pair in a map. The key and the value are assigned to variables so they can
-easily be accessed in the block.
+На самом деле здесь не используется функция, но это по-прежнему один из наиболее распространенных способов использования карт.
+[Правило `@each`][`@each` rule] оценивает блок стилей для каждой пары ключ/значение на карте.
+Ключ и значение присваиваются переменным, поэтому к ним можно легко получить доступ в блоке.
 
 [`@each` rule]: ../at-rules/control/each
 
 <%= partial 'code-snippets/example-each-map' %>
 
-### Add to a Map
+### Добавить на карту
 
-It's also useful to add new pairs to a map, or to replace the value for an
-existing key. The [`map.set($map, $key, $value)` function][] does this: it
-returns a copy of `$map` with the value at `$key` set to `$value`.
+Также полезно добавлять новые пары на карту или заменять значение существующего ключа.
+[Функция `map.set($map, $key, $value)`][`map.set($map, $key, $value)` function] делает следующее: она возвращает копию `$map` со значением в `$key`, установленным на `$value`.
 
 [`map.set($map, $key, $value)` function]: ../modules/map#set
 
@@ -93,8 +87,7 @@ returns a copy of `$map` with the value at `$key` set to `$value`.
   // ("regular": 400, "medium": 500, "bold": 900)
 <% end %>
 
-Instead of setting values one-by-one, you can also merge two existing maps using
-[`map.merge($map1, $map2)`][].
+Вместо того, чтобы устанавливать значения по одному, вы также можете объединить две существующие карты, используя [`map.merge($map1, $map2)`][].
 
 [`map.merge($map1, $map2)` function]: ../modules/map#merge
 
@@ -116,8 +109,7 @@ Instead of setting values one-by-one, you can also merge two existing maps using
   // ("lightest": 100, "light": 300, "medium": 500, "bold": 700)
 <% end %>
 
-If both maps have the same keys, the second map's values are used in the map
-that gets returned.
+Если обе карты имеют одинаковые ключи, значения второй карты используются в возвращаемой карте.
 
 <% example(autogen_css: false) do %>
   @use "sass:map";
@@ -135,21 +127,18 @@ that gets returned.
   // ("light": 300, "medium": 700)
 <% end %>
 
-Note that because Sass maps are [immutable][], `map.set()` and `map.merge()` do
-not modify the original list.
+Обратите внимание, что поскольку карты Sass [неизменяемые][immutable], `map.set()` и `map.merge()` не изменяют исходный список.
 
 [immutable]: #immutability
 
-## Immutability
+## Неизменность
 
-Maps in Sass are *immutable*, which means that the contents of a map value never
-changes. Sass's map functions all return new maps rather than modifying the
-originals. Immutability helps avoid lots of sneaky bugs that can creep in when
-the same map is shared across different parts of the stylesheet.
+Карты в Sass *неизменяемы*, что означает, что содержимое значения карты никогда не изменяется.
+Все функции карты Sass возвращают новые карты, а не изменяют исходные.
+Неизменяемость помогает избежать множества скрытых ошибок, которые могут закрасться, когда одна и та же карта используется в разных частях таблицы стилей.
 
-You can still update your state over time by assigning new maps to the same
-variable, though. This is often used in functions and mixins to track
-configuration in a map.
+Однако вы все равно можете обновлять свое состояние с течением времени, назначая новые карты той же переменной.
+Это часто используется в функциях и миксинах для отслеживания конфигурации на карте.
 
 <% example(autogen_css: false) do %>
   @use "sass:map";
