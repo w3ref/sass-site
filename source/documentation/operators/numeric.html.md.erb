@@ -1,21 +1,16 @@
 ---
-title: Numeric Operators
+title: Числовые операторы
 table_of_contents: true
 introduction: >
-  Sass supports the standard set of mathematical operators for
-  [numbers](../values/numbers). They automatically convert between compatible
+  Sass поддерживает стандартный набор математических операторов для [чисел](../values/numbers).
+  Они автоматически конвертируют между совместимыми единицами.
   units.
 ---
 
-* `<expression> + <expression>` adds the first [expression][]'s value to the
-  second's.
-* `<expression> - <expression>` subtracts the first [expression][]'s value from
-  the second's.
-* `<expression> * <expression>` multiplies the first [expression][]'s value by
-  the second's.
-* `<expression> % <expression>` returns the remainder of the first
-  [expression][]'s value divided by the second's. This is known as the [*modulo*
-  operator][].
+* `<expression> + <expression>` добавляет значение первого [выражения][expression] ко второму.
+* `<expression> - <expression>` вычитает значение первого [выражения][expression] из второго.
+* `<expression> * <expression>` умножает значение первого [выражения][expression] на второе.
+* `<expression> % <expression>` возвращает остаток от значения первого [выражения][expression], деленный на второе. Это известно как [оператор *modulo*][*modulo* operator].
 
 [expression]: ../syntax/structure#expressions
 [*modulo* operator]: https://en.wikipedia.org/wiki/Modulo_operation
@@ -32,7 +27,7 @@ introduction: >
   @debug 1in % 9px  // 0.0625in
 <% end %>
 
-Unitless numbers can be used with numbers of any unit.
+Безразмерные числа можно использовать с числами любой единицы.
 
 <% example(autogen_css: false) do %>
   @debug 100px + 50; // 150px
@@ -42,8 +37,7 @@ Unitless numbers can be used with numbers of any unit.
   @debug 4s * 10  // 40s
 <% end %>
 
-Numbers with incompatible units can't be used with addition, subtraction, or
-modulo.
+Числа с несовместимыми единицами измерения нельзя использовать с добавлением, вычитанием или по модулю.
 
 <% example(autogen_css: false) do %>
   @debug 100px + 10s;
@@ -55,12 +49,12 @@ modulo.
   // Error: Incompatible units px and s.
 <% end %>
 
-## Unary Operators
+## Унарные операторы
 
-You can also write `+` and `-` as unary operators, which take only one value:
+Вы также можете писать `+` и `-` как унарные операторы, которые принимают только одно значение:
 
-* `+<expression>` returns the expression's value without changing it.
-* `-<expression>` returns the negative version of the expression's value.
+* `+<expression>` возвращает значение выражения, не изменяя его.
+* `-<expression>` возвращает отрицательную версию значения выражения.
 
 <% example(autogen_css: false) do %>
   @debug +(5s + 7s); // 12s
@@ -73,24 +67,20 @@ You can also write `+` and `-` as unary operators, which take only one value:
 <% end %>
 
 <% heads_up do %>
-  Because `-` can refer to both subtraction and unary negation, it can be
-  confusing which is which in a space-separated list. To be safe:
+  Поскольку `-` может относиться как к вычитанию, так и к унарному отрицанию, может возникнуть путаница, что есть что в списке, разделенном пробелами.
+  На всякий случай:
 
-  * Always write spaces on both sides of `-` when subtracting.
-  * Write a space before `-` but not after for a negative number or a unary
-    negation.
-  * Wrap unary negation in parentheses if it's in a space-separated list.
+  * При вычитании всегда пишите пробелы с обеих сторон от символа `-`.
+  * Для отрицательного числа или унарного отрицания ставьте пробел перед знаком `-`, но не после него.
+  * Заключите унарное отрицание в круглые скобки, если оно находится в списке, разделенном пробелами.
 
-  The different meanings of `-` in Sass take precedence in the following order:
+  Различные значения `-` в Sass имеют приоритет в следующем порядке:
 
-  1. `-` as part of an identifier. The only exception are units; Sass normally
-     allows any valid identifier to be used as an identifier, but units may not
-     contain a hyphen followed by a digit.
-  2. `-` between an expression and a literal number with no whitespace, which is
-     parsed as subtraction.
-  3. `-` at the beginning of a literal number, which is parsed as a negative number.
-  4. `-` between two numbers regardless of whitespace, which is parsed as subtraction.
-  5. `-` before a value other than a literal number, which is parsed as unary negation.
+  1. `-` как часть идентификатора. Единственное исключение - юниты; Sass обычно позволяет использовать любой действительный идентификатор в качестве идентификатора, но единицы измерения не могут содержать дефис, за которым следует цифра.
+  2. `-` между выражением и буквальным числом без пробелов, которое анализируется как вычитание.
+  3. Символ `-` в начале буквального числа, которое анализируется как отрицательное число.
+  4. Символ `-` между двумя числами независимо от пробелов, который анализируется как вычитание.
+  5. Символ `-` перед значением, отличным от буквального числа, которое анализируется как унарное отрицание.
 
   <% example(autogen_css: false) do %>
     @debug a-1; // a-1
@@ -113,34 +103,28 @@ You can also write `+` and `-` as unary operators, which take only one value:
   <% end %>
 <% end %>
 
-## Division
+## Деление
 
 <% impl_status dart: '1.33.0', libsass: false, ruby: false, feature: 'math.div()' %>
 
-Unlike other mathematical operations, division in Sass is done with the
-[`math.div()`] function. Although many programming languages use `/` as a
-division operator, in CSS `/` is used as a separator (as in `font: 15px/32px` or
-`hsl(120 100% 50% / 0.8)`). While Sass does support the use of `/` as a division
-operator, this is deprecated and [will be removed] in a future version.
+В отличие от других математических операций, деление в Sass выполняется с помощью функции [`math.div()`].
+Хотя многие языки программирования используют `/` в качестве оператора деления, в CSS `/` используется как разделитель (как в `font: 15px/32px` или `hsl(120 100% 50% / 0.8)`).
+Хотя Sass действительно поддерживает использование `/` в качестве оператора деления, это устарело и [будет удалено][will be removed] в будущей версии.
 
 [`math.div()`]: ../modules/math#div
 [will be removed]: ../breaking-changes/slash-div
 
-### Slash-Separated Values
+### Значения, разделенные косой чертой
 
-For the time being while Sass still supports `/` as a division operator, it has
-to have a way to disambiguate between `/` as a separator and `/` as division. In
-order to make this work, if two numbers are separated by `/`, Sass will print
-the result as slash-separated instead of divided unless one of these conditions
-is met:
+На данный момент, хотя Sass по-прежнему поддерживает `/` как оператор деления, он должен иметь возможность устранять неоднозначность между `/` как разделителем и `/` как делением.
+Чтобы это работало, если два числа разделены символом `/`, Sass будет печатать результат как разделенный косой чертой, а не разделенный, если не выполняется одно из этих условий:
 
-* Either expression is anything other than a literal number.
-* The result is stored in a variable or returned by a function.
-* The operation is surrounded by parentheses, unless those parentheses are
-  outside a list that contains the operation.
-* The result is used as part of another operation (other than `/`).
+* Любое выражение не является буквальным числом.
+* Результат сохраняется в переменной или возвращается функцией.
+* Операция заключена в круглые скобки, если только эти скобки не находятся за пределами списка, содержащего операцию.
+* Результат используется как часть другой операции (кроме `/`).
 
-You can use [`list.slash()`] to force `/` to be used as a separator.
+Вы можете использовать [`list.slash()`] для принудительного использования `/` в качестве разделителя.
 
 [`list.slash`]: ../modules/list#slash
 

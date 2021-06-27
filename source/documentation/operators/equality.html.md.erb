@@ -1,37 +1,27 @@
 ---
-title: Equality Operators
+title: Операторы равенства
 ---
 
 <% impl_status dart: true, libsass: false, ruby: '4.0.0 (unreleased)', feature: "Unitless Equality" do %>
-  LibSass and older versions of Ruby Sass consider numbers without units to be
-  equal to the same numbers with any units. This behavior was deprecated and has
-  been removed from more recently releases because it violates [transitivity][].
+  LibSass и более старые версии Ruby Sass считают числа без единиц измерения равными тем же числам с любыми единицами измерения.
+  Это поведение устарело и было удалено из более поздних выпусков, поскольку оно нарушает [транзитивность][transitivity].
 
   [transitivity]: https://en.wikipedia.org/wiki/Transitive_relation
 <% end %>
 
-The equality operators return whether or not two values are the same. They're
-written `<expression> == <expression>`, which returns whether two
-[expressions][] are equal, and `<expression> != <expression>`, which returns
-whether two expressions are *not* equal. Two values are considered equal if
-they're the same type *and* the same value, which means different things for
-different types:
+Операторы равенства возвращают, совпадают ли два значения.
+Они записываются как `<expression> == <expression>`, которое возвращает, равны ли два [выражения][expressions] и `<expression> != <expression>`, которое возвращает, являются ли два выражения *не* равными.
+Два значения считаются равными, если они одного типа *и* одного и того же значения, что означает разные вещи для разных типов:
 
 [expressions]: ../syntax/structure#expressions
 
-* [Numbers][] are equal if they have the same value *and* the same units, or if
-  their values are equal when their units are converted between one another.
-* [Strings][] are unusual in that [unquoted][] and [quoted][] strings with the
-  same contents are considered equal.
-* [Colors][] are equal if they have the same red, green, blue, and alpha values.
-* [Lists][] are equal if their contents are equal. Comma-separated lists aren't
-  equal to space-separated lists, and bracketed lists aren't equal to
-  unbracketed lists.
-* [Maps][] are equal if their keys and values are both equal.
-* [`true`, `false`][], and [`null`][] are only equal to themselves.
-* [Functions][] are equal to the same function. Functions are compared *by
-  reference*, so even if two functions have the same name and definition they're
-  considered different if they aren't defined in the same place.
+* [Числа][Numbers] равны, если они имеют одинаковое значение *и* одинаковые единицы измерения, или если их значения равны, когда их единицы конвертируются между собой.
+* [Строки][Strings] необычны тем, что строки [без кавычек][unquoted] и [в кавычках][quoted] с одинаковым содержимым считаются равными.
+* [Цвета][Colors] равны, если они имеют одинаковые значения красного, зеленого, синего и альфа-канала.
+* [Списки][Lists] равны, если их содержимое одинаково. Списки, разделенные запятыми, не равны спискам, разделенным пробелами, а списки в квадратных скобках не равны спискам без квадратных скобок.
+* [Карты][Maps] равны, если их ключи и значения равны.
+* [`true`, `false`][] и [`null`][] равны только самим себе.
+* [Функции][Functions] эквивалентны одной и той же функции. Функции сравниваются *по ссылке*, поэтому, даже если две функции имеют одинаковое имя и определение, они считаются разными, если они не определены в одном месте.
 
 [Numbers]: ../values/numbers
 [Strings]: ../values/strings
@@ -88,7 +78,7 @@ different types:
   @debug (5px 7px 10px) != (5px, 7px, 10px)  // true
   @debug (5px 7px 10px) != [5px 7px 10px]  // true
 
-  $theme: ("venus": #998099, "nebula": #d2e1dd) 
+  $theme: ("venus": #998099, "nebula": #d2e1dd)
   @debug $theme == ("venus": #998099, "nebula": #d2e1dd)  // true
   @debug $theme != ("venus": #998099, "iron": #dadbdf)  // true
 

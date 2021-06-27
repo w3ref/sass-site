@@ -1,16 +1,12 @@
 ---
-title: Boolean Operators
+title: Логические операторы
 introduction: >
-  Unlike languages like JavaScript, Sass uses words rather than symbols for its
-  [boolean](../values/booleans) operators.
+  В отличие от таких языков, как JavaScript, Sass использует слова, а не символы для своих [логических](../values/booleans) операторов.
 ---
 
-* `not <expression>` returns the opposite of the expression's value: it turns
-  `true` into `false` and `false` into `true`.
-* `<expression> and <expression>` returns `true` if *both* expressions' values
-  are `true`, and `false` if either is `false`.
-* `<expression> or <expression>` returns `true` if *either* expression's value
-  is `true`, and `false` if both are `false`.
+* `not <expression>` возвращает значение, противоположное выражению: оно превращает `true` в `false`, а `false` в `true`.
+* `<expression> and <expression>` возвращает `true` если *оба* значения выражений `true`, а `false`, если любое из них равно `false`.
+* `<expression> or <expression>` возвращает `true`, если *любое* значений выражения равно `true`, а `false`, если оба значения `false`.
 
 <% example(autogen_css: false) do %>
   @debug not true; // false

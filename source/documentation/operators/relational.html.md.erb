@@ -1,19 +1,14 @@
 ---
-title: Relational Operators
+title: Операторы отношения
 introduction: >
-  Relational operators determine whether [numbers](../values/numbers) are larger
-  or smaller than one another. They automatically convert between compatible
-  units.
+  Операторы отношения определяют, являются ли [числа](../values/numbers) больше или меньше друг друга.
+  Они автоматически конвертируют между совместимыми единицами.
 ---
 
-* `<expression> < <expression>` returns whether the first [expression][]'s value
-  is less than the second's.
-* `<expression> <= <expression>` returns whether the first [expression][]'s
-  value is less than or equal to the second's.
-* `<expression> > <expression>` returns whether the first [expression][]'s value
-  is greater than to the second's.
-* `<expression> >= <expression>`, returns whether the first [expression][]'s
-  value is greater than or equal to the second's.
+* `<expression> < <expression>` возвращает, является ли значение первого [выражения][expression] меньше второго.
+* `<expression> <= <expression>` возвращает, является ли значение первого [выражения][expression] меньшим или равным второму.
+* `<expression> > <expression>` возвращает, является ли значение первого [выражения][expression] больше второго.
+* `<expression> >= <expression>`, возвращает, является ли значение первого [выражения][expression] больше или равно второму.
 
 [expression]: ../syntax/structure#expressions
 
@@ -29,8 +24,8 @@ introduction: >
   @debug 1000ms <= 1s  // true
 <% end %>
 
-Unitless numbers can be compared with any number. They're automatically
-converted to that number's unit.
+Безразмерные числа можно сравнивать с любым числом.
+Они автоматически конвертируются в единицы этого числа.
 
 <% example(autogen_css: false) do %>
   @debug 100 > 50px; // true
@@ -40,7 +35,7 @@ converted to that number's unit.
   @debug 10px < 17  // true
 <% end %>
 
-Numbers with incompatible units can't be compared.
+Номера с несовместимыми блоками сравнивать нельзя.
 
 <% example(autogen_css: false) do %>
   @debug 100px > 10s;

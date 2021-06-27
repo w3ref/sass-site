@@ -1,44 +1,39 @@
 ---
-title: Operators
+title: Операторы
 introduction: >
-  Sass supports a handful of useful `operators` for working with different
-  values. These include the standard mathematical operators like `+` and `*`, as
-  well as operators for various other types:
+  Sass поддерживает несколько полезных операторов `operators` для работы с разными значениями.
+  К ним относятся стандартные математические операторы, такие как `+` и `*`, а также операторы для различных других типов:
 ---
 
 <%= partial 'documentation/snippets/operator-list', locals: {parens: false} %>
 
 <% heads_up do %>
-  Early on in Sass's history, it added support for mathematical operations on
-  [colors][]. These operations operated on each of the colors' RGB channels
-  separately, so adding two colors would produce a color with the sum of their
-  red channels as its red channel and so on.
+  В начале истории Sass он добавил поддержку математических операций с [цветами][colors].
+  Эти операции работали с каждым из каналов RGB каждого цвета отдельно, поэтому добавление двух цветов приведет к получению цвета с суммой их красных каналов в качестве красного канала и так далее.
 
   [colors]: values/colors
 
-  This behavior wasn't very useful, since it channel-by-channel RGB arithmetic
-  didn't correspond well to how humans perceive color. [Color functions][] were
-  added which are much more useful, and color operations were deprecated.
-  They're still supported in LibSass and Ruby Sass, but they'll produce warnings
-  and users are strongly encouraged to avoid them.
+  Это поведение было не очень полезным, поскольку его поканальная арифметика RGB не соответствовала тому, как люди воспринимают цвет.
+  [Цветовые функции][Color functions] были добавлены, которые намного более полезны, а цветовые операции устарели.
+  Они по-прежнему поддерживаются в LibSass и Ruby Sass, но выдают предупреждения, и пользователям настоятельно рекомендуется их избегать.
 
   [Color functions]: modules/color
 <% end %>
 
-## Order of Operations
+## Порядок операций
 
-Sass has a pretty standard [order of operations][], from tightest to loosest:
+Sass имеет довольно стандартный [порядок операций][order of operations], от самого жесткого до самого слабого:
 
 [order of operations]: https://en.wikipedia.org/wiki/Order_of_operations#Programming_languages
 
-1. The unary operators [`not`][], [`+`, `-`][], and [`/`][].
-2. The [`*`, `/`, and `%` operators][].
-3. The [`+` and `-` operators][].
-4. The [`>`, `>=`, `<` and `<=` operators][].
-5. The [`==` and `!=` operators][].
-6. The [`and` operator][].
-7. The [`or` operator][].
-8. The [`=` operator][], when it's available.
+1. Унарные операторы [`not`][], [`+`, `-`][] и [`/`][].
+2. [Операторы `*`, `/` и `%`][`*`, `/`, and `%` operators].
+3. [Операторы `+` and `-`][`+` and `-` operators].
+4. [Операторы `>`, `>=`, `<` и `<=`][`>`, `>=`, `<` and `<=` operators].
+5. [Операторы `==` и `!=`][`==` and `!=` operators].
+6. [Оператор `and`][`and` operator].
+7. [Оператор `or`][`or` operator].
+8. [Оператор `=`][`=` operator], если он доступен.
 
 [`not`]: operators/boolean
 [`+`, `-`]: operators/numeric#unary-operators
@@ -59,12 +54,11 @@ Sass has a pretty standard [order of operations][], from tightest to loosest:
   @debug true or false and false == true or (false and false)  // true
 <% end %>
 
-### Parentheses
+### Круглые скобки
 
-You can explicitly control the order of operations using parentheses. An
-operation inside parentheses is always evaluated before any operations outside
-of them. Parentheses can even be nested, in which case the innermost parentheses
-will be evaluated first.
+Вы можете явно управлять порядком операций, используя круглые скобки.
+Операция в круглых скобках всегда оценивается перед любыми операциями вне скобок.
+Скобки могут быть даже вложенными, и в этом случае в первую очередь будут оцениваться самые внутренние круглые скобки.
 
 <% example(autogen_css: false) do %>
   @debug (1 + 2) * 3; // 9
@@ -74,11 +68,10 @@ will be evaluated first.
   @debug ((1 + 2) * 3 + 4) * 5  // 65
 <% end %>
 
-## Single Equals
+## Одиночные равные
 
-Sass supports a special `=` operator that's only allowed in function arguments,
-which just creates an [unquoted string][] with its two operands separated by
-`=`. This exists for backwards-compatibility with very old IE-only syntax.
+Sass поддерживает специальный оператор `=`, который разрешен только в аргументах функции, который просто создает [строку без кавычек][unquoted string] с двумя операндами, разделенными символом `=`.
+Это существует для обратной совместимости с очень старым синтаксисом, предназначенным только для IE.
 
 [unquoted string]: values/strings#unquoted
 

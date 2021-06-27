@@ -31,23 +31,23 @@ toc:
     - <code>@for</code>: /documentation/at-rules/control/for
     - <code>@while</code>: /documentation/at-rules/control/while
   - Из CSS: /documentation/at-rules/css
-- Values: /documentation/values
+- Значения: /documentation/values
   :children:
-  - Numbers: /documentation/values/numbers
-  - Strings: /documentation/values/strings
-  - Colors: /documentation/values/colors
-  - Lists: /documentation/values/lists
-  - Maps: /documentation/values/maps
-  - <code>true</code> and <code>false</code>: /documentation/values/booleans
+  - Числа: /documentation/values/numbers
+  - Строки: /documentation/values/strings
+  - Цвета: /documentation/values/colors
+  - Списки: /documentation/values/lists
+  - Карты: /documentation/values/maps
+  - <code>true</code> и <code>false</code>: /documentation/values/booleans
   - <code>null</code>: /documentation/values/null
-  - Functions: /documentation/values/functions
-- Operators: /documentation/operators
+  - Функции: /documentation/values/functions
+- Операторы: /documentation/operators
   :children:
-  - Equality: /documentation/operators/equality
-  - Relational: /documentation/operators/relational
-  - Numeric: /documentation/operators/numeric
-  - String: /documentation/operators/string
-  - Boolean: /documentation/operators/boolean
+  - Равенства: /documentation/operators/equality
+  - Отношения: /documentation/operators/relational
+  - Числа: /documentation/operators/numeric
+  - Строки: /documentation/operators/string
+  - Логические: /documentation/operators/boolean
 - Built-In Modules: /documentation/modules
   :children:
   - <code>sass:color</code>: /documentation/modules/color

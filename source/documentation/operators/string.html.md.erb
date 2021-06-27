@@ -1,16 +1,12 @@
 ---
-title: String Operators
+title: Строковые операторы
 introduction: >
-  Sass supports a few operators that generate [strings](../values/strings):
+  Sass поддерживает несколько операторов, которые генерируют [строки](../values/strings):
 ---
 
-* `<expression> + <expression>` returns a string that contains both expressions'
-  values. If the either value is a [quoted string][], the result will be quoted;
-  otherwise, it will be unquoted.
+* `<expression> + <expression>` возвращает строку, содержащую значения обоих выражений. Если любое значение является [строка в кавычках][quoted string], результат будет заключен в кавычки; в противном случае это будет без кавычек.
 
-* `<expression> - <expression>` returns an unquoted string that contains both
-  expressions' values, separated by `-`. This is a legacy operator, and
-  [interpolation][] should generally be used instead.
+* `<expression> - <expression>` возвращает строку без кавычек, содержащую значения обоих выражений, разделенные знаком `-`. Это устаревший оператор, и вместо него обычно следует использовать [интерполяцию][interpolation].
 
 [quoted string]: ../values/strings#quoted
 [interpolation]: ../interpolation
@@ -25,13 +21,11 @@ introduction: >
   @debug sans - serif  // sans-serif
 <% end %>
 
-These operators don't just work for strings! They can be used with any values
-that can be written to CSS, with a few exceptions:
+Эти операторы работают не только со строками!
+Их можно использовать с любыми значениями, которые можно записать в CSS, за некоторыми исключениями:
 
-* Numbers can't be used as the left-hand value, because they have [their own
-  operators][numeric].
-* Colors can't be used as the left-hand value, because they used to have [their
-  own operators][color].
+* Числа не могут использоваться в качестве значения слева, потому что у них есть [свои собственные операторы][numeric].
+* Цвета нельзя использовать как левое значение, потому что раньше они имели [свои собственные операторы][color].
 
 [numeric]: numeric
 [color]: ../operators
@@ -45,21 +39,17 @@ that can be written to CSS, with a few exceptions:
 <% end %>
 
 <% heads_up do %>
-  It's often cleaner and clearer to use [interpolation][] to create strings,
-  rather than relying on this operators.
+  Часто проще и понятнее использовать [интерполяцию][interpolation] для создания строк, чем полагаться на эти операторы.
 
   [interpolation]: ../interpolation
 <% end %>
 
-## Unary Operators
+## Унарные операторы
 
-For historical reasons, Sass also supports `/` and `-` as a unary operators
-which take only one value:
+По историческим причинам Sass также поддерживает `/` и `-` как унарные операторы, которые принимают только одно значение:
 
-* `/<expression>` returns an unquoted string starting with `/` and followed by
-  the expression's value.
-* `-<expression>` returns an unquoted string starting with `-` and followed by
-  the expression's value.
+* `/<expression>` возвращает строку без кавычек, начинающуюся с `/`, за которой следует значение выражения.
+* `-<expression>` возвращает строку без кавычек, начинающуюся с `-`, за которой следует значение выражения.
 
 <% example(autogen_css: false) do %>
   @debug / 15px; // /15px
