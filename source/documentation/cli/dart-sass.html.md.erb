@@ -1,40 +1,36 @@
 ---
-title: Dart Sass Command-Line Interface
+title: Интерфейс командной строки Dart Sass
 table_of_contents: true
 ---
 
-## Usage
+## Применение
 
-The Dart Sass executable can be invoked in one of two modes.
+Исполняемый файл Dart Sass можно запускать в одном из двух режимов.
 
-### One-to-One Mode
+### Режим "один к одному"
 
 ```
 sass <input.scss> [output.css]
 ```
 
-One-to-one mode compiles a single input file (`input.scss`) to a single output
-location (`output.css`). If no output location is passed, the compiled CSS is
-printed to the terminal.
+В режиме «один к одному» один входной файл (`input.scss`) компилируется в единственное место вывода (`output.css`).
+Если расположение вывода не передано, скомпилированный CSS выводится на терминал.
 
-The input file is parsed as [SCSS][] if its extension is `.scss`, as the
-[indented syntax][] if its extension is `.sass`, or as [plain CSS][] if its
-extension is `.css`. If it doesn't have one of these three extensions, or if it
-comes from standard input, it's parsed as SCSS by default. This can be
-controlled with the [`--indented` flag][].
+Входной файл анализируется как [SCSS][], если его расширение - `.scss`, как [синтаксис с отступом][indented syntax], если его расширение - `.sass`, или как [простой CSS][plain CSS], если его расширение - `.css`.
+Если у него нет одного из этих трех расширений или если он поступает со стандартного ввода, по умолчанию он анализируется как SCSS.
+Это можно контролировать с помощью [флага `--indented`][`--indented` flag].
 
 [SCSS]: ../syntax#scss
 [indented syntax]: ../syntax#the-indented-syntax
 [plain CSS]: ../at-rules/import#importing-css
 [`--indented` flag]: #indented
 
-The special string `-` can be passed in place of the input file to tell Sass to
-read the input file from [standard input][]. Sass will default to parsing it as
-SCSS unless the [`--indented` flag][] is passed.
+Специальная строка `-` может быть передана вместо входного файла, чтобы сообщить Sass о необходимости чтения входного файла из [стандартного ввода][standard input].
+Sass по умолчанию будет анализировать его как SCSS, если не передан [флаг `--indented`][`--indented` flag].
 
 [standard input]: https://en.wikipedia.org/wiki/Standard_streams#Standard_input_(stdin)
 
-### Many-to-many Mode
+### Режим "многие ко многим"
 
 <% impl_status dart: '1.4.0' %>
 
@@ -42,9 +38,9 @@ SCSS unless the [`--indented` flag][] is passed.
 sass [<input.css>:<output.css>] [<input/>:<output/>]...
 ```
 
-Many-to-many mode compiles one or more input files to one or more output files.
-The inputs are separated from the outputs with colons. It can also compile all
-Sass files in a directory to CSS files with the same names in another directory.
+В режиме «многие-ко-многим» один или несколько входных файлов компилируются в один или несколько выходных файлов.
+Входы отделяются от выходов двоеточиями.
+Он также может компилировать все файлы Sass в каталоге в файлы CSS с такими же именами в другом каталоге.
 
 ```shellsession
 ​# Compiles style.scss to style.css.
@@ -57,23 +53,21 @@ $ sass light.scss:light.css dark.scss:dark.css
 $ sass themes:public/css
 ```
 
-When compiling whole directories, Sass will ignore [partial files][] whose names
-begin with `_`. You can use partials to separate out your stylesheets without
-creating a bunch of unnecessary output files.
+При компиляции целых каталогов Sass игнорирует [частичные файлы][partial files], имена которых начинаются с `_`.
+Вы можете использовать партиалы для разделения таблиц стилей без создания кучи ненужных выходных файлов.
 
 [partial files]: ../at-rules/import#partials
 
-## Options
+## Опции
 
-### Input and Output
+### Ввод и Вывод
 
-These options control how Sass loads its input files and how it produces output
-files.
+Эти параметры управляют тем, как Sass загружает свои входные файлы и как создает выходные файлы.
 
 #### `--stdin`
 
-This flag is an alternative way of telling Sass that it should read its input
-file from [standard input][]. When it's passed, no input file may be passed.
+Этот флаг - альтернативный способ сообщить Sass, что он должен прочитать свой входной файл из [стандартного ввода][standard input].
+Когда он передан, входной файл не может быть передан.
 
 ```shellsession
 $ echo "h1 {font-size: 40px}" | sass --stdin h1.css
@@ -83,22 +77,19 @@ h1 {
 }
 ```
 
-The `--stdin` flag may not be used with [many-to-many mode][].
+Флаг `--stdin` нельзя использовать с [режимом многие-ко-многим][many-to-many mode].
 
 [many-to-many mode]: #many-to-many-mode
 
 #### `--indented`
 
-This flag tells Sass to parse the input file as the [indented syntax][]. If it's
-used in [many-to-many mode][], all input files are parsed as the indented
-syntax, although files they [use][] will have their syntax determined as usual.
-The inverse, `--no-indented`, can be used to force all input files to be parsed
-as [SCSS][] instead.
+Этот флаг сообщает Sass, что нужно проанализировать входной файл как [синтаксис с отступом][indented syntax].
+Если он используется в режиме [многие-ко-многим][many-to-many mode], все входные файлы анализируются с использованием синтаксиса с отступом, хотя для файлов, которые они [используют][use] синтаксис определяется как обычно.
+Обратное значение, `--no-indented`, может использоваться для принудительного анализа всех входных файлов как [SCSS][].
 
 [use]: ../at-rules/use
 
-The `--indented` flag is mostly useful when the input file is coming from
-[standard input][], so its syntax can't be automatically determined.
+Флаг `--indented` в основном полезен, когда входной файл поступает из [стандартного ввода][standard input], поэтому его синтаксис не может быть определен автоматически.
 
 ```shellsession
 $ echo -e 'h1\n  font-size: 40px' | sass --indented -
@@ -109,9 +100,9 @@ h1 {
 
 #### `--load-path`
 
-This option (abbreviated `-I`) adds an additional [load path][] for Sass to look
-for stylesheets. It can be passed multiple times to provide multiple load paths.
-Earlier load paths will take precedence over later ones.
+Этот параметр (сокращенно `-I`) добавляет дополнительный [путь загрузки][load path] для Sass для поиска таблиц стилей.
+Его можно передавать несколько раз, чтобы обеспечить несколько путей загрузки.
+Более ранние пути загрузки имеют приоритет над более поздними.
 
 [load path]: ../at-rules/use#load-paths
 
@@ -121,12 +112,11 @@ $ sass --load-path=node_modules/bootstrap/dist/css style.scss style.css
 
 #### `--style`
 
-This option (abbreviated `-s`) controls the output style of the resulting CSS.
-Dart Sass supports two output styles:
+Этот параметр (сокращенно `-s`) управляет стилем вывода результирующего CSS.
+Dart Sass поддерживает два стиля вывода:
 
-* `expanded` (the default) writes each selector and declaration on its own line.
-* `compressed` removes as many extra characters as possible, and writes the
-  entire stylesheet on a single line.
+* `expanded` (по умолчанию) записывает каждый селектор и объявление в отдельной строке.
+* `compressed` удаляет как можно больше лишних символов и записывает всю таблицу стилей в одну строку.
 
 ```shellsession
 $ sass --style=expanded style.scss
@@ -142,10 +132,8 @@ h1{font-size:40px}
 
 <% impl_status dart: '1.19.0' %>
 
-This flag tells Sass never to emit a `@charset` declaration or a UTF-8
-[byte-order mark][]. By default, or if `--charset` is passed, Sass will insert
-either a `@charset` declaration (in expanded output mode) or a byte-order mark
-(in compressed output mode) if the stylesheet contains any non-ASCII characters.
+Этот флаг указывает Sass никогда не генерировать объявление `@charset` или UTF-8 [знак порядка байтов][byte-order mark].
+По умолчанию, или если передан `--charset`, Sass вставит либо объявление `@charset` (в расширенном режиме вывода), либо отметку байтового порядка (в сжатом режиме вывода), если таблица стилей содержит какие-либо символы, отличные от ASCII.
 
 [byte-order mark]: https://en.wikipedia.org/wiki/Byte_order_mark#UTF-8
 
@@ -166,16 +154,12 @@ h1::before {
 
 <% impl_status dart: '1.20.0' %>
 
-This flag tells Sass whether to emit a CSS file when an error occurs during
-compilation. This CSS file describes the error in a comment *and* in the
-`content` property of `body::before`, so that you can see the error message in
-the browser without needing to switch back to the terminal.
+Этот флаг сообщает Sass, следует ли создавать файл CSS при возникновении ошибки во время компиляции.
+Этот файл CSS описывает ошибку в комментариях *и* в свойстве `content` объекта `body::before`, так что вы можете увидеть сообщение об ошибке в браузере без необходимости возвращаться к терминалу.
 
-By default, error CSS is enabled if you're compiling to at least one file on
-disk (as opposed to standard output). You can pass `--error-css` explicitly to
-enable it even when you're compiling to standard out, or `--no-error-css` to
-disable it everywhere. When it's disabled, the [`--update` flag][] and
-[`--watch` flag][] will delete CSS files instead when an error occurs.
+По умолчанию ошибка CSS включена, если вы компилируете хотя бы один файл на диске (в отличие от стандартного вывода).
+Вы можете явно передать `--error-css`, чтобы включить его, даже когда вы компилируете в стандартную версию, или `--no-error-css`, чтобы отключить его повсюду.
+Когда он отключен [флаг `--update`][`--update` flag] и [флаг `--watch`][`--watch` flag] вместо этого удаляют файлы CSS при возникновении ошибки.
 
 [`--watch` flag]: #watch
 
@@ -196,7 +180,7 @@ body::before {
   padding: 1em;
   margin-bottom: 1em;
   border-bottom: 2px solid black;
-  content: "Error: Incompatible units em and px.\a   \2577 \a 1 \2502  $width: 15px + 2em;\a   \2502          ^^^^^^^^^^\a   \2575 \a   test.scss 1:9  root stylesheet";         
+  content: "Error: Incompatible units em and px.\a   \2577 \a 1 \2502  $width: 15px + 2em;\a   \2502          ^^^^^^^^^^\a   \2575 \a   test.scss 1:9  root stylesheet";
 }
 Error: Incompatible units em and px.
   ╷
@@ -210,27 +194,26 @@ Error: Incompatible units em and px.
 
 <% impl_status dart: '1.4.0' %>
 
-If the `--update` flag is passed, Sass will only compile stylesheets whose
-dependencies have been modified more recently than the corresponding CSS file
-was generated. It will also print status messages when updating stylesheets.
+Если передан флаг `--update`, Sass будет компилировать только таблицы стилей, зависимости которых были изменены позже, чем был сгенерирован соответствующий файл CSS.
+Он также будет печатать сообщения о состоянии при обновлении таблиц стилей.
 
 ```shellsession
 $ sass --update themes:public/css
 Compiled themes/light.scss to public/css/light.css.
 ```
 
-### Source Maps
+### Исходные карты
 
 <% impl_status dart: '1.3.0' %>
 
 <%= partial 'documentation/snippets/source-maps' %>
 
-Dart Sass generates source maps by default for every CSS file it emits.
+Dart Sass по умолчанию генерирует исходные карты для каждого создаваемого файла CSS.
 
 #### `--no-source-map`
 
-If the `--no-source-map` flag is passed, Sass won't generate any source maps. it
-cannot be passed along with other source map options.
+Если передан флаг `--no-source-map`, Sass не будет генерировать исходные карты.
+Его нельзя передавать вместе с другими параметрами исходной карты.
 
 ```shellsession
 $ sass --no-source-map style.scss style.css
@@ -238,15 +221,11 @@ $ sass --no-source-map style.scss style.css
 
 #### `--source-map-urls`
 
-This option controls how the source maps that Sass generates link back to the
-Sass files that contributed to the generated CSS. Dart Sass supports two types
-of URLs:
+Эта опция контролирует, как исходные карты, которые генерирует Sass, ссылаются на файлы Sass, которые внесли свой вклад в сгенерированный CSS. Dart Sass поддерживает два типа URL-адресов:
 
-* `relative` (the default) uses relative URLs from the location of the source
-  map file to the locations of the Sass source file.
-* `absolute` uses the absolute [`file:` URLs][] of the Sass source files. Note
-  that absolute URLs will only work on the same computer that the CSS was
-  compiled.
+* `relative` (по умолчанию) использует относительные URL-адреса от местоположения исходного файла карты до местоположений исходного файла Sass.
+* `absolute` использует абсолютные [URL-адреса `file:`][`file:` URLs] исходных файлов Sass.
+  Обратите внимание, что абсолютные URL-адреса будут работать только на том же компьютере, на котором был скомпилирован CSS.
 
 [`file:` URLs]: https://en.wikipedia.org/wiki/File_URI_scheme
 
@@ -260,10 +239,8 @@ $ sass --source-map-urls=absolute sass/style.scss css/style.css
 
 #### `--embed-sources`
 
-This flag tells Sass to embed the entire contents of the Sass files that
-contributed to the generated CSS in the source map. This may produce very large
-source maps, but it guarantees that the source will be available on any computer
-no matter how the CSS is served.
+Этот флаг сообщает Sass о необходимости встраивать все содержимое файлов Sass, которые внесли свой вклад в сгенерированный CSS, в исходную карту.
+Это может привести к очень большим исходным картам, но это гарантирует, что источник будет доступен на любом компьютере, независимо от того, как обслуживается CSS.
 
 ```shellsession
 $ sass --embed-sources sass/style.scss css.style.css
@@ -271,23 +248,19 @@ $ sass --embed-sources sass/style.scss css.style.css
 
 #### `--embed-source-map`
 
-This flag tells Sass to embed the contents of the source map file in the
-generated CSS, rather than creating a separate file and linking to it from the
-CSS.
+Этот флаг сообщает Sass о необходимости встраивания содержимого файла исходной карты в сгенерированный CSS, а не создания отдельного файла и ссылки на него из CSS.
 
 ```shellsession
 $ sass --embed-source-map sass/style.scss css.style.css
 ```
 
-### Other Options
+### Другие опции
 
 #### `--watch`
 
 <% impl_status dart: '1.6.0' %>
 
-This flag (abbreviated `-w`) acts like the [`--update` flag][], but after the
-first round compilation is done Sass stays open and continues compiling
-stylesheets whenever they or their dependencies change.
+Этот флаг (сокращенно `-w`) действует как [флаг `--update`][`--update` flag], но после завершения первого раунда компиляции Sass остается открытым и продолжает компилировать таблицы стилей всякий раз, когда они или их зависимости изменяются.
 
 [`--update` flag]: #update
 
@@ -303,11 +276,8 @@ Compiled themes/dark.scss to public/css/dark.css.
 
 <% impl_status dart: '1.8.0' %>
 
-This flag, which may only be passed along with `--watch`, tells Sass to manually
-check for changes to the source files every so often instead of relying on the
-operating system to notify it when something changes. This may be necessary if
-you're editing Sass on a remote drive where the operating system's notification
-system doesn't work.
+Этот флаг, который может быть передан только вместе с `--watch`, сообщает Sass, что нужно время от времени вручную проверять наличие изменений в исходных файлах, вместо того, чтобы полагаться на то, что операционная система уведомит его, когда что-то изменится.
+Это может быть необходимо, если вы редактируете Sass на удаленном диске, где система уведомлений операционной системы не работает.
 
 ```shellsession
 $ sass --watch --poll themes:public/css
@@ -321,9 +291,8 @@ Compiled themes/dark.scss to public/css/dark.css.
 
 <% impl_status dart: '1.8.0' %>
 
-This flag tells Sass to stop compiling immediately when an error is detected,
-rather than trying to compile other Sass files that may not contain errors. It's
-mostly useful in [many-to-many mode][].
+Этот флаг указывает Sass немедленно прекратить компиляцию при обнаружении ошибки, а не пытаться скомпилировать другие файлы Sass, которые могут не содержать ошибок.
+В основном это полезно в режиме [многие-ко-многим][many-to-many mode].
 
 ```shellsession
 $ sass --stop-on-error themes:public/css
@@ -339,9 +308,7 @@ Error: Expected expression.
 
 <% impl_status dart: '1.5.0' %>
 
-This flag (abbreviated `-i`) tells Sass to run in interactive mode, where you
-can write [SassScript expressions][] and see their results. Interactive mode
-also supports [variables][] and [`@use` rules][].
+Этот флаг (сокращенно `-i`) указывает Sass работать в интерактивном режиме, где вы можете написать [SassScript-выражения][SassScript expressions] и увидеть их результаты. Интерактивный режим также поддерживает [переменные][variables] и [правила `@use`][`@use` rules].
 
 [SassScript expressions]: ../syntax/structure#expressions
 [variables]: ../variables
@@ -360,9 +327,8 @@ $ sass --interactive
 
 #### `--color`
 
-This flag (abbreviated `-c`) tells Sass to emit [terminal colors][], and the
-inverse `--no-color` tells it not to emit colors. By default, it will emit
-colors if it looks like it's being run on a terminal that supports them.
+Этот флаг (сокращенно `-c`) указывает Sass испускать [цвета терминала][terminal colors], а обратный `--no-color` говорит ему не испускать цвета.
+По умолчанию он будет излучать цвета, если похоже, что он запущен на терминале, который их поддерживает.
 
 [terminal colors]: https://en.wikipedia.org/wiki/ANSI_escape_code#Colors
 
@@ -386,9 +352,9 @@ Error: Incompatible units em and px.
 
 <% impl_status dart: '1.17.0' %>
 
-This flag tells Sass only to emit ASCII characters to the terminal as part of
-error messages. By default, or if `--unicode` is passed, Sass will emit non-ASCII
-characters for these messages. This flag does not affect the CSS output.
+Этот флаг указывает Sass только выдавать на терминал символы ASCII как часть сообщений об ошибках.
+По умолчанию, или если передан `--unicode`, Sass будет выдавать не-ASCII символы для этих сообщений.
+Этот флаг не влияет на вывод CSS.
 
 ```shellsession
 $ sass --no-unicode style.scss style.css
@@ -410,9 +376,9 @@ Error: Incompatible units em and px.
 
 #### `--quiet`
 
-This flag (abbreviated `-q`) tells Sass not to emit any warnings when compiling.
-By default, Sass emits warnings when deprecated features are used or when the
-[`@warn` rule][] is encountered. It also silences the [`@debug` rule][].
+Этот флаг (сокращенно `-q`) указывает Sass не выдавать никаких предупреждений при компиляции.
+По умолчанию Sass выдает предупреждения при использовании устаревших функций или при обнаружении [правила `@warn`][`@warn` rule].
+Он также отключает [правило `@debug`][`@debug` rule].
 
 [`@warn` rule]: ../at-rules/warn
 [`@debug` rule]: ../at-rules/debug
@@ -423,8 +389,8 @@ $ sass --quiet style.scss style.css
 
 #### `--trace`
 
-This flag tells Sass to print the full Dart or JavaScript stack trace when an
-error is encountered. It's used by the Sass team for debugging errors.
+Этот флаг сообщает Sass о необходимости распечатать полную трассировку стека Dart или JavaScript при обнаружении ошибки.
+Команда Sass использует его для отладки ошибок.
 
 ```shellsession
 $ sass --trace style.scss style.css
@@ -449,7 +415,7 @@ package:sass/src/executable.dart 62:15                               main
 
 #### `--help`
 
-This flag (abbreviated `-h`) prints a summary of this documentation.
+Этот флаг (сокращенно `-h`) печатает краткое изложение этой документации.
 
 ```shellsession
 $ sass --help
@@ -463,7 +429,7 @@ Usage: sass <input.scss> [output.css]
 
 #### `--version`
 
-This flag prints the current version of Sass.
+Этот флаг печатает текущую версию Sass.
 
 ```shellsession
 $ sass --version

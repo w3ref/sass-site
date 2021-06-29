@@ -63,9 +63,9 @@ toc:
   - Единицы цвета: /documentation/breaking-changes/color-units
   - Расширение составных селекторов: /documentation/breaking-changes/extend-compound
   - Синтаксис переменных CSS: /documentation/breaking-changes/css-vars
-- Command Line: /documentation/cli
+- Командная строка: /documentation/cli
   :children:
   - Dart Sass: /documentation/cli/dart-sass
   - Ruby Sass: /documentation/cli/ruby-sass
-  - Migrator: /documentation/cli/migrator
+  - Мигратор: /documentation/cli/migrator
 - JavaScript API: /documentation/js-api

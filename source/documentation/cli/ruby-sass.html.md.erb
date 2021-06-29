@@ -1,64 +1,57 @@
 ---
-title: Ruby Sass Command-Line Interface
+title: Интерфейс командной строки Ruby Sass
 table_of_contents: true
 ---
 
 <% heads_up do %>
 
-[Ruby Sass has reached end of life][] and is now totally unmaintained. Please
-switch to [Dart Sass][] or [LibSass][] at your earliest convenience.
+[Ruby Sass достиг конца жизненного цикла][Ruby Sass has reached end of life] и в настоящее время полностью не поддерживается.
+Пожалуйста, переключитесь на [Dart Sass][] или [LibSass][] при первой возможности.
 
 [Ruby Sass has reached end of life]: /blog/ruby-sass-is-unsupported
 [Dart Sass]: /dart-sass
 [LibSass]: /libsass
 <% end %>
 
-## Usage
+## Применение
 
-The Ruby Sass executable can be invoked in one of two modes.
+Исполняемый файл Ruby Sass может быть вызван в одном из двух режимов.
 
-### One-to-One Mode
+### Режим "один к одному"
 
 ```
 sass [input.scss] [output.css]
 ```
 
-One-to-one mode compiles a single input file (`input.scss`) to a single output
-location (`output.css`). If no output location is passed, the compiled CSS is
-printed to the terminal. If no input *or* output is passed, the CSS is read from
-[standard input][] and printed to the terminal.
+В режиме «один к одному» один входной файл (`input.scss`) компилируется в единственное место вывода (`output.css`).
+Если расположение вывода не передано, скомпилированный CSS выводится на терминал.
+Если ввод *или* вывод не передается, CSS считывается из [стандартного ввода][standard input] и выводится на терминал.
 
 [standard input]: https://en.wikipedia.org/wiki/Standard_streams#Standard_input_(stdin)
 
-The input file is parsed as [SCSS][] if its extension is `.scss` or as the
-[indented syntax][] if its extension is `.sass`. If it doesn't have one of these
-two extensions, or if it comes from standard input, it's parsed as the
-indented syntax by default. This can be controlled with the [`--scss` flag][].
+Входной файл анализируется как [SCSS][], если его расширение - `.scss`, или как [синтаксис с отступом][indented syntax], если его расширение - `.sass`.
+Если у него нет одного из этих двух расширений или если он поступает со стандартного ввода, он по умолчанию анализируется как синтаксис с отступом.
+Это можно контролировать с помощью [флага `--scss`][`--scss` flag].
 
 [SCSS]: ../syntax#scss
 [indented syntax]: ../syntax#the-indented-syntax
 [`--scss` flag]: #scss
 
-### Many-to-Many Mode
+### Режим "многие ко многим"
 
 ```
 sass [<input.css>:<output.css>] [<input/>:<output/>] [input.css] [input/]...
 ```
 
-Many-to-many mode compiles one or more input files to one or more output files.
-The inputs are separated from the outputs with colons. It can also compile all
-Sass files in a directory to CSS files with the same names in another directory.
-Many-to-many mode is enabled when any argument contains a colon, *or* when the
-[`--update` flag][] or the [`--watch` flag][] is passed.
+В режиме «многие-ко-многим» один или несколько входных файлов компилируются в один или несколько выходных файлов.
+Входы отделяются от выходов двоеточиями. Он также может компилировать все файлы Sass в каталоге в файлы CSS с такими же именами в другом каталоге.
+Режим «многие-ко-многим» включается, когда любой аргумент содержит двоеточие, *или* когда передается [флаг `--update`][`--update` flag] или [флаг `--watch`][`--watch` flag].
 
 [`--update` flag]: #update
 [`--watch` flag]: #watch
 
-If an input file is passed without a corresponding output file, it's compiled to
-a CSS file named after the input file, but with the extension replaced with
-`.css`. If an input directory is passed without a corresponding output
-directory, all the Sass files within it are compiled to CSS files in the same
-directory.
+Если входной файл передается без соответствующего выходного файла, он компилируется в файл CSS, названный в честь входного файла, но с расширением, замененным на `.css`.
+Если входной каталог передается без соответствующего выходного каталога, все файлы Sass в нем компилируются в файлы CSS в том же каталоге.
 
 ```shellsession
 $ sass style.scss:style.css
@@ -76,25 +69,23 @@ $ sass themes:public/css
       write public/css/dark.css.map
 ```
 
-When compiling whole directories, Sass will ignore [partial files][] whose names
-begin with `_`. You can use partials to separate out your stylesheets without
-creating a bunch of unnecessary output files.
+При компиляции целых каталогов Sass игнорирует [частичные файлы][partial files], имена которых начинаются с `_`.
+Вы можете использовать партиалы для разделения таблиц стилей без создания кучи ненужных выходных файлов.
 
 [partial files]: ../at-rules/use#partials
 
-Many-to-many mode will only compile stylesheets whose dependencies have been
-modified more recently than the corresponding CSS file was generated. It will
-also print status messages when updating stylesheets.
+В режиме «многие ко многим» будут компилироваться только таблицы стилей, зависимости которых были изменены позже, чем был сгенерирован соответствующий файл CSS.
+Он также будет печатать сообщения о состоянии при обновлении таблиц стилей.
 
-## Options
+## Опции
 
-### Common
+### Общий
 
 #### `--load-path`
 
-This option (abbreviated `-I`) adds an additional [load path][] for Sass to look
-for stylesheets. It can be passed multiple times to provide multiple load paths.
-Earlier load paths will take precedence over later ones.
+Этот параметр (сокращенно `-I`) добавляет дополнительный [путь загрузки][load path] для Sass для поиска таблиц стилей.
+Его можно передавать несколько раз, чтобы обеспечить несколько путей загрузки.
+Более ранние пути загрузки имеют приоритет над более поздними.
 
 [load path]: ../at-rules/use#load-paths
 
@@ -102,10 +93,9 @@ Earlier load paths will take precedence over later ones.
 $ sass --load-path=node_modules/bootstrap/dist/css style.scss style.css
 ```
 
-Load paths are also loaded from the `SASS_PATH` [environment variable][], if
-it's set. This variable should be a list of paths separated by `;` (on Windows)
-or `:` (on other operating systems). Load paths on `SASS_PATH` take precedence
-over load paths passed on the command line.
+Пути загрузки также загружаются из `SASS_PATH` [переменная среды][environment variable], если она установлена.
+Эта переменная должна быть списком путей, разделенных `;` (в Windows) или `:` (в других операционных системах).
+Пути загрузки в `SASS_PATH` имеют приоритет над путями загрузки, переданными в командной строке.
 
 [environment variable]: https://en.wikipedia.org/wiki/Environment_variable
 
@@ -115,8 +105,8 @@ $ SASS_PATH=node_modules/bootstrap/dist/css sass style.scss style.css
 
 #### `--require`
 
-This option (abbreviated `-r`) loads a [Ruby gem][] before running Sass. It can
-be used to load functions defined in Ruby into your Sass environment.
+Эта опция (сокращенно `-r`) загружает [Ruby gem][] перед запуском Sass.
+Его можно использовать для загрузки функций, определенных в Ruby, в среду Sass.
 
 [Ruby gem]: https://rubygems.org/
 
@@ -126,8 +116,7 @@ $ sass --require=rails-sass-images style.scss style.css
 
 #### `--compass`
 
-This flag loads the [Compass framework][] and makes its mixins and functions
-available for use in Sass.
+Этот флаг загружает [Compass framework][] и делает его миксины и функции доступными для использования в Sass.
 
 [Compass framework]: http://compass-style.org/
 
@@ -137,15 +126,13 @@ $ sass --compass style.scss style.css
 
 #### `--style`
 
-This option (abbreviated `-t`) controls the output style of the resulting CSS.
-Ruby Sass supports four output styles:
+Эта опция (сокращенно `-t`) управляет стилем вывода результирующего CSS.
+Ruby Sass поддерживает четыре стиля вывода:
 
-* `nested` (the default) indents CSS rules to match the nesting of the Sass
-  source.
-* `expanded` writes each selector and declaration on its own line.
-* `compact` puts each CSS rule on its own single line.
-* `compressed` removes as many extra characters as possible, and writes the
-  entire stylesheet on a single line.
+* `nested` (по умолчанию) изменяет правила CSS для соответствия вложенности исходного кода Sass.
+* `expanded` записывает каждый селектор и объявление в отдельной строке.
+* `compact` помещает каждое правило CSS в отдельную строку.
+* `compressed` удаляет как можно больше лишних символов и записывает всю таблицу стилей в одну строку.
 
 ```shellsession
 $ sass --style=nested
@@ -172,7 +159,7 @@ h1{font-size:40px}h1 code{font-face:Roboto Mono}
 
 #### `--help`
 
-This flag (abbreviated `-h` and `-?`) prints a summary of this documentation.
+Этот флаг (сокращенно `-h` и `-?`) печатает краткое изложение этой документации.
 
 ```shellsession
 $ sass --help
@@ -186,23 +173,22 @@ Description:
 
 #### `--version`
 
-This flag prints the current version of Sass.
+Этот флаг печатает текущую версию Sass.
 
 ```shellsession
 $ sass --version
 <%= impl_version(:ruby) %>
 ```
 
-### Watching and Updating
+### Наблюдение и Обновление
 
-These options affect [many-to-many mode][].
+Эти параметры влияют на [режим многие-ко-многим][many-to-many mode].
 
 [many-to-many mode]: #many-to-many-mode
 
 #### `--watch`
 
-Enables [many-to-many mode][], and causes Sass to stay open and continue
-compiling stylesheets whenever they or their dependencies change.
+Включает [режим многие-ко-многим][many-to-many mode] и заставляет Sass оставаться открытым и продолжать компилировать таблицы стилей всякий раз, когда они или их зависимости изменяются.
 
 ```shellsession
 $ sass --watch themes:public/css
@@ -216,11 +202,7 @@ $ sass --watch themes:public/css
 
 #### `--poll`
 
-This flag, which may only be passed along with `--watch`, tells Sass to manually
-check for changes to the source files every so often instead of relying on the
-operating system to notify it when something changes. This may be necessary if
-you're editing Sass on a remote drive where the operating system's notification
-system doesn't work.
+Этот флаг, который может быть передан только вместе с `--watch`, сообщает Sass, что нужно время от времени вручную проверять наличие изменений в исходных файлах, вместо того, чтобы полагаться на то, что операционная система уведомит его, когда что-то изменится. Это может быть необходимо, если вы редактируете Sass на удаленном диске, где система уведомлений операционной системы не работает.
 
 ```shellsession
 $ sass --watch --poll themes:public/css
@@ -234,8 +216,7 @@ $ sass --watch --poll themes:public/css
 
 #### `--update`
 
-This flag enables [many-to-many mode][], even if none of the arguments are
-colon-separated pairs.
+Этот флаг включает [режим многие-ко-многим][many-to-many mode], даже если ни один из аргументов не является парами, разделенными двоеточиями.
 
 ```shellsession
 $ sass --update style.scss
@@ -245,11 +226,10 @@ $ sass --update style.scss
 
 #### `--force`
 
-This flag (abbreviated `-f`) may only be passed in [many-to-many mode][]. It
-causes Sass files to *always* be compiled to CSS files, instead of only being
-compiled when the source files are more up-to-date than the output.
+Этот флаг (сокращенно `-f`) можно передавать только в [режиме многие-ко-многим][many-to-many mode].
+Это приводит к тому, что файлы Sass *всегда* компилируются в файлы CSS, а не компилируются только тогда, когда исходные файлы более актуальны, чем выходные данные.
 
-The `--force` flag may not be passed alongside the [`--watch` flag][].
+Флаг `--force` нельзя передавать вместе с [флагом `--watch`][`--watch` flag].
 
 ```shellsession
 $ sass --force style.scss:style.css
@@ -259,9 +239,8 @@ $ sass --force style.scss:style.css
 
 #### `--stop-on-error`
 
-This flag may only be passed in [many-to-many mode][]. It tells Sass to stop
-compiling immediately when an error is detected, rather than trying to compile
-other Sass files that may not contain errors.
+Этот флаг можно передавать только в [режиме многие-ко-многим][many-to-many mode].
+Он сообщает Sass немедленно прекратить компиляцию при обнаружении ошибки, а не пытаться скомпилировать другие файлы Sass, которые могут не содержать ошибок.
 
 ```shellsession
 $ sass --stop-on-error themes:public/css
@@ -270,14 +249,13 @@ Error: Invalid CSS after "h1 {font-size: ": expected expression (e.g. 1px, bold)
   Use --trace for backtrace.
 ```
 
-### Input and Output
+### Ввод и Вывод
 
-These options control how Sass loads its input files and how it produces output
-files.
+Эти параметры управляют тем, как Sass загружает свои входные файлы и как создает выходные файлы.
 
 #### `--scss`
 
-This flag tells Sass to parse [standard input][] as [SCSS][].
+Этот флаг сообщает Sass о необходимости синтаксического анализа [стандартный ввод][standard input] как [SCSS][].
 
 ```shellsession
 $ echo "h1 {font-size: 40px}" | sass --scss
@@ -288,21 +266,18 @@ h1 {
 
 #### `--sourcemap`
 
-This option controls how Sass generates source maps, which are files that tell
-browsers or other tools that consume CSS how that CSS corresponds to the Sass
-files from which it was generated. They make it possible to see and even edit
-your Sass files in browsers. See instructions for using source maps in
-[Chrome][] and [Firefox][]. It has four possible values:
+Эта опция контролирует, как Sass генерирует исходные карты, то есть файлы, которые сообщают браузерам или другим инструментам, использующим CSS, как этот CSS соответствует файлам Sass, из которых он был сгенерирован.
+Они позволяют просматривать и даже редактировать ваши файлы Sass в браузерах.
+Смотрите инструкции по использованию исходных карт в [Chrome][] и [Firefox][].
+Имеет четыре возможных значения:
 
 [Chrome]: https://developers.google.com/web/tools/chrome-devtools/javascript/source-maps
 [Firefox]: https://developer.mozilla.org/en-US/docs/Tools/Style_Editor#Source_map_support
 
-* `auto` (the default) uses relative URLs to link from the source map to the
-  Sass stylesheets where possible, and absolute [`file:` URLs][] otherwise.
-* `file` always uses absolute absolute `file:` URLs to link from the source map
-  to the Sass stylesheets.
-* `inline` includes the text of the Sass stylehseets in the source map directly.
-* `none` doesn't generate source maps at all.
+* `auto` (по умолчанию) использует относительные URL-адреса для ссылки с исходной карты на таблицы стилей Sass, где это возможно, и абсолютные [URL-адреса `file:`][`file:` URLs] в противном случае.
+* `file` всегда использует абсолютные абсолютные URL-адреса `file:` для ссылки с исходной карты на таблицы стилей Sass.
+* `inline` включает текст стилей Sass напрямую в исходную карту.
+* `none` вообще не генерирует исходные карты.
 
 [`file:` URLs]: https://en.wikipedia.org/wiki/File_URI_scheme
 
@@ -322,8 +297,8 @@ $ sass --sourcemap=none sass/style.scss css/style.css
 
 #### `--stdin`
 
-This flag (abbreviated `-s`) is tells Sass to read its input file from [standard
-input][]. When it's passed, no input file may be passed.
+Этот флаг (сокращенно `-s`) указывает Sass читать входной файл из [стандартного ввода][standard input].
+Когда он передан, входной файл не может быть передан.
 
 ```shellsession
 $ echo -e 'h1\n  font-size: 40px' | sass --stdin
@@ -332,13 +307,12 @@ h1 {
 }
 ```
 
-The `--stdin` flag may not be used with [many-to-many mode][].
+Флаг `--stdin` нельзя использовать с [режимом многие-ко-многим][many-to-many mode].
 
 #### `--default-encoding`
 
-This option (abbreviated `-E`) controls the default [character encoding][] that
-Sass will use to load source files that don't [explicitly specify][] a character
-encoding. It defaults to the operating system's default encoding.
+Эта опция (сокращенно `-E`) управляет [кодировкой символов][character encoding] по умолчанию, которую Sass будет использовать для загрузки исходных файлов, которые не [явно указывают][explicitly specify] кодировку символов.
+По умолчанию используется кодировка операционной системы по умолчанию.
 
 [character encoding]: https://en.wikipedia.org/wiki/Character_encoding
 [explicitly specify]: ../syntax/parsing#input-encoding
@@ -349,10 +323,8 @@ $ sass --default-encoding=Shift-JIS style.scss style.css
 
 #### `--unix-newlines`
 
-This flag tells Sass to generate output files with whose lines are separated
-with the U+000A LINE FEED character, as opposed to the operating system default
-(on Windows, this is U+000D CARRIAGE RETURN followed by U+000A LINE FEED). It's
-always true on systems that default to Unix-style newlines.
+Этот флаг указывает Sass генерировать выходные файлы, строки которых разделены символом U+000A LINE FEED, в отличие от операционной системы по умолчанию (в Windows это U+000D CARRIAGE RETURN, за которым следует U+000A LINE FEED).
+Это всегда верно для систем, в которых по умолчанию используются символы новой строки в стиле Unix.
 
 ```shellsession
 $ sass --unix-newlines style.scss style.css
@@ -360,12 +332,11 @@ $ sass --unix-newlines style.scss style.css
 
 #### `--debug-info`
 
-This flag (abbreviated `-g`) causes Sass to emit dummy `@media` queries that
-indicate where each style rule was defined in the source stylehseet.
+Этот флаг (сокращенно `-g`) заставляет Sass выдавать фиктивные запросы `@media`, которые указывают, где каждое правило стиля было определено в исходной таблице стилей.
 
 <% heads_up do %>
-This flag only exists for backwards-compatibility. Source maps are now the
-recommended way of mapping CSS back to the Sass that generated it.
+Этот флаг существует только для обратной совместимости.
+Исходные карты теперь являются рекомендуемым способом сопоставления CSS обратно с Sass, который его сгенерировал.
 <% end %>
 
 ```shellsession
@@ -377,9 +348,7 @@ h1 {
 
 #### `--line-comments`
 
-This flag (also available as `--line-numbers`, abbreviated as `-l`) causes Sass
-to emit comments for every style rule that indicate where each style rule was
-defined in the source stylesheet.
+Этот флаг (также доступный как `--line-numbers`, сокращенно `-l`) заставляет Sass генерировать комментарии для каждого правила стиля, которые указывают, где каждое правило стиля было определено в исходной таблице стилей.
 
 ```shellsession
 $ sass --line-numbers style.scss
@@ -388,13 +357,12 @@ h1 {
   font-size: 40px; }
 ```
 
-### Other Options
+### Другие опции
 
 #### `--interactive`
 
-This flag (abbreviated `-i`) tells Sass to run in interactive mode, where you
-can write [SassScript expressions][] and see their results. Interactive mode
-also supports [variables][].
+Этот флаг (сокращенно `-i`) указывает Sass работать в интерактивном режиме, где вы можете написать [SassScript-выражения][SassScript expressions] и увидеть их результаты.
+Интерактивный режим также поддерживает [переменные][variables].
 
 [SassScript expressions]: ../syntax/structure#expressions
 [variables]: ../variables
@@ -411,9 +379,8 @@ $ sass --interactive
 
 #### `--check`
 
-This flag (abbreviated `-c`) tells Sass to verify that the syntax of its input
-file is valid without executing that file. If the syntax is valid, it exits with
-[status][] 0. It can't be used in [many-to-many mode][].
+Этот флаг (сокращенно `-c`) указывает Sass проверять, что синтаксис его входного файла действителен, не выполняя этот файл. Если синтаксис действителен, он завершается со [статусом][status] 0.
+Его нельзя использовать в [режиме многие-ко-многим][many-to-many mode].
 
 [status]: https://en.wikipedia.org/wiki/Exit_status
 
@@ -423,8 +390,7 @@ $ sass --check style.scss
 
 #### `--precision`
 
-This option tells Sass how many digits of [precision][] to use when emitting
-decimal numbers.
+Эта опция сообщает Sass, сколько цифр [точности][precision] использовать при выводе десятичных чисел.
 
 [precision]: ../values/numbers#precision
 
@@ -436,8 +402,8 @@ h1 {
 
 #### `--cache-location`
 
-This option tells Sass where to store its cache of parsed files, so it can
-run faster in future invocations. It defaults to `.sass-cache`.
+Эта опция сообщает Sass, где хранить свой кеш проанализированных файлов, чтобы он мог работать быстрее в будущих вызовах.
+По умолчанию это `.sass-cache`.
 
 ```shellsession
 $ sass --cache-location=/tmp/sass-cache style.scss style.css
@@ -445,7 +411,7 @@ $ sass --cache-location=/tmp/sass-cache style.scss style.css
 
 #### `--no-cache`
 
-This flag (abbreviated `-C`) tells Sass not to cache parsed files at all.
+Этот флаг (сокращенно `-C`) говорит Sass не кэшировать проанализированные файлы вообще.
 
 ```shellsession
 $ sass --no-cache style.scss style.css
@@ -453,8 +419,8 @@ $ sass --no-cache style.scss style.css
 
 #### `--trace`
 
-This flag tells Sass to print the full Ruby stack trace when an error is
-encountered. It's used by the Sass team for debugging errors.
+Этот флаг указывает Sass напечатать полную трассировку стека Ruby при обнаружении ошибки.
+Команда Sass использует его для отладки ошибок.
 
 ```shellsession
 Traceback (most recent call last):
@@ -487,9 +453,9 @@ test.scss:1: Invalid CSS after "h1 {font-size: ": expected expression (e.g. 1px,
 ```
 #### `--quiet`
 
-This flag (abbreviated `-q`) tells Sass not to emit any warnings when compiling.
-By default, Sass emits warnings when deprecated features are used or when the
-[`@warn` rule][] is encountered. It also silences the [`@debug` rule][].
+Этот флаг (сокращенно `-q`) указывает Sass не выдавать никаких предупреждений при компиляции.
+По умолчанию Sass выдает предупреждения при использовании устаревших функций или при обнаружении [правила `@warn`][`@warn` rule].
+Он также отключает [правило `@debug`][`@debug` rule].
 
 [`@warn` rule]: ../at-rules/warn
 [`@debug` rule]: ../at-rules/debug
