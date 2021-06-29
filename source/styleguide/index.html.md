@@ -1,11 +1,13 @@
 ---
-title: Style Guide
+title: Руководство по стилю
 introduction: >
-  Contributing to this website? Awesome! Use this style guide, developed by
-  Team Sass Design. If you add new design, please document it here.
+  Участвуете в создании этого сайта?
+  Потрясающие!
+  Используйте это руководство по стилю, разработанное Team Sass Design.
+  Если вы добавляете новый дизайн, укажите его здесь.
 ---
 
-### Site Objectives
+### Цели сайта
 
-1. Show why Sass is the best CSS Preprocessor, and why you should use it.
-2. Be a resource for those who are already using Sass, at whatever level.
+1. Покажите, почему Sass - лучший препроцессор CSS и почему вы должны его использовать.
+2. Будьте ресурсом для тех, кто уже использует Sass, на любом уровне.

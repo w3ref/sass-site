@@ -1,58 +1,51 @@
 ---
-title: Code Style Guide
+title: Руководство по стилю кода
 introduction: >
-  If you would like to contribute to this website's code, please adhere to the
-  following code style guidelines.
+  Если вы хотите внести свой вклад в код этого веб-сайта, пожалуйста, придерживайтесь следующих рекомендаций по стилю кода.
 ---
 
-- Please try to keep lines at a maximum of 80 characters.
-- Favor clarity over brevity in naming anything.
-- Pages end with `.html.haml`, `.html.erb`, `.html.md`, etc.
-- Partials and layouts end with `.haml`, `.md`, `.erb`, etc.
+- Пожалуйста, старайтесь, чтобы длина строки не превышала 80 символов.
+- Предпочитайте ясность краткости при назывании чего-либо.
+- Страницы заканчиваются на `.html.haml`, `.html.erb`, `.html.md` и т. д.
+- Частичные файлы и макеты заканчиваются на `.haml`, `.md`, `.erb` и т. д.
 
-## Markup
+## Разметка
 
-For the most part, we use [Haml][] and [Markdown][] for writing markup. If you
-need to use regular HTML anywhere, write HTML5, but favor a strict XHTML style:
+По большей части мы используем [Haml][] и [Markdown][] для написания разметки.
+Если вам нужно где угодно использовать обычный HTML, напишите HTML5, но отдавайте предпочтение строгому стилю XHTML:
 
-- Use well-formed markup; elements are nested properly and do not overlap.
-- Write elements and attributes in lowercase.
-- Quote all attributes.
-- Self-close empty elements with a space before the trailing slash:
-  (`<hr />`)
+- Используйте правильную разметку; элементы правильно вложены и не перекрываются.
+- Пишите элементы и атрибуты в нижнем регистре.
+- Цитируйте все атрибуты.
+- Самозакрывающиеся пустые элементы с пробелом перед завершающей косой чертой (`<hr />`)
 
-## Style
+## Стиль
 
-This website uses Sass in the SCSS syntax. Make sure you're using the classes
-that we have to offer before rewriting something, unless you can justify
-otherwise.
+Этот веб-сайт использует Sass в синтаксисе SCSS.
+Убедитесь, что вы используете классы, которые мы можем предложить, прежде чем что-то переписывать, если вы не можете обосновать иное.
 
-- Use the style [Brad Frost writes about][bf] for clarity:
-  - Note that older classes do not use this style yet, but we will refactor over
-    time.
-  - Use a `sl-` global namespace.
-  - Use the class prefixes [Harry Roberts][hr] advocates, though we are using a
-    much simpler set:
-    - `c-` is for **components**. Example: `sl-c-card`.
-    - `l-` is for **layouts**. Example: `sl-l-grid`.
-    - `is-` and `has-` for states. Example: `sl-is-active`.
-    - `js-` is for classes specifically created for JavaScript targeting.
-      Exampe: `sl-js-toggle-navigation`
-  - Use the [BEM][] syntax.
-    - **Block** -- the overall component object. Example: `sl-c-card`.
-    - **Element** -- any child of the block. Example: `sl-c-card__header`.
-    - **Modifier** -- any variation. This can be put on a block. Example:
-    `sl-c-card--primary`. It can also be put on an element Example:
-    `sl-c-card__header--large`.
-- Keep classes as flat as possible, and avoid nesting too deep.
-- Avoid using element selectors __unless__ you're using a wrapper utility to
-  target everything inside (such as a class around a block of markdown or other
-  longform text to style all its elements properly). This is specifically for
-  when it doesn't make sense to use classes. Be mindful when do this. We can
-  give you feedback in a code review for instances like this.
-- For naming of variables, mixins, placeholder selectors, or classes, use the
-  general-to-specific approach. See [this article][gts] for more details.
-- Write comma-delimited selectors on separate lines.
+- Для ясности используйте стиль [о котором пишет Брэд Фрост][bf]:
+  - Обратите внимание, что старые классы еще не используют этот стиль, но со временем мы будем проводить рефакторинг.
+  - Используйте глобальное пространство имен `sl-`.
+  - Используйте префиксы классов, сторонники [Harry Roberts][hr], хотя мы используем гораздо более простой набор:
+    - `c-` для **компонентов**. Пример: `sl-c-card`.
+    - `l-` для **макетов**. Пример: `sl-l-grid`.
+    - `is-` and `has-` for states. Пример: `sl-is-active`.
+    - `js-` предназначен для классов, специально созданных для таргетинга JavaScript.
+      Пример: `sl-js-toggle-navigation`
+  - Используйте синтаксис [БЭМ][BEM].
+    - **Блок** -- общий компонентный объект. Пример: `sl-c-card`.
+    - **Элемент** -- любой дочерний элемент блока. Пример: `sl-c-card__header`.
+    - **Модификатор** -- любой вариант. Это можно поставить на блок.
+      Пример: `sl-c-card--primary`. Его также можно поместить в элемент.
+      Пример: `sl-c-card__header--large`.
+- Держите классы как можно более плоскими и избегайте слишком глубокого вложения.
+- Избегайте использования селекторов элементов, __если только вы не__ используете утилиту-оболочку для нацеливания на все внутри (например, класс вокруг блока уценки или другого длинного текста, чтобы правильно стилизовать все его элементы).
+  Это специально для случаев, когда нет смысла использовать классы. Будьте внимательны, когда делаете это.
+  Мы можем дать вам обратную связь при проверке кода в подобных случаях.
+- Для именования переменных, миксинов, селекторов-заполнителей или классов используйте подход от общего к конкретному.
+  Смотрите [эту статью][gts] для получения более подробной информации.
+- Пишите селекторы через запятую на отдельных строках.
 
 [haml]:     http://haml.info/
 [markdown]: http://daringfireball.net/projects/markdown/
