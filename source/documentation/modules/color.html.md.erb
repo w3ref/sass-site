@@ -14,30 +14,25 @@ SIGNATURE
 %>
   <% impl_status dart: '1.27.0', libsass: false, ruby: false, feature: "$whiteness and $blackness" %>
 
-  Increases or decreases one or more properties of `$color` by fixed amounts.
+  Увеличивает или уменьшает одно или несколько свойств `$color` на фиксированную величину.
 
-  Adds the value passed for each keyword argument to the corresponding property
-  of the color, and returns the adjusted color. It's an error to specify an RGB
-  property (`$red`, `$green`, and/or `$blue`) at the same time as an HSL
-  property (`$hue`, `$saturation`, and/or `$lightness`), or either of those at
-  the same time as an [HWB][] property (`$hue`, `$whiteness`, and/or
-  `$blackness`).
+  Добавляет значение, переданное для каждого аргумента ключевого слова, к соответствующему свойству цвета и возвращает скорректированный цвет.
+  Ошибка при указании свойства RGB (`$red`, `$green`, и/или `$blue`) одновременно со свойством HSL (`$hue`, `$saturation`, и/или `$lightness`), или любой из них одновременно со свойством [HWB][] (`$hue`, `$whiteness`, и/или `$blackness`).
 
   [HWB]: https://en.wikipedia.org/wiki/HWB_color_model
 
-  All optional arguments must be numbers. The `$red`, `$green`, and `$blue`
-  arguments must be [unitless][] and between -255 and 255 (inclusive). The
-  `$hue` argument must have either the unit `deg` or no unit. The `$saturation`,
-  `$lightness`, `$whiteness`, and `$blackness` arguments must be between `-100%`
-  and `100%` (inclusive), and may not be unitless. The `$alpha` argument must be
-  unitless and between -1 and 1 (inclusive).
+  Все необязательные аргументы должны быть числами.
+  Аргументы `$red`, `$green` и `$blue` должны иметь значение [без единиц измерения][unitless] и находиться в диапазоне от -255 до 255 (включительно).
+  Аргумент `$hue` должен иметь либо единицу `deg`, либо не иметь единицы.
+  Аргументы `$saturation`, `$lightness`, `$whiteness` и `$blackness` должны находиться в диапазоне от `-100%` до `100%` (включительно) и не могут быть безразмерными.
+  Аргумент `$alpha` должен быть безразмерным и находиться в диапазоне от -1 до 1 (включительно).
 
   [unitless]: ../values/numbers#units
 
-  See also:
+  Смотрите также:
 
-  * [`color.scale()`](#scale) for fluidly scaling a color's properties.
-  * [`color.change()`](#change) for setting a color's properties.
+  * [`color.scale()`](#scale) для плавного масштабирования свойств цвета.
+  * [`color.change()`](#change) для установки свойств цвета.
 
   <% example(autogen_css: false) do %>
     @debug color.adjust(#6b717f, $red: 15); // #7a717f
@@ -52,22 +47,18 @@ SIGNATURE
 
 
 <% function 'adjust-hue($color, $degrees)', returns: 'color' do %>
-  Increases or decreases `$color`'s hue.
+  Увеличивает или уменьшает оттенок `$color`.
 
-  The `$hue` must be a number between `-360deg` and `360deg` (inclusive) to add
-  to `$color`'s hue. It may be [unitless][] but it may not have any unit other
-  than `deg`.
+  `$hue` должен быть числом от `-360deg` до `360deg` (включительно), чтобы добавить к оттенку `$color`.
+  Он может быть [безразмерным][unitless], но не может иметь никаких других единиц, кроме `deg`.
 
   [unitless]: ../values/numbers#units
 
-  See also [`color.adjust()`](#adjust), which can adjust any property of a
-  color.
+  Смотрите также [`color.adjust()`](#adjust), где можно настроить любое свойство цвета.
 
   <% heads_up do %>
-    Because `adjust-hue()` is redundant with [`adjust()`](#adjust), it's not
-    included directly in the new module system. Instead of
-    `adjust-hue($color, $amount)`, you can write
-    [`color.adjust($color, $hue: $amount)`](#adjust).
+    Поскольку `adjust-hue()` дублируется с [`adjust()`](#adjust), он не включен непосредственно в новую модульную систему.
+    Вместо `adjust-hue($color, $amount)`, вы можете написать [`color.adjust($color, $hue: $amount)`](#adjust).
   <% end %>
 
   <% example(autogen_css: false) do %>
@@ -96,21 +87,20 @@ SIGNATURE
             'alpha($color)',
             'opacity($color)',
             returns: 'number' do %>
-  Returns the alpha channel of `$color` as a number between 0 and 1.
+  Возвращает альфа-канал `$color` в виде числа от 0 до 1.
 
-  As a special case, this supports the Internet Explorer syntax
-  `alpha(opacity=20)`, for which it returns an [unquoted string][].
+  Как особый случай, он поддерживает синтаксис Internet Explorer `alpha(opacity=20)`, для которого он возвращает [строку без кавычек][unquoted string].
 
   [unquoted string]: ../values/strings#unquoted
 
-  See also:
+  Смотрите также:
 
-  * [`color.red()`](#red) for getting a color's red channel.
-  * [`color.green()`](#green) for getting a color's green channel.
-  * [`color.blue()`](#blue) for getting a color's blue channel.
-  * [`color.hue()`](#hue) for getting a color's hue.
-  * [`color.saturation()`](#saturation) for getting a color's saturation.
-  * [`color.lightness()`](#lightness) for getting a color's lightness.
+  * [`color.red()`](#red) для получения красного канала цвета.
+  * [`color.green()`](#green) для получения зеленого канала цвета.
+  * [`color.blue()`](#blue) для получения канала синего цвета.
+  * [`color.hue()`](#hue) для получения оттенка цвета.
+  * [`color.saturation()`](#saturation) для получения насыщенности цвета.
+  * [`color.lightness()`](#lightness) для получения яркости цвета.
 
   <% example(autogen_css: false) do %>
     @debug color.alpha(#e1d7d2); // 1
@@ -127,19 +117,19 @@ SIGNATURE
 <% function 'color.blackness($color)', returns: 'number' do %>
   <% impl_status dart: '1.27.0', libsass: false, ruby: false %>
 
-  Returns the [HWB][] blackness of `$color` as a number between `0%` and `100%`.
+  Возвращает [HWB][] уровень черного для `$color` как число от `0%` до `100%`.
 
   [HWB]: https://en.wikipedia.org/wiki/HWB_color_model
 
-  See also:
+  Смотрите также:
 
-  * [`color.red()`](#red) for getting a color's red channel.
-  * [`color.green()`](#green) for getting a color's green channel.
-  * [`color.hue()`](#hue) for getting a color's hue.
-  * [`color.saturation()`](#saturation) for getting a color's saturation.
-  * [`color.lightness()`](#lightness) for getting a color's lightness.
-  * [`color.whiteness()`](#whiteness) for getting a color's whiteness.
-  * [`color.alpha()`](#alpha) for getting a color's alpha channel.
+  * [`color.red()`](#red) для получения красного канала цвета.
+  * [`color.green()`](#green) для получения зеленого канала цвета.
+  * [`color.hue()`](#hue) для получения оттенка цвета.
+  * [`color.saturation()`](#saturation) для получения насыщенности цвета.
+  * [`color.lightness()`](#lightness) для получения яркости цвета.
+  * [`color.whiteness()`](#whiteness) для получения белизны цвета.
+  * [`color.alpha()`](#alpha) для получения альфа-канала цвета.
 
   <% example(autogen_css: false) do %>
     @debug color.blackness(#e1d7d2); // 11.7647058824%
@@ -154,18 +144,18 @@ SIGNATURE
 
 
 <% function 'color.blue($color)', 'blue($color)', returns: 'number' do %>
-  Returns the blue channel of `$color` as a number between 0 and 255.
+  Возвращает синий канал `$color` как число от 0 до 255.
 
-  See also:
+  Смотрите также:
 
-  * [`color.red()`](#red) for getting a color's red channel.
-  * [`color.green()`](#green) for getting a color's green channel.
-  * [`color.hue()`](#hue) for getting a color's hue.
-  * [`color.saturation()`](#saturation) for getting a color's saturation.
-  * [`color.lightness()`](#lightness) for getting a color's lightness.
-  * [`color.whiteness()`](#whiteness) for getting a color's whiteness.
-  * [`color.blackness()`](#blackness) for getting a color's blackness.
-  * [`color.alpha()`](#alpha) for getting a color's alpha channel.
+  * [`color.red()`](#red) для получения красного канала цвета.
+  * [`color.green()`](#green) для получения зеленого канала цвета.
+  * [`color.hue()`](#hue) для получения оттенка цвета.
+  * [`color.saturation()`](#saturation) для получения насыщенности цвета.
+  * [`color.lightness()`](#lightness) для получения яркости цвета.
+  * [`color.whiteness()`](#whiteness) для получения белизны цвета.
+  * [`color.blackness()`](#blackness) для получения черноты цвета.
+  * [`color.alpha()`](#alpha) для получения альфа-канала цвета.
 
   <% example(autogen_css: false) do %>
     @debug color.blue(#e1d7d2); // 210
@@ -189,31 +179,24 @@ SIGNATURE
 %>
   <% impl_status dart: '1.27.0', libsass: false, ruby: false, feature: "$whiteness and $blackness" %>
 
-  Sets one or more properties of a color to new values.
+  Устанавливает одно или несколько свойств цвета на новые значения.
 
-  Uses the value passed for each keyword argument in place of the corresponding
-  property of the color, and returns the changed color. It's an error to specify
-  an RGB property (`$red`, `$green`, and/or `$blue`) at the same time as an HSL
-  property (`$hue`, `$saturation`, and/or `$lightness`), or either of those at
-  the same time as an [HWB][] property (`$hue`, `$whiteness`, and/or
-  `$blackness`).
+  Использует значение, переданное для каждого аргумента ключевого слова, вместо соответствующего свойства цвета и возвращает измененный цвет. Ошибка при указании свойства RGB (`$red`, `$green`, и/или `$blue`) одновременно со свойством HSL (`$hue`, `$saturation`, и/или `$lightness`) или любой из них одновременно со свойством [HWB][] (`$hue`, `$whiteness`, и/или `$blackness`).
 
   [HWB]: https://en.wikipedia.org/wiki/HWB_color_model
 
-  All optional arguments must be numbers. The `$red`, `$green`, and `$blue`
-  arguments must be [unitless][] and between 0 and 255 (inclusive). The `$hue`
-  argument must have either the unit `deg` or no unit. The `$saturation`,
-  `$lightness`, `$whiteness`, and `$blackness` arguments must be between `0%`
-  and `100%` (inclusive), and may not be unitless. The `$alpha` argument must be
-  unitless and between -1 and 1 (inclusive).
+  Все необязательные аргументы должны быть числами.
+  Аргументы `$red`, `$green` и `$blue` должны иметь значение [без единиц измерения][unitless] и находиться в диапазоне от -255 до 255 (включительно).
+  Аргумент `$hue` должен иметь либо единицу `deg`, либо не иметь единицы.
+  Аргументы `$saturation`, `$lightness`, `$whiteness` и `$blackness` должны находиться в диапазоне от `-100%` до `100%` (включительно) и не могут быть безразмерными.
+  Аргумент `$alpha` должен быть безразмерным и находиться в диапазоне от -1 до 1 (включительно).
 
   [unitless]: ../values/numbers#units
 
-  See also:
+  Смотрите также:
 
-  * [`color.scale()`](#scale) for fluidly scaling a color's properties.
-  * [`color.adjust()`](#adjust) for adjusting a color's properties by fixed
-    amounts.
+  * [`color.scale()`](#scale) для плавного масштабирования свойств цвета.
+  * [`color.adjust()`](#adjust) для настройки свойств цвета на фиксированное количество.
 
   <% example(autogen_css: false) do %>
     @debug color.change(#6b717f, $red: 100); // #64717f
@@ -230,9 +213,9 @@ SIGNATURE
 <% function 'color.complement($color)',
             'complement($color)',
             returns: 'color' do %>
-  Returns the RGB [complement][] of `$color`.
+  Возвращает RGB [дополнение][complement] из `$color`.
 
-  This is identical to [`color.adjust($color, $hue: 180deg)`](#adjust).
+  Это идентично [`color.adjust($color, $hue: 180deg)`](#adjust).
 
   [complement]: https://en.wikipedia.org/wiki/Complementary_colors
 
@@ -259,20 +242,17 @@ SIGNATURE
 
 
 <% function 'darken($color, $amount)', returns: 'color' do %>
-  Makes `$color` darker.
+  Делает `$color` темнее.
 
-  The `$amount` must be a number between `0%` and `100%` (inclusive). Decreases
-  the HSL lightness of `$color` by that amount.
+  Сумма `$amount` должна быть числом от `0%` до `100%` (включительно).
+  Уменьшает яркость HSL для `$color` на эту величину.
 
   <% heads_up do %>
-    The `darken()` function decreases lightness by a fixed amount, which is often
-    not the desired effect. To make a color a certain percentage darker than it was
-    before, use [`color.scale()`](#scale) instead.
+    Функция `darken()` уменьшает яркость на фиксированную величину, что часто не является желаемым эффектом.
+    Чтобы сделать цвет на определенный процент темнее, чем он был раньше, используйте вместо этого [`color.scale()`](#scale).
 
-    Because `darken()` is usually not the best way to make a color darker, it's
-    not included directly in the new module system. However, if you have to
-    preserve the existing behavior, `darken($color, $amount)` can be written
-    [`color.adjust($color, $lightness: -$amount)`](#adjust).
+    Поскольку `darken()` - обычно не лучший способ сделать цвет темнее, он не включен непосредственно в новую модульную систему.
+    Однако, если вам нужно сохранить существующее поведение, `darken($color, $amount)` можно записать [`color.adjust($color, $lightness: -$amount)`](#adjust).
 
     <% example(autogen_css: false) do %>
       // #036 has lightness 20%, so when darken() subtracts 30% it just returns black.
@@ -312,20 +292,17 @@ SIGNATURE
 
 
 <% function 'desaturate($color, $amount)', returns: 'color' do %>
-  Makes `$color` less saturated.
+  Делает `$color` менее насыщенным.
 
-  The `$amount` must be a number between `0%` and `100%` (inclusive). Decreases
-  the HSL saturation of `$color` by that amount.
+  Сумма `$amount` должна быть числом от `0%` до `100%` (включительно).
+  Уменьшает HSL-насыщенность `$color` на эту величину.
 
   <% heads_up do %>
-    The `desaturate()` function decreases saturation by a fixed amount, which is
-    often not the desired effect. To make a color a certain percentage less
-    saturated than it was before, use [`color.scale()`](#scale) instead.
+    Функция `desaturate()` уменьшает насыщенность на фиксированную величину, что часто не является желаемым эффектом.
+    Чтобы сделать цвет на определенный процент менее насыщенным, чем был раньше, используйте вместо него [`color.scale()`](#scale).
 
-    Because `desaturate()` is usually not the best way to make a color less
-    saturated, it's not included directly in the new module system. However, if
-    you have to preserve the existing behavior, `desaturate($color, $amount)`
-    can be written [`color.adjust($color, $saturation: -$amount)`](#adjust).
+    Поскольку `desaturate()` обычно не лучший способ сделать цвет менее насыщенным, он не включен непосредственно в новую модульную систему.
+    Однако, если вам нужно сохранить существующее поведение, `desaturate($color, $amount)` можно записать [`color.adjust($color, $saturation: -$amount)`](#adjust).
 
     <% example(autogen_css: false) do %>
       // #d2e1dd has saturation 20%, so when desaturate() subtracts 30% it just
@@ -369,9 +346,9 @@ SIGNATURE
 <% function 'color.grayscale($color)',
             'grayscale($color)',
             returns: 'color' do %>
-  Returns a gray color with the same lightness as `$color`.
+  Возвращает серый цвет той же яркости, что и `$color`.
 
-  This is identical to [`color.change($color, $saturation: 0%)`](#change).
+  Это идентично [`color.change($color, $saturation: 0%)`](#change).
 
   <% example(autogen_css: false) do %>
     @debug color.grayscale(#6b717f); // #757575
@@ -386,18 +363,18 @@ SIGNATURE
 
 
 <% function 'color.green($color)', 'green($color)', returns: 'number' do %>
-  Returns the green channel of `$color` as a number between 0 and 255.
+  Возвращает зеленый канал `$color` как число от 0 до 255.
 
-  See also:
+  Смотрите также:
 
-  * [`color.red()`](#red) for getting a color's red channel.
-  * [`color.blue()`](#blue) for getting a color's blue channel.
-  * [`color.hue()`](#hue) for getting a color's hue.
-  * [`color.saturation()`](#saturation) for getting a color's saturation.
-  * [`color.lightness()`](#lightness) for getting a color's lightness.
-  * [`color.whiteness()`](#whiteness) for getting a color's whiteness.
-  * [`color.blackness()`](#blackness) for getting a color's blackness.
-  * [`color.alpha()`](#alpha) for getting a color's alpha channel.
+  * [`color.red()`](#red) для получения красного канала цвета.
+  * [`color.blue()`](#blue) для получения канала синего цвета.
+  * [`color.hue()`](#hue) для получения оттенка цвета.
+  * [`color.saturation()`](#saturation) для получения насыщенности цвета.
+  * [`color.lightness()`](#lightness) для получения яркости цвета.
+  * [`color.whiteness()`](#whiteness) для получения белизны цвета.
+  * [`color.blackness()`](#blackness) для получения черноты цвета.
+  * [`color.alpha()`](#alpha) для получения альфа-канала цвета.
 
   <% example(autogen_css: false) do %>
     @debug color.green(#e1d7d2); // 215
@@ -412,18 +389,18 @@ SIGNATURE
 
 
 <% function 'color.hue($color)', 'hue($color)', returns: 'number' do %>
-  Returns the hue of `$color` as a number between `0deg` and `360deg`.
+  Возвращает оттенок `$color` как число от `0deg` до `360deg`.
 
-  See also:
+  Смотрите также:
 
-  * [`color.red()`](#red) for getting a color's red channel.
-  * [`color.green()`](#green) for getting a color's green channel.
-  * [`color.blue()`](#blue) for getting a color's blue channel.
-  * [`color.saturation()`](#saturation) for getting a color's saturation.
-  * [`color.lightness()`](#lightness) for getting a color's lightness.
-  * [`color.whiteness()`](#whiteness) for getting a color's whiteness.
-  * [`color.blackness()`](#blackness) for getting a color's blackness.
-  * [`color.alpha()`](#alpha) for getting a color's alpha channel.
+  * [`color.red()`](#red) для получения красного канала цвета.
+  * [`color.green()`](#green) для получения зеленого канала цвета.
+  * [`color.blue()`](#blue) для получения канала синего цвета.
+  * [`color.saturation()`](#saturation) для получения насыщенности цвета.
+  * [`color.lightness()`](#lightness) для получения яркости цвета.
+  * [`color.whiteness()`](#whiteness) для получения белизны цвета.
+  * [`color.blackness()`](#blackness) для получения черноты цвета.
+  * [`color.alpha()`](#alpha) для получения альфа-канала цвета.
 
   <% example(autogen_css: false) do %>
     @debug color.hue(#e1d7d2); // 20deg
@@ -442,24 +419,20 @@ SIGNATURE
             'color.hwb($hue, $whiteness, $blackness, $alpha: 1)', returns: 'color' do %>
   <% impl_status dart: '1.27.0', libsass: false, ruby: false %>
 
-  Returns a color with the given [hue, whiteness, and blackness][] and the given
-  alpha channel.
+  Возвращает цвет с заданными [оттенком, белизной и чернотой]][hue, whiteness, and blackness] и заданным альфа-каналом.
 
   [hue, whiteness, and blackness]: https://en.wikipedia.org/wiki/HWB_color_model
 
-  The hue is a number between `0deg` and `360deg` (inclusive). The whiteness and
-  blackness are numbers between `0%` and `100%` (inclusive). The hue may be
-  [unitless][], but the whiteness and blackness must have unit `%`. The alpha
-  channel can be specified as either a unitless number between 0 and 1
-  (inclusive), or a percentage between `0%` and `100%` (inclusive).
+  Оттенок - это число от `0deg` до `360deg` (включительно).
+  Белизна и черный цвет - это числа от `0%` до `100%` (включительно).
+  Оттенок может быть [безразмерным][unitless], но для белизны и черноты должна быть единица `%`.
+  Альфа-канал может быть указан либо как безразмерное число от 0 до 1 (включительно), либо как процентное соотношение между `0%` и `100%` (включительно).
 
   [unitless]: ../values/numbers#units
-  
+
   <% heads_up do %>
-    Sass's [special parsing rules][] for slash-separated values make it
-    difficult to pass variables for `$blackness` or `$alpha` when using the
-    `color.hwb($hue $whiteness $blackness / $alpha)` signature. Consider using
-    `color.hwb($hue, $whiteness, $blackness, $alpha)` instead.
+    [Специальные правила синтаксического анализа][special parsing rules] Sass для значений, разделенных косой чертой, затрудняют передачу переменных для `$blackness` или `$alpha` при использовании сигнатуры `color.hwb($hue $whiteness $blackness / $alpha)`.
+    Вместо этого рассмотрите возможность использования `color.hwb($hue, $whiteness, $blackness, $alpha)`.
 
     [special parsing rules]: ../operators/numeric#slash-separated-values
   <% end %>
@@ -479,8 +452,7 @@ SIGNATURE
 <% function 'color.ie-hex-str($color)',
             'ie-hex-str($color)',
             returns: 'unquoted string' do %>
-  Returns an unquoted string that represents `$color` in the `#AARRGGBB` format
-  expected by Internet Explorer's [`-ms-filter`][] property.
+  Возвращает строку без кавычек, которая представляет `$color` в формате `#AARRGGBB`, ожидаемом свойством Internet Explorer [`-ms-filter`][].
 
   [`-ms-filter`]: https://developer.mozilla.org/en-US/docs/Web/CSS/-ms-filter
 
@@ -499,13 +471,13 @@ SIGNATURE
 <% function 'color.invert($color, $weight: 100%)',
             'invert($color, $weight: 100%)',
             returns: 'color' do %>
-  Returns the inverse or [negative][] of `$color`.
+  Возвращает обратное или [отрицательное][negative] значение `$color`.
 
   [negative]: https://en.wikipedia.org/wiki/Negative_(photography)
 
-  The `$weight` must be a number between `0%` and `100%` (inclusive). A higher
-  weight means the result will be closer to the negative, and a lower weight means
-  it will be closer to `$color`. Weight `50%` will always produce `#808080`.
+  `$weight` должен быть числом от `0%` до `100%` (включительно).
+  Более высокий вес означает, что результат будет ближе к отрицательному, а меньший вес означает, что он будет ближе к `$color`.
+  Вес `50%` всегда будет давать `#808080`.
 
   <% example(autogen_css: false) do %>
     @debug color.invert(#b37399); // #4c8c66
@@ -520,20 +492,17 @@ SIGNATURE
 
 
 <% function 'lighten($color, $amount)', returns: 'color' do %>
-  Makes `$color` lighter.
+  Делает `$color` светлее.
 
-  The `$amount` must be a number between `0%` and `100%` (inclusive). Increases
-  the HSL lightness of `$color` by that amount.
+  Сумма `$amount` должна быть числом от `0%` до `100%` (включительно).
+  На эту величину увеличивает яркость HSL для `$color`.
 
   <% heads_up do %>
-    The `lighten()` function increases lightness by a fixed amount, which is often
-    not the desired effect. To make a color a certain percentage lighter than it was
-    before, use [`scale()`](#scale) instead.
+    Функция `lighten()` увеличивает яркость на фиксированную величину, что часто не является желаемым эффектом.
+    Чтобы сделать цвет на определенный процент светлее, чем был раньше, используйте вместо него [`scale()`](#scale).
 
-    Because `lighten()` is usually not the best way to make a color lighter,
-    it's not included directly in the new module system. However, if you have to
-    preserve the existing behavior, `lighten($color, $amount)` can be written
-    [`adjust($color, $lightness: $amount)`](#adjust).
+    Поскольку `lighten()` обычно не лучший способ сделать цвет светлее, он не включен непосредственно в новую модульную систему.
+    Однако, если вам нужно сохранить существующее поведение, `lighten($color, $amount)` можно записать [`adjust($color, $lightness: $amount)`](#adjust).
 
     <% example(autogen_css: false) do %>
       // #e1d7d2 has lightness 85%, so when lighten() adds 30% it just returns white.
@@ -575,18 +544,18 @@ SIGNATURE
 <% function 'color.lightness($color)',
             'lightness($color)',
             returns: 'number' do %>
-  Returns the HSL lightness of `$color` as a number between `0%` and `100%`.
+  Возвращает HSL-яркость `$color` как число от `0%` до `100%`.
 
-  See also:
+  Смотрите также:
 
-  * [`color.red()`](#red) for getting a color's red channel.
-  * [`color.green()`](#green) for getting a color's green channel.
-  * [`color.blue()`](#blue) for getting a color's blue channel.
-  * [`color.hue()`](#hue) for getting a color's hue.
-  * [`color.saturation()`](#saturation) for getting a color's saturation.
-  * [`color.whiteness()`](#whiteness) for getting a color's whiteness.
-  * [`color.blackness()`](#blackness) for getting a color's blackness.
-  * [`color.alpha()`](#alpha) for getting a color's alpha channel.
+  * [`color.red()`](#red) для получения красного канала цвета.
+  * [`color.green()`](#green) для получения зеленого канала цвета.
+  * [`color.blue()`](#blue) для получения канала синего цвета.
+  * [`color.hue()`](#hue) для получения оттенка цвета.
+  * [`color.saturation()`](#saturation) для получения насыщенности цвета.
+  * [`color.whiteness()`](#whiteness) для получения белизны цвета.
+  * [`color.blackness()`](#blackness) для получения черноты цвета.
+  * [`color.alpha()`](#alpha) для получения альфа-канала цвета.
 
   <% example(autogen_css: false) do %>
     @debug color.lightness(#e1d7d2); // 85.2941176471%
@@ -603,12 +572,11 @@ SIGNATURE
 <% function 'color.mix($color1, $color2, $weight: 50%)',
             'mix($color1, $color2, $weight: 50%)',
             returns: 'color' do %>
-  Returns a number that's a mixture of `$color1` and `$color2`.
+  Возвращает число, представляющее собой смесь `$color1` и `$color2`.
 
-  Both the `$weight` and the relative opacity of each color determines how much of
-  each color is in the result. The `$weight` must be a number between `0%` and
-  `100%` (inclusive). A larger weight indicates that more of `$color1` should be
-  used, and a smaller weight indicates that more of `$color2` should be used.
+  И `$weight`, и относительная непрозрачность каждого цвета определяют, сколько каждого цвета будет в результате.
+  Значение `$weight` должно быть числом от `0%` до `100%` (включительно).
+  Больший вес указывает, что следует использовать больше `$color1`, а меньший вес указывает, что следует использовать больше `$color2`.
 
   <% example(autogen_css: false) do %>
     @debug color.mix(#036, #d2e1dd); // #698aa2
@@ -625,20 +593,17 @@ SIGNATURE
 
 
 <% function 'opacify($color, $amount)', 'fade-in($color, $amount)', returns: 'color' do %>
-  Makes `$color` more opaque.
+  Делает `$color` более непрозрачным.
 
-  The `$amount` must be a number between `0` and `1` (inclusive). Increases the
-  alpha channel of `$color` by that amount.
+  Сумма `$amount` должна быть числом от `0` до `1` (включительно).
+  Увеличивает альфа-канал `$color` на эту величину.
 
   <% heads_up do %>
-    The `opacify()` function increases the alpha channel by a fixed amount, which is often
-    not the desired effect. To make a color a certain percentage more opaque than it was
-    before, use [`scale()`](#scale) instead.
+    Функция `opacify()` увеличивает альфа-канал на фиксированную величину, что часто не является желаемым эффектом.
+    Чтобы сделать цвет на определенный процент более непрозрачным, чем был раньше, используйте вместо этого [`scale()`](#scale).
 
-    Because `opacify()` is usually not the best way to make a color more opaque,
-    it's not included directly in the new module system. However, if you have to
-    preserve the existing behavior, `opacify($color, $amount)` can be written
-    [`adjust($color, $alpha: -$amount)`](#adjust).
+    Поскольку `opacify()` обычно не лучший способ сделать цвет более непрозрачным, он не включен непосредственно в новую модульную систему.
+    Однако, если вам нужно сохранить существующее поведение, `opacify($color, $amount)` можно записать [`adjust($color, $alpha: -$amount)`](#adjust).
 
     <% example(autogen_css: false) do %>
       // rgba(#036, 0.7) has alpha 0.7, so when opacify() adds 0.3 it returns a fully
@@ -670,18 +635,18 @@ SIGNATURE
 
 
 <% function 'color.red($color)', 'red($color)', returns: 'number' do %>
-  Returns the red channel of `$color` as a number between 0 and 255.
+  Возвращает красный канал `$color` как число от 0 до 255.
 
-  See also:
+  Смотрите также:
 
-  * [`color.green()`](#green) for getting a color's green channel.
-  * [`color.blue()`](#blue) for getting a color's blue channel.
-  * [`color.hue()`](#hue) for getting a color's hue.
-  * [`color.saturation()`](#saturation) for getting a color's saturation.
-  * [`color.lightness()`](#lightness) for getting a color's lightness.
-  * [`color.whiteness()`](#whiteness) for getting a color's whiteness.
-  * [`color.blackness()`](#blackness) for getting a color's blackness.
-  * [`color.alpha()`](#alpha) for getting a color's alpha channel.
+  * [`color.green()`](#green) для получения зеленого канала цвета.
+  * [`color.blue()`](#blue) для получения канала синего цвета.
+  * [`color.hue()`](#hue) для получения оттенка цвета.
+  * [`color.saturation()`](#saturation) для получения насыщенности цвета.
+  * [`color.lightness()`](#lightness) для получения яркости цвета.
+  * [`color.whiteness()`](#whiteness) для получения белизны цвета.
+  * [`color.blackness()`](#blackness) для получения черноты цвета.
+  * [`color.alpha()`](#alpha) для получения альфа-канала цвета.
 
   <% example(autogen_css: false) do %>
     @debug color.red(#e1d7d2); // 225
@@ -696,20 +661,17 @@ SIGNATURE
 
 
 <% function 'saturate($color, $amount)', 'saturate($color, $amount)', returns: 'color' do %>
-  Makes `$color` more saturated.
+  Делает `$color` более насыщенным.
 
-  The `$amount` must be a number between `0%` and `100%` (inclusive). Increases
-  the HSL saturation of `$color` by that amount.
+  Сумма `$amount` должна быть числом от `0%` до `100%` (включительно).
+  Увеличивает HSL-насыщенность `$color` на эту величину.
 
   <% heads_up do %>
-    The `saturate()` function increases saturation by a fixed amount, which is often
-    not the desired effect. To make a color a certain percentage more saturated than
-    it was before, use [`scale()`](#scale) instead.
+    Функция `saturate()` увеличивает насыщенность на фиксированную величину, что часто не является желаемым эффектом.
+    Чтобы сделать цвет на определенный процент более насыщенным, чем был раньше, используйте вместо этого [`scale()`](#scale) instead.
 
-    Because `saturate()` is usually not the best way to make a color more
-    saturated, it's not included directly in the new module system. However, if
-    you have to preserve the existing behavior, `saturate($color, $amount)` can
-    be written [`adjust($color, $saturation: $amount)`](#adjust).
+    Поскольку `saturate()` обычно не лучший способ сделать цвет более насыщенным, он не включен непосредственно в новую модульную систему.
+    Однако, если вам нужно сохранить существующее поведение, `saturate($color, $amount)` может быть записано [`adjust($color, $saturation: $amount)`](#adjust).
 
     <% example(autogen_css: false) do %>
       // #0e4982 has saturation 80%, so when saturate() adds 30% it just becomes
@@ -753,18 +715,18 @@ SIGNATURE
 <% function 'color.saturation($color)',
             'saturation($color)',
             returns: 'number' do %>
-  Returns the HSL saturation of `$color` as a number between `0%` and `100%`.
+  Возвращает HSL-насыщенность `$color` как число от `0%` до `100%`.
 
-  See also:
+  Смотрите также:
 
-  * [`color.red()`](#red) for getting a color's red channel.
-  * [`color.green()`](#green) for getting a color's green channel.
-  * [`color.blue()`](#blue) for getting a color's blue channel.
-  * [`color.hue()`](#hue) for getting a color's hue.
-  * [`color.lightness()`](#lightness) for getting a color's lightness.
-  * [`color.whiteness()`](#whiteness) for getting a color's whiteness.
-  * [`color.blackness()`](#blackness) for getting a color's blackness.
-  * [`color.alpha()`](#alpha) for getting a color's alpha channel.
+  * [`color.red()`](#red) для получения красного канала цвета.
+  * [`color.green()`](#green) для получения зеленого канала цвета.
+  * [`color.blue()`](#blue) для получения канала синего цвета.
+  * [`color.hue()`](#hue) для получения оттенка цвета.
+  * [`color.lightness()`](#lightness) для получения яркости цвета.
+  * [`color.whiteness()`](#whiteness) для получения белизны цвета.
+  * [`color.blackness()`](#blackness) для получения черноты цвета.
+  * [`color.alpha()`](#alpha) для получения альфа-канала цвета.
 
   <% example(autogen_css: false) do %>
     @debug color.saturation(#e1d7d2); // 20%
@@ -788,27 +750,20 @@ SIGNATURE
 %>
   <% impl_status dart: '1.27.0', libsass: false, ruby: false, feature: "$whiteness and $blackness" %>
 
-Fluidly scales one or more properties of `$color`.
+Плавно масштабирует одно или несколько свойств `$color`.
 
-  Each keyword argument must be a number between `-100%` and `100%` (inclusive).
-  This indicates how far the corresponding property should be moved from its
-  original position towards the maximum (if the argument is positive) or the
-  minimum (if the argument is negative). This means that, for example,
-  `$lightness: 50%` will make all colors `50%` closer to maximum lightness
-  without making them fully white.
+  Каждый аргумент ключевого слова должен быть числом от `-100%` до `100%` (включительно).
+  Это указывает, как далеко соответствующее свойство должно быть перемещено от исходного положения к максимуму (если аргумент положительный) или минимуму (если аргумент отрицательный).
+  Это означает, что, например, `$lightness: 50%` сделает все цвета `50%` ближе к максимальной яркости, не делая их полностью белыми.
 
-  It's an error to specify an RGB property (`$red`, `$green`, and/or `$blue`) at
-  the same time as an HSL property (`$saturation`, and/or `$lightness`), or
-  either of those at the same time as an [HWB][] property (`$whiteness`, and/or
-  `$blackness`).
+  Ошибка при указании свойства RGB (`$red`, `$green`, и/или `$blue`) одновременно со свойством HSL (`$saturation`, и/или `$lightness`), или любое из них одновременно со свойством [HWB][] (`$whiteness`, и/или `$blackness`).
 
   [HWB]: https://en.wikipedia.org/wiki/HWB_color_model
 
-  See also:
+  Смотрите также:
 
-  * [`color.adjust()`](#adjust) for changing a color's properties by fixed
-    amounts.
-  * [`color.change()`](#change) for setting a color's properties.
+  * [`color.adjust()`](#adjust) для изменения свойств цвета на фиксированное количество.
+  * [`color.change()`](#change) для установки свойств цвета.
 
   <% example(autogen_css: false) do %>
     @debug color.scale(#6b717f, $red: 15%); // #81717f
@@ -823,21 +778,16 @@ Fluidly scales one or more properties of `$color`.
 
 
 <% function 'transparentize($color, $amount)', 'fade-out($color, $amount)', returns: 'color' do %>
-  Makes `$color` more transparent.
+  Делает `$color` более прозрачным.
 
-  The `$amount` must be a number between `0` and `1` (inclusive). Decreases the
-  alpha channel of `$color` by that amount.
+  Сумма `$amount` должна быть числом от `0` до `1` (включительно).
+  Уменьшает альфа-канал `$color` на эту величину.
 
   <% heads_up do %>
-    The `transparentize()` function decreases the alpha channel by a fixed amount,
-    which is often not the desired effect. To make a color a certain percentage more
-    transparent than it was before, use [`color.scale()`](#scale) instead.
+    Функция `transparentize()` уменьшает альфа-канал на фиксированную величину, что часто не является желаемым эффектом.
+    Чтобы сделать цвет на определенный процент более прозрачным, чем был раньше, используйте вместо этого [`color.scale()`](#scale).
 
-    Because `transparentize()` is usually not the best way to make a color more
-    transparent, it's not included directly in the new module system. However,
-    if you have to preserve the existing behavior,
-    `transparentize($color, $amount)` can be written
-    [`color.adjust($color, $alpha: -$amount)`](#adjust).
+    Поскольку `transparentize()` обычно не лучший способ сделать цвет более прозрачным, он не включен непосредственно в новую модульную систему. Однако, если вам нужно сохранить существующее поведение, для `transparentize($color, $amount)` можно записать [`color.adjust($color, $alpha: -$amount)`](#adjust).
 
     <% example(autogen_css: false) do %>
       // rgba(#036, 0.3) has alpha 0.3, so when transparentize() subtracts 0.3 it
@@ -871,19 +821,19 @@ Fluidly scales one or more properties of `$color`.
 <% function 'color.whiteness($color)', returns: 'number' do %>
   <% impl_status dart: '1.27.0', libsass: false, ruby: false %>
 
-  Returns the [HWB][] whiteness of `$color` as a number between `0%` and `100%`.
+  Возвращает [HWB][] белизну `$color` как число от `0%` до `100%`.
 
   [HWB]: https://en.wikipedia.org/wiki/HWB_color_model
 
-  See also:
+  Смотрите также:
 
-  * [`color.red()`](#red) for getting a color's red channel.
-  * [`color.green()`](#green) for getting a color's green channel.
-  * [`color.hue()`](#hue) for getting a color's hue.
-  * [`color.saturation()`](#saturation) for getting a color's saturation.
-  * [`color.lightness()`](#lightness) for getting a color's lightness.
-  * [`color.blackness()`](#blackness) for getting a color's blackness.
-  * [`color.alpha()`](#alpha) for getting a color's alpha channel.
+  * [`color.red()`](#red) для получения красного канала цвета.
+  * [`color.green()`](#green) для получения зеленого канала цвета.
+  * [`color.hue()`](#hue) для получения оттенка цвета.
+  * [`color.saturation()`](#saturation) для получения насыщенности цвета.
+  * [`color.lightness()`](#lightness) для получения яркости цвета.
+  * [`color.blackness()`](#blackness) для получения черноты цвета.
+  * [`color.alpha()`](#alpha) для получения альфа-канала цвета.
 
   <% example(autogen_css: false) do %>
     @debug color.whiteness(#e1d7d2); // 82.3529411765%

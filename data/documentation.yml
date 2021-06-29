@@ -48,7 +48,7 @@ toc:
   - Числа: /documentation/operators/numeric
   - Строки: /documentation/operators/string
   - Логические: /documentation/operators/boolean
-- Built-In Modules: /documentation/modules
+- Встроенные модули: /documentation/modules
   :children:
   - <code>sass:color</code>: /documentation/modules/color
   - <code>sass:list</code>: /documentation/modules/list

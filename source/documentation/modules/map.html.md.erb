@@ -5,13 +5,10 @@ title: sass:map
 <%= partial '../snippets/built-in-module-status' %>
 
 <% fun_fact do %>
-  Sass libraries and design systems tend to share and override configurations
-  that are represented as nested maps (maps that contain maps that contain
-  maps).
+  Библиотеки и системы проектирования Sass имеют тенденцию разделять и переопределять конфигурации, представленные как вложенные карты (карты, содержащие карты, содержащие карты).
 
-  To help you work with nested maps, some map functions support deep
-  operations. For example, if you pass multiple keys to `map.get()`, it will
-  follow those keys to find the desired nested map:
+  Чтобы помочь вам работать с вложенными картами, некоторые функции карт поддерживают глубокие операции.
+  Например, если вы передадите несколько ключей в `map.get()`, он будет следовать этим ключам, чтобы найти желаемую вложенную карту:
 
   <% example(autogen_css: false) do %>
     $config: (a: (b: (c: d)));
@@ -26,8 +23,7 @@ title: sass:map
 <% function 'map.deep-merge($map1, $map2)', returns: 'map' do %>
   <% impl_status dart: '1.27.0', libsass: false, ruby: false %>
 
-  Identical to [`map.merge()`](#merge), except that nested map values are *also*
-  recursively merged.
+  Идентично [`map.merge()`](#merge), за исключением того, что значения вложенных карт *также* рекурсивно объединяются.
 
   <% example(autogen_css: false) do %>
     $helvetica-light: (
@@ -87,8 +83,7 @@ title: sass:map
             returns: 'map' do %>
   <% impl_status dart: '1.27.0', libsass: false, ruby: false %>
 
-If `$keys` is empty, returns a copy of `$map` without a value associated with
-  `$key`.
+Если `$keys` пусто, возвращает копию `$map` без значения, связанного с `$key`.
 
   <% example(autogen_css: false) do %>
     $font-weights: ("regular": 400, "medium": 500, "bold": 700);
@@ -104,12 +99,9 @@ If `$keys` is empty, returns a copy of `$map` without a value associated with
 
   ---
 
-  If `$keys` is not empty, follows the set of keys including `$key` and
-  excluding the last key in `$keys`, from left to right, to find the nested map
-  targeted for updating.
+  Если `$keys` не пусто, следует за набором ключей, включая `$key` и исключая последний ключ в `$keys`, слева направо, чтобы найти вложенную карту, предназначенную для обновления.
 
-  Returns a copy of `$map` where the targeted map does not have a value
-  associated with the last key in `$keys`.
+  Возвращает копию `$map`, где целевая карта не имеет значения, связанного с последним ключом в `$keys`.
 
   <% example(autogen_css: false) do %>
     $fonts: (
@@ -149,27 +141,23 @@ If `$keys` is empty, returns a copy of `$map` without a value associated with
 
 <% function 'map.get($map, $key, $keys...)',
             'map-get($map, $key, $keys...)' do %>
-  If `$keys` is empty, returns the value in `$map` associated with `$key`.
+  Если `$keys` пусто, возвращает значение в `$map`, связанное с `$key`.
 
-  If `$map` doesn't have a value associated with `$key`, returns [`null`][].
+  Если `$map` не имеет значения, связанного с `$key`, возвращает [`null`][].
 
   <%= partial 'code-snippets/example-map-get' %>
 
   ---
 
   <% impl_status dart: '1.27.0', libsass: false, ruby: false do %>
-    Only Dart Sass supports calling `map.get()` with more than two arguments.
+    Только Dart Sass поддерживает вызов `map.get()` с более чем двумя аргументами.
   <% end %>
 
-  If `$keys` is not empty, follows the set of keys including `$key` and
-  excluding the last key in `$keys`, from left to right, to find the nested map
-  targeted for searching.
+  Если `$keys` не пусто, следует за набором ключей, включая `$key` и исключая последний ключ в `$keys`, слева направо, чтобы найти вложенную карту, предназначенную для поиска.
 
-  Returns the value in the targeted map associated with the last key in `$keys`.
+  Возвращает значение целевой карты, связанное с последним ключом в `$keys`.
 
-  Returns [`null`][] if the map does not have a value associated with the key,
-  or if any key in `$keys` is missing from a map or references a value that is
-  not a map.
+  Возвращает [`null`][], если карта не имеет значения, связанного с ключом, или если какой-либо ключ в `$keys` отсутствует в карте или ссылается на значение, не являющееся картой.
 
   <% example(autogen_css: false) do %>
     $fonts: (
@@ -198,8 +186,7 @@ If `$keys` is empty, returns a copy of `$map` without a value associated with
 <% function 'map.has-key($map, $key, $keys...)',
             'map-has-key($map, $key, $keys...)',
             returns: 'boolean' do %>
-  If `$keys` is empty, returns whether `$map` contains a value associated with
-  `$key`.
+  Если `$keys` пусто, возвращает, содержит ли `$map` значение, связанное с `$key`.
 
   <% example(autogen_css: false) do %>
     $font-weights: ("regular": 400, "medium": 500, "bold": 700);
@@ -216,18 +203,14 @@ If `$keys` is empty, returns a copy of `$map` without a value associated with
   ---
 
   <% impl_status dart: '1.27.0', libsass: false, ruby: false do %>
-    Only Dart Sass supports calling `map.has-key()` with more than two arguments.
+    Только Dart Sass поддерживает вызов `map.has-key()` с более чем двумя аргументами.
   <% end %>
 
-  If `$keys` is not empty, follows the set of keys including `$key` and
-  excluding the last key in `$keys`, from left to right, to find the nested map
-  targeted for searching.
+  Если `$keys` не пусто, следует за набором ключей, включая `$key` и исключая последний ключ в `$keys`, слева направо, чтобы найти вложенную карту, предназначенную для поиска.
 
-  Returns true if the targeted map contains a value associated with the last key
-  in `$keys`.
+  Возвращает истину, если целевая карта содержит значение, связанное с последним ключом в `$keys`.
 
-  Returns false if it does not, or if any key in `$keys` is missing from a map
-  or references a value that is not a map.
+  Возвращает `false`, если это не так, или если какой-либо ключ в `$keys` отсутствует на карте или ссылается на значение, которое не является картой.
 
   <% example(autogen_css: false) do %>
     $fonts: (
@@ -252,7 +235,7 @@ If `$keys` is empty, returns a copy of `$map` without a value associated with
 
 
 <% function 'map.keys($map)', 'map-keys($map)', returns: 'list' do %>
-  Returns a comma-separated list of all the keys in `$map`.
+  Возвращает разделенный запятыми список всех ключей в `$map`.
 
   <% example(autogen_css: false) do %>
     $font-weights: ("regular": 400, "medium": 500, "bold": 700);
@@ -272,19 +255,16 @@ If `$keys` is empty, returns a copy of `$map` without a value associated with
             'map-merge($map1, $keys..., $map2)',
             returns: 'map' do %>
   <% heads_up do %>
-    In practice, the actual arguments to `map.merge($map1, $keys..., $map2)`
-    are passed as `map.merge($map1, $args...)`. They are described here as `$map1,
-    $keys..., $map2` for explanation purposes only.
+    На практике фактические аргументы в `map.merge($map1, $keys..., $map2)` передаются как `map.merge($map1, $args...)`.
+    Они описаны здесь как `$map1, $keys..., $map2` только для объяснения.
   <% end %>
 
-  If no `$keys` are passed, returns a new map with all the keys and values from
-  both `$map1` and `$map2`.
+  Если `$keys` не переданы, возвращает новую карту со всеми ключами и значениями из `$map1` и `$map2`.
 
-  If both `$map1` and `$map2` have the same key, `$map2`'s value takes
-  precedence.
+  Если и `$map1`, и `$map2` имеют один и тот же ключ, значение `$map2` имеет приоритет.
 
-  All keys in the returned map that also appear in `$map1` have the same order
-  as in `$map1`. New keys from `$map2` appear at the end of the map.
+  Все ключи в возвращенной карте, которые также появляются в `$map1`, имеют тот же порядок, что и в `$map1`.
+  Новые ключи от `$map2` появляются в конце карты.
 
   <% example(autogen_css: false) do %>
     $light-weights: ("lightest": 100, "light": 300);
@@ -303,15 +283,13 @@ If `$keys` is empty, returns a copy of `$map` without a value associated with
   ---
 
   <% impl_status dart: '1.27.0', libsass: false, ruby: false do %>
-    Only Dart Sass supports calling `map.merge()` with more than two arguments.
+    Только Dart Sass поддерживает вызов `map.merge()` с более чем двумя аргументами.
   <% end %>
 
-  If `$keys` is not empty, follows the `$keys` to find the nested map targeted
-  for merging. If any key in `$keys` is missing from a map or references a value
-  that is not a map, sets the value at that key to an empty map.
+  Если `$keys` не пусто, следует за `$keys`, чтобы найти вложенную карту, предназначенную для слияния.
+  Если какой-либо ключ в `$keys` отсутствует на карте или ссылается на значение, которое не является картой, устанавливает значение в этом ключе на пустую карту.
 
-  Returns a copy of `$map1` where the targeted map is replaced by a new map that
-  contains all the keys and values from both the targeted map and `$map2`.
+  Возвращает копию `$map1`, где целевая карта заменяется новой картой, которая содержит все ключи и значения как целевой карты, так и `$map2`.
 
   <% example(autogen_css: false) do %>
     $fonts: (
@@ -357,9 +335,9 @@ If `$keys` is empty, returns a copy of `$map` without a value associated with
 <% function 'map.remove($map, $keys...)',
             'map-remove($map, $keys...)',
             returns: 'map' do %>
-  Returns a copy of `$map` without any values associated with `$keys`.
+  Возвращает копию `$map` без каких-либо значений, связанных с `$keys`.
 
-  If a key in `$keys` doesn't have an associated value in `$map`, it's ignored.
+  Если ключ в `$keys` не имеет связанного значения в `$map`, он игнорируется.
 
   <% example(autogen_css: false) do %>
     $font-weights: ("regular": 400, "medium": 500, "bold": 700);
@@ -383,13 +361,11 @@ If `$keys` is empty, returns a copy of `$map` without a value associated with
             'map.set($map, $keys..., $key, $value)',
             returns: 'map' do %>
   <% heads_up do %>
-    In practice, the actual arguments to `map.set($map, $keys..., $key, $value)`
-    are passed as `map.set($map, $args...)`. They are described here as `$map,
-    $keys..., $key, $value` for explanation purposes only.
+    На практике фактические аргументы в `map.set($map, $keys..., $key, $value)` передаются как `map.set($map, $args...)`.
+    Они описаны здесь как `$map, $keys..., $key, $value` только в целях объяснения.
   <% end %>
 
-  If `$keys` are not passed, returns a copy of `$map` with the value at `$key`
-  set to `$value`.
+  Если `$keys` не переданы, возвращает копию `$map` со значением в `$key`, установленным в `$value`.
 
   <% example(autogen_css: false) do %>
     $font-weights: ("regular": 400, "medium": 500, "bold": 700);
@@ -406,15 +382,13 @@ If `$keys` is empty, returns a copy of `$map` without a value associated with
   ---
 
   <% impl_status dart: '1.27.0', libsass: false, ruby: false do %>
-    Only Dart Sass supports calling `map.set()` with more than three arguments.
+    Только Dart Sass поддерживает вызов `map.set()` с более чем тремя аргументами.
   <% end %>
 
-  If `$keys` are passed, follows the `$keys` to find the nested map targeted for
-  updating. If any key in `$keys` is missing from a map or references a value
-  that is not a map, sets the value at that key to an empty map.
+  Если переданы `$keys`, следует за `$keys`, чтобы найти вложенную карту, предназначенную для обновления.
+  Если какой-либо ключ в `$keys` отсутствует на карте или ссылается на значение, которое не является картой, устанавливает значение в этом ключе на пустую карту.
 
-  Returns a copy of `$map` with the targeted map's value at `$key` set to
-  `$value`.
+  Возвращает копию `$map` со значением целевой карты в `$key`, установленным в `$value`.
 
   <% example(autogen_css: false) do %>
     $fonts: (
@@ -455,7 +429,7 @@ If `$keys` is empty, returns a copy of `$map` without a value associated with
 
 
 <% function 'map.values($map)', 'map-values($map)', returns: 'list' do %>
-  Returns a comma-separated list of all the values in `$map`.
+  Возвращает разделенный запятыми список всех значений в `$map`.
 
   <% example(autogen_css: false) do %>
     $font-weights: ("regular": 400, "medium": 500, "bold": 700);
