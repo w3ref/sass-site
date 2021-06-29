@@ -1,68 +1,47 @@
 ---
-title: Implementation Guide
+title: Руководство по внедрению
 ---
 
 - content_for (:introduction) do
-  Sass has a thriving community of implementations, with more being produced all
-  the time. The core team loves to see new implementations thrive and mature,
-  and they want to help out in any way they can.
+  У Sass есть процветающее сообщество реализаций, которые постоянно создаются.
+  Основная команда любит видеть, как новые реализации развиваются и развиваются, и они хотят помочь всем, чем могут.
 
 %ul.list-tiled
   %li
     :markdown
-      ## Resources
+      ## Ресурсы
 
-      * [`sass-spec`](https://github.com/sass/sass-spec) is a suite of
-        implementation-agnostic test cases for verifying that a Sass
-        implementation behaves correctly. It's the best way to track your
-        implementation's compatibility with the Sass reference implementation.
+      * [`sass-spec`](https://github.com/sass/sass-spec) - это набор независимых от реализации тестовых примеров для проверки правильности работы реализации Sass.
+        Это лучший способ отслеживать совместимость вашей реализации с эталонной реализацией Sass.
 
-      * [How `@extend` Works](https://gist.github.com/nex3/7609394) is a
-        fairly comprehensive run-down of the algorithm used by Sass's
-        trickiest feature. Natalie still says that the implementation of
-        `@extend` is the hardest code she's ever had to write, but luckily you
-        don't have to figure it out from scratch.
+      * [Как работает `@extend`](https://gist.github.com/nex3/7609394) - это довольно подробное описание алгоритма, используемого самой сложной функцией Sass.
+        Натали по-прежнему говорит, что реализация `@extend` - самый сложный код, который ей когда-либо приходилось писать, но, к счастью, вам не нужно разбираться в этом с нуля.
 
-      * **Reach out!** If you're working on a new implementation, we want to
-        hear about it. Send an email to [Natalie](mailto:nex342@gmail.com) and
-        [Chris](mailto:chris@eppsteins.net), tell us about the cool work
-        you're doing, and ask about any corners of the language that don't
-        quite make sense.
+      * **Протяните руку помощи!** Если вы работаете над новой реализацией, мы хотим об этом услышать.
+        Отправьте электронное письмо [Натали](mailto:nex342@gmail.com) и [Крису](mailto:chris@eppsteins.net), расскажите нам о крутой работе, которую вы делаете, и спросите о любых уголках языка, которые не совсем понятно.
 
   %li
     :markdown
-      ## Requirements
+      ## Требования
 
-      We whole-heartedly love new implementations of Sass, but we do have a
-      few restrictions that we ask those implementations to follow in order to
-      call themselves "Sass", "Sass implementations", or the like. Sass is a
-      community as much as it is a language, and it's important that all
-      implementations are willing to work for the good of the community.
+      Мы искренне любим новые реализации Sass, но у нас есть несколько ограничений, которым мы просим эти реализации следовать, чтобы называть себя «Sass», «реализациями Sass» и т.п.
+      Sass - это не только язык, но и сообщество, и важно, чтобы все реализации были готовы работать на благо сообщества.
 
-      First, we ask that every implementation adopt the [Sass community
-      guidelines](/community-guidelines) for their own implementation-specific
-      communities. Much of what makes the Sass community strong is a culture
-      of kindness and respect, and having clear and explicit guidelines helps
-      produce that culture.
+      Во-первых, мы просим, ​​чтобы каждая реализация принимала [руководящие принципы сообщества Sass](/community-guidelines) для своих собственных сообществ, ориентированных на конкретную реализацию.
+      Многое из того, что делает сообщество Sass сильным, - это культура доброты и уважения, а наличие четких и ясных руководящих принципов помогает создать эту культуру.
 
-      Second, we ask that implementations not extend the language without
-      agreement from the other major implementations and from the language
-      designers, Natalie and Chris. The only reason a Sass community exists at
-      all is because the language enables styles and frameworks to be shared
-      among designers, and it's crucial for sharing that Sass code that works
-      for one implementation works the same for all of them. In addition, it's
-      important that there be a unified vision for the language design.
+      Во-вторых, мы просим, ​​чтобы реализации не расширяли язык без согласия других основных реализаций и разработчиков языка Натали и Криса.
+      Единственная причина, по которой сообщество Sass вообще существует, заключается в том, что язык позволяет разработчикам совместно использовать стили и фреймворки, и для совместного использования этого кода Sass, который работает для одной реализации, он работает одинаково для всех из них.
+      Кроме того, важно иметь единое видение языкового дизайна.
 
   %li
     :markdown
-      ## Making Language Changes
+      ## Внесение изменений в язык
 
-      Sass can still evolve as a language, of course. We have [a process][] for
-      proposing and iterating on new language features that anyone can
-      participate in. Language changes are discussed collaboratively, with
-      particular weight given to the maintainers of mature Sass implementations.
-      Attempts will be made to reach consensus with all stakeholders. However,
-      this may be impossible in some circumstances, and the ultimate say lies
-      with the lead designer of Sass, Natalie.
+      Конечно, Sass все еще может развиваться как язык.
+      У нас есть [процесс][a process] для предложения и повторения новых языковых функций, в которых может участвовать каждый.
+      Языковые изменения обсуждаются совместно, с особым вниманием к разработчикам зрелых реализаций Sass.
+      Будут предприняты попытки достичь консенсуса со всеми заинтересованными сторонами.
+      Однако в некоторых случаях это может быть невозможно, и последнее слово остается за ведущим дизайнером Sass Натали.
 
       [a process]: https://github.com/sass/language/blob/master/CONTRIBUTING.md
