@@ -2,23 +2,18 @@
 title: JavaScript API
 table_of_contents: true
 introduction: >
-  Both major Sass implementations support the same JavaScript API. [Dart
-  Sass](/dart-sass) is distributed as the pure-Javascript [`sass`
-  package](https://www.npmjs.com/package/sass), and [LibSass](/libsass) is
-  distributed as a native extension in the [`node-sass`
-  package](https://www.npmjs.com/package/node-sass).
+  Обе основные реализации Sass поддерживают один и тот же JavaScript API.
+  [Dart Sass](/dart-sass) распространяется как чистый Javascript [пакет `sass`](https://www.npmjs.com/package/sass), а [LibSass](/libsass) распространяется как собственное расширение в [пакете `node-sass`](https://www.npmjs.com/package/node-sass).
 ---
 
-## Usage
+## Применение
 
-The Sass module provides two functions with similar APIs.
+Модуль Sass предоставляет две функции с похожими API.
 
 ### `renderSync()`
 
-This function synchronously compiles a Sass file to CSS. If it succeeds, it
-returns the [result][], and if it fails it throws an [error][]. It takes an
-[options object][], which must have either the [`file` option][] or the
-[`data` option][] set.
+Эта функция синхронно компилирует файл Sass в CSS. В случае успеха он возвращает [результат][result], а в случае неудачи выдает [ошибку][error].
+Он принимает [объект параметров][options object], для которого должен быть установлен либо [параметр `file`][`file` option], либо [параметр`data`][`data` option].
 
 [result]: #result-object
 [error]: #error-object
@@ -37,16 +32,12 @@ var result = sass.renderSync({file: "style.scss"});
 
 <% impl_status dart: true, node: '3.0.0' %>
 
-This function asynchronously compiles a Sass file to CSS, and calls a standard
-Node callback with the [result][] or an [error][] when the rendering is
-complete. It takes an [options object][], which must have either the
-[`file` option][] or the [`data` option][] set.
+Эта функция асинхронно компилирует файл Sass в CSS и вызывает стандартный обратный вызов Node с [результатом][result] или [ошибкой][error] по завершении рендеринга.
+Он принимает [объект параметров][options object], для которого должен быть установлен либо [парамет][`file` option], либо [параметр][`data` option].
 
 <% heads_up do %>
-When using Dart Sass, **[`renderSync()`][] is almost twice as fast as
-`render()`** by default, due to the overhead of making the entire evaluation
-process asynchronous. To avoid this performance hit, you can pass the
-[`fiber` option][] to `render()`.
+При использовании Dart Sass, **[`renderSync()`][] по умолчанию почти в два раза быстрее, чем `render()`**, из-за накладных расходов, связанных с выполнением всего процесса оценки асинхронным.
+Чтобы избежать этого снижения производительности, вы можете передать [параметр `fiber`][`fiber` option] в `render()`.
 
 [`renderSync()`]: #rendersync
 [`fiber` option]: #fiber
@@ -66,11 +57,8 @@ sass.render({
 
 <% impl_status dart: true, node: '2.0.0' %>
 
-The `info` property contains a string that includes tab-separated information
-about the Sass implementation. For Dart Sass, this is the version of Dart Sass
-and the version of the [dart2js][] compiler used to compile it to JavaScript;
-for LibSass, it's the version of LibSass and the version of [Node Sass][] that
-wraps it.
+Свойство `info` содержит строку, которая включает разделенную табуляцией информацию о реализации Sass.
+Для Dart Sass это версия Dart Sass и версия компилятора [dart2js][], используемая для его компиляции в JavaScript; для LibSass - это версия LibSass и версия [Node Sass][], в которую он обернут.
 
 [dart2js]: https://webdev.dartlang.org/tools/dart2js
 [Node Sass]: https://www.npmjs.com/package/node-sass
@@ -81,19 +69,18 @@ console.log(sass.info);
 // dart2js	2.0.0	(Dart Compiler)	[Dart]
 ```
 
-### Result Object
+### Объект Результат
 
-When [`renderSync()`][] or [`render()`][] succeed, they provide a result object
-that contains information about the compilation. This object has the following
-properties:
+Когда [`renderSync()`][] или [`render()`][] завершаются успешно, они предоставляют объект результата, который содержит информацию о компиляции.
+Этот объект имеет следующие свойства:
 
 [`renderSync()`]: #rendersync
 [`render()`]: #render
 
 #### `result.css`
 
-The compiled CSS, as a [Buffer][]. This can be converted to a string by calling
-[`Buffer.toString()`][].
+Скомпилированный CSS в виде [Buffer][].
+Его можно преобразовать в строку, вызвав [`Buffer.toString()`][].
 
 [Buffer]: https://nodejs.org/api/buffer.html
 [`Buffer.toString()`]: https://nodejs.org/api/buffer.html#buffer_buf_tostring_encoding_start_end
@@ -106,18 +93,15 @@ console.log(result.css.toString());
 
 #### `result.map`
 
-The source map that maps the compiled CSS to the source files from which it was
-generated, as a [Buffer][]. This can be converted to a string by calling
-[`Buffer.toString()`][].
+Исходная карта, которая сопоставляет скомпилированный CSS с исходными файлами, из которых он был сгенерирован, как [Buffer][].
+Его можно преобразовать в строку, вызвав [`Buffer.toString()`][].
 
-This is `null` or `undefined` unless either
+Это `null` или `undefined`, если только оба
 
-* the [`sourceMap` option][] is a string; or
-* the `sourceMap` option is `true` *and* the [`outFile` option][] is set.
+* [опция `sourceMap`][`sourceMap` option] является строкой; или же
+* опция `sourceMap` имеет значение `true` *и* установлена [опция `outFile`][`outFile` option].
 
-The source map uses absolute [`file:` URLs][] to link to the Sass source files,
-except if the source file comes from the [`data` option][] in which case it
-lists its URL as `stdin`.
+Исходная карта использует абсолютные [`file:` URL-адреса][`file:` URLs] для ссылки на исходные файлы Sass, за исключением случаев, когда исходный файл исходит из параметра [`data` option][], и в этом случае он указывает свой URL как `stdin`.
 
 [`sourceMap` option]: #sourcemap
 [`outFile` option]: #outfile
@@ -135,49 +119,42 @@ console.log(result.map.toString());
 
 #### `result.stats.includedFiles`
 
-An array of the absolute paths of all Sass files loaded during compilation. If a
-stylesheet was loaded from an [importer][] that returned the stylesheet's
-contents, the raw string of the `@use` or `@import` that loaded that stylesheet
-is included in this array.
+Массив абсолютных путей ко всем файлам Sass, загруженным во время компиляции.
+Если таблица стилей была загружена из [импортера][importer], который вернул содержимое таблицы стилей, необработанная строка `@use` или `@import`, которая загрузила эту таблицу стилей, включается в этот массив.
 
 [importer]: #importer
 
 #### `result.stats.entry`
 
-The absolute path of the input file passed as the [`file` option], or `"data"`
-if the [`data` option] was passed instead.
+Абсолютный путь к входному файлу, переданному как [параметр `file`][`file` option], или `"data"`, если вместо него был передан [параметр `data`][`data` option].
 
 #### `result.stats.start`
 
-The number of milliseconds between 1 January 1970 at 00:00:00 UTC and the time
-at which Sass compilation began.
+Количество миллисекунд между 1 Января 1970 00:00:00 UTC и временем начала компиляции Sass.
 
 #### `result.stats.end`
 
-The number of milliseconds between 1 January 1970 at 00:00:00 UTC and the time
-at which Sass compilation ended.
+Количество миллисекунд между 1 Января 1970 00:00:00 UTC и временем завершения компиляции Sass.
 
 #### `result.stats.duration`
 
-The number of milliseconds it took to compile the Sass file. This is always
-equal to [`result.stats.start`][] minus [`result.stats.end`][].
+Количество миллисекунд, которое потребовалось для компиляции файла Sass. Это всегда равно [`result.stats.start`][] минус [`result.stats.end`][].
 
 [`result.stats.start`]: #result-stats-start
 [`result.stats.end`]: #result-stats-end
 
-### Error Object
+### Объект Ошибка
 
-When [`renderSync()`][] or [`render()`][] fail, they provide an
-[`Error` object][] that contains information about the compilation. This object
-has the following properties, in addition to the standard `Error` properties:
+Когда [`renderSync()`][] или [`render()`][] терпят неудачу, они предоставляют [объект `Error` object][], который содержит информацию о компиляции.
+Этот объект имеет следующие свойства в дополнение к стандартным свойствам `Error`:
 
 [`Error` object]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error
 
 #### `error.formatted`
 
-A string representation of the error. In [Node Sass][], this is more detailed
-than [`error.toString()`][] or [`error.message`][]. In [Dart Sass][], it
-provides the same information.
+Строковое представление ошибки.
+В [Node Sass][] это более подробно, чем в [`error.toString()`][] или [`error.message`][].
+В [Dart Sass][] он предоставляет ту же информацию.
 
 [Dart Sass]: /dart-sass
 [`error.toString()`]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/toString
@@ -185,63 +162,55 @@ provides the same information.
 
 #### `error.file`
 
-The stylesheet where the error occurred. If the error occurred in a stylesheet
-loaded from disk, this is the absolute path of that stylesheet. If the error
-occurred in a stylesheet that was loaded from an [importer][] which returned the
-stylesheet's contents, this is the raw string of the `@use` or `@import` that
-loaded that stylesheet. If it occurred in the contents of the [`data` option][],
-this is the string `"stdin"`.
+Таблица стилей, в которой произошла ошибка. Если ошибка произошла в таблице стилей, загруженной с диска, это абсолютный путь к этой таблице стилей.
+Если ошибка произошла в таблице стилей, загруженной из [импортера][importer], вернувшего содержимое таблицы стилей, это необработанная строка из `@use` или `@import`, которые загрузили эту таблицу стилей.
+Если это произошло в содержимом [параметра `data`][`data` option], это строка `"stdin"`.
 
 #### `error.line`
 
-The line in [`error.file`][] on which the error occurred.
+Строка в [`error.file`][], в которой произошла ошибка.
 
 [`error.file`]: #error-file
 
 #### `error.column`
 
-The column of [`error.line`][] in [`error.file`][] on which the error occurred.
+Столбец [`error.line`][] в [`error.file`][], в котором произошла ошибка.
 
 [`error.line`]: #error-line
 
 #### `error.status`
 
-The [exit status][] that should be used if this error causes the enclosing
-program to exit.
+[Статус выхода][exit status], который следует использовать, если эта ошибка приводит к завершению работы включающей программы.
 
 [exit status]: https://en.wikipedia.org/wiki/Exit_status
 
-## Options
+## Параметры
 
-### Input
+### Ввод
 
-These options control how Sass loads it input files.
+Эти параметры управляют тем, как Sass загружает входные файлы.
 
 #### `file`
 
 <% impl_status dart: '1.11.0', node: :partial, feature: "Plain CSS Files" do %>
-  Node Sass and older versions of Dart Sass support loading files with the
-  extension `.css`, but contrary to the specification they're treated as SCSS
-  files rather than being parsed as CSS. This behavior has been deprecated in
-  Node Sass, and an update is in the works to load them as plain CSS instead.
+  Node Sass и более старые версии Dart Sass поддерживают загрузку файлов с расширением `.css`, но вопреки спецификации они обрабатываются как файлы SCSS, а не анализируются как CSS.
+  Это поведение устарело в Node Sass, и в настоящее время разрабатывается обновление, чтобы вместо этого загрузить их как простой CSS.
 
-  All versions of Node Sass and Dart Sass otherwise support the `file` option as
-  described below.
+  Все версии Node Sass и Dart Sass в остальном поддерживают параметр `file`, как описано ниже.
 <% end %>
 
-This string option is the path to the file for Sass to load and compile. If the
-file's extension is `.scss`, it will be parsed as [SCSS][]; if it's `.sass`, it
-will be parsed as the [indented syntax][]; and if it's `.css`, it will be parsed
-as [plain CSS][]. If it has no extension, it will be parsed as SCSS.
+Эта строковая опция - это путь к файлу для загрузки и компиляции Sass.
+Если расширение файла - `.scss`, он будет проанализирован как [SCSS][];
+если это `.sass`, он будет проанализирован как [синтаксис с отступом][indented syntax];
+а если это `.css`, он будет проанализирован как [простой CSS][plain CSS].
+Если у него нет расширения, он будет проанализирован как SCSS.
 
 [SCSS]: syntax#scss
 [indented syntax]: syntax#the-indented-syntax
 [plain CSS]: at-rules/import#importing-css
 
-If the `file` option and the [`data` option][] are both passed, the `file`
-option is used as the path of the stylesheet for error reporting, but the `data`
-option is used as the contents of the stylesheet. In this case, the `file`
-option's extension is *not* used to determine the syntax of the stylesheet.
+Если оба параметра `file` и [`data`][`data` option] переданы, параметр `file` используется как путь к таблице стилей для сообщения об ошибках, но параметр `data` используется как содержимое таблица стилей.
+В этом случае расширение опции `file` *не* используется для определения синтаксиса таблицы стилей.
 
 ```js
 sass.renderSync({file: "style.scss"});
@@ -249,12 +218,10 @@ sass.renderSync({file: "style.scss"});
 
 #### `data`
 
-This string option provides the contents of the stylesheet to compile. Unless
-the [`file` option][] is passed as well, the stylesheet's URL is set to
-`"stdin"`.
+Эта строковая опция предоставляет содержимое таблицы стилей для компиляции. Если также не передан [параметр `file`][`file` option], URL-адрес таблицы стилей установлен на `"stdin"`.
 
-By default, this stylesheet is parsed as [SCSS][]. This can be controlled using
-the [`indentedSyntax` option][].
+По умолчанию эта таблица стилей анализируется как [SCSS][].
+Это можно контролировать с помощью [параметра `indentedSyntax`][`indentedSyntax` option].
 
 [`indentedSyntax` option]: #indentedsyntax
 
@@ -269,9 +236,9 @@ h1 {
 
 ### `indentedSyntax`
 
-This flag controls whether the [`data` option][] is parsed as the [indented
-syntax][] or not. It defaults to `false`. It has no effect on stylesheets loaded
-using the [`file` option][].
+Этот флаг контролирует, анализируется ли [параметр `data`][`data` option] как [синтаксис с отступом][indented syntax] или нет.
+По умолчанию это `false`.
+Это не влияет на таблицы стилей, загруженные с использованием [параметра `file`][`file` option].
 
 ```js
 sass.renderSync({
@@ -285,12 +252,11 @@ h1
 ### `includePaths`
 
 <% impl_status dart: '1.15.0', node: '3.9.0', feature: "SASS_PATH" do %>
-  Earlier versions of Dart Sass and Node Sass didn't support the `SASS_PATH`
-  environment variable.
+  Более ранние версии Dart Sass и Node Sass не поддерживали переменную окружения `SASS_PATH`.
 <% end %>
 
-This array of strings option provides [load paths][] for Sass to look for
-imports. Earlier load paths will take precedence over later ones.
+Этот параметр массива строк предоставляет [пути загрузки][load paths] для Sass для поиска импорта.
+Более ранние пути загрузки имеют приоритет над более поздними.
 
 [load paths]: at-rules/import#load-paths
 
@@ -301,10 +267,9 @@ sass.renderSync({
 });
 ```
 
-Load paths are also loaded from the `SASS_PATH` [environment variable][], if
-it's set. This variable should be a list of paths separated by `;` (on Windows)
-or `:` (on other operating systems). Load paths from the `includePaths` option
-take precedence over load paths from `SASS_PATH`.
+Пути загрузки также загружаются из `SASS_PATH` [переменная среды][environment variable], если она установлена.
+Эта переменная должна быть списком путей, разделенных `;` (в Windows) или `:` (в других операционных системах).
+Пути загрузки из опции `includePaths` имеют приоритет над путями загрузки из `SASS_PATH`.
 
 [environment variable]: https://en.wikipedia.org/wiki/Environment_variable
 
@@ -312,23 +277,19 @@ take precedence over load paths from `SASS_PATH`.
 $ SASS_PATH=node_modules/bootstrap/dist/css sass style.scss style.css
 ```
 
-### Output
+### Вывод
 
-These options control how Sass produces output files.
+Эти параметры управляют тем, как Sass создает выходные файлы.
 
 #### `outputStyle`
 
-This string option controls the output style of the resulting CSS. There are
-four possible output styles:
+Эта строковая опция управляет стилем вывода результирующего CSS.
+Есть четыре возможных стиля вывода:
 
-* `"expanded"` (the default for Dart Sass) writes each selector and declaration
-  on its own line.
-* `"compressed"` removes as many extra characters as possible, and writes the
-  entire stylesheet on a single line.
-* `"nested"` (the default for Node Sass, not supported by Dart Sass) indents CSS
-  rules to match the nesting of the Sass source.
-* `compact` (not supported by Dart Sass) puts each CSS rule on its own single
-  line.
+* `"expanded"` (по умолчанию для Dart Sass) записывает каждый селектор и объявление в отдельной строке.
+* `"compressed"` удаляет как можно больше лишних символов и записывает всю таблицу стилей в одну строку.
+* `"nested"` (значение по умолчанию для Node Sass, не поддерживаемое Dart Sass) делает отступ правил CSS для соответствия вложенности исходного кода Sass.
+* `compact` (не поддерживается Dart Sass) помещает каждое правило CSS в отдельную строку.
 
 ```js
 var source = `
@@ -380,12 +341,12 @@ console.log(result.css.toString());
 #### `precision`
 
 <% impl_status dart: false, node: true do %>
-  For performance reasons, Dart Sass doesn't allow its precision to be
-  customized. It always supports 10 digits of numeric precision.
+  По соображениям производительности Dart Sass не позволяет настраивать свою точность.
+  Он всегда поддерживает 10 цифр числовой точности.
 <% end %>
 
-This integer option determines the [precision][] that will be used when
-generating CSS that includes numbers. It defaults to 5 for Node Sass.
+Эта целочисленная опция определяет [точность][precision], которая будет использоваться при генерации CSS, включающего числа.
+По умолчанию для Node Sass установлено значение 5.
 
 [precision]: values/numbers#precision
 
@@ -409,9 +370,8 @@ console.log(result.css.toString());
 
 <% impl_status dart: true, node: '3.0.0' %>
 
-This string option determines whether the generated CSS should use spaces (with
-the value `"space"`) or tabs (with the value `"tab"`) for indentation. It
-defaults to `"space"`.
+Эта строковая опция определяет, должен ли сгенерированный CSS использовать для отступов пробелы (со значением `"space"`) или табуляции (со значением `"tab"`).
+По умолчанию это `"space"`.
 
 ```js
 var result = sass.renderSync({
@@ -428,9 +388,8 @@ result.css.toString();
 
 <% impl_status dart: true, node: '3.0.0' %>
 
-This integer option controls how many spaces or tabs (depending on the
-[`indentType` option][]) should be used per indentation level in the generated
-CSS. It defaults to 2, and must be between 0 and 10 (inclusive).
+Этот целочисленный параметр определяет, сколько пробелов или табуляции (в зависимости от [параметра `indentType`][`indentType` option]) следует использовать для каждого уровня отступа в сгенерированном CSS.
+По умолчанию оно равно 2 и должно быть от 0 до 10 (включительно).
 
 [`indentType` option]: #indenttype
 
@@ -450,13 +409,13 @@ console.log(result.css.toString());
 
 <% impl_status dart: true, node: '3.0.0' %>
 
-This string option controls what character sequence is used at the end of each
-line in the generated CSS. It can have the following values:
+Эта строковая опция определяет, какая последовательность символов используется в конце каждой строки в сгенерированном CSS.
+Может иметь следующие значения:
 
-* `lf` (the default) uses U+000A LINE FEED.
-* `lfcr` uses U+000A LINE FEED followed by U+000D CARRIAGE RETURN.
-* `cr` (the default) uses U+000D CARRIAGE RETURN.
-* `crlf` uses U+000D CARRIAGE RETURN followed by U+000A LINE FEED.
+* `lf` (по умолчанию) использует U+000A LINE FEED.
+* `lfcr` использует U+000A LINE FEED, за которым следует U+000D CARRIAGE RETURN.
+* `cr` (по умолчанию) использует U+000D CARRIAGE RETURN.
+* `crlf` использует U+000D CARRIAGE RETURN, за которым следует U+000A LINE FEED.
 
 ```js
 var result = sass.renderSync({
@@ -471,12 +430,11 @@ console.log(result.css.toString());
 #### `sourceComments`
 
 <% impl_status dart: false, node: true do %>
-  This option isn't supported by Dart Sass, because source maps are recommended
-  as the best way of determining where a style rule is defined.
+  Эта опция не поддерживается Dart Sass, потому что исходные карты рекомендуются как лучший способ определить, где определено правило стиля.
 <% end %>
 
-This flag causes Sass to emit comments for every style rule that indicate where
-each style rule was defined in the source stylesheet. It defaults to `false`.
+Этот флаг заставляет Sass генерировать комментарии для каждого правила стиля, которые указывают, где каждое правило стиля было определено в исходной таблице стилей.
+По умолчанию это `false`.
 
 ```js
 var result = sass.renderSync({
@@ -491,28 +449,23 @@ console.log(result.css.toString());
 // }
 ```
 
-### Source Maps
+### Исходные карты
 
 <%= partial 'documentation/snippets/source-maps' %>
 
-The Sass JS API makes source maps available using the [`result.map` field][].
+Sass JS API делает исходные карты доступными с помощью [поля `result.map`][`result.map` field].
 
 [`result.map` field]: #result-map
 
 #### `sourceMap`
 
-This flag controls whether source maps are generated.
+Этот флаг контролирует создание исходных карт.
 
-If this option is a string, it's the path that the source map is expected to be
-written to, which is used to link to the source map from the generated CSS and
-to link *from* the source map to the Sass source files. Note that if the
-`sourceMap` option is a string and the [`outFile` option][] isn't passed, Sass
-assumes that the CSS will be written to the same directory as the [`file`
-option][] if it's passed.
+Если эта опция является строкой, это путь, по которому, как ожидается, будет записана исходная карта, который используется для ссылки на исходную карту из сгенерированного CSS и для ссылки *из* исходной карты на исходные файлы Sass.
+Обратите внимание: если параметр `sourceMap` является строкой, а [параметр `outFile`][`outFile` option] не передан, Sass предполагает, что CSS будет записан в тот же каталог, что и [параметр `file`][`file` option], если он прошедший.
 
-If this option is `true`, the path is assumed to be the `outFile` option with
-`.map` added to the end. If it's `true` and the `outFile` option isn't passed,
-it has no effect.
+Если этот параметр имеет значение `true`, предполагается, что путь является параметром `outFile` с добавленным в конец `.map`.
+Если это `true` и опция `outFile` не передана, это не имеет никакого эффекта.
 
 ```js
 var result = sass.renderSync({
@@ -539,13 +492,12 @@ console.log(result.css.toString());
 
 #### `outFile`
 
-This string option is the location that Sass expects the generated CSS to be
-saved to. It's used to determine the URL used to link from the generated CSS to
-the source map, and *from* the source map to the Sass source files.
+Эта строковая опция - это место, в которое Sass ожидает сохранения сгенерированного CSS.
+Он используется для определения URL-адреса, используемого для ссылки из сгенерированного CSS на исходную карту и *из* исходной карты в исходные файлы Sass.
 
 <% heads_up do %>
-  Despite the name, Sass does *not* write the CSS output to this file. The
-  caller must do that themselves.
+  Несмотря на название, Sass *не* записывает вывод CSS в этот файл.
+  Вызывающий должен сделать это сам.
 <% end %>
 
 ```js
@@ -563,7 +515,7 @@ console.log(result.css.toString());
 
 #### `omitSourceMapUrl`
 
-This flag causes Sass not to link from the generated CSS to the source map.
+Этот флаг заставляет Sass не связывать сгенерированный CSS с исходной картой.
 
 ```js
 var result = sass.renderSync({
@@ -579,10 +531,8 @@ console.log(result.css.toString());
 
 #### `sourceMapContents`
 
-This flag tells Sass to embed the entire contents of the Sass files that
-contributed to the generated CSS in the source map. This may produce very large
-source maps, but it guarantees that the source will be available on any computer
-no matter how the CSS is served.
+Этот флаг сообщает Sass о необходимости встраивать все содержимое файлов Sass, которые внесли свой вклад в сгенерированный CSS, в исходную карту.
+Это может привести к очень большим исходным картам, но это гарантирует, что источник будет доступен на любом компьютере, независимо от того, как обслуживается CSS.
 
 ```js
 sass.renderSync({
@@ -594,9 +544,7 @@ sass.renderSync({
 
 #### `sourceMapEmbed`
 
-This flag tells Sass to embed the contents of the source map file in the
-generated CSS, rather than creating a separate file and linking to it from the
-CSS.
+Этот флаг сообщает Sass о необходимости встраивания содержимого файла исходной карты в сгенерированный CSS, а не создания отдельного файла и ссылки на него из CSS.
 
 ```js
 sass.renderSync({
@@ -608,21 +556,16 @@ sass.renderSync({
 
 #### `sourceMapRoot`
 
-This string option is prepended to all the links from the source map to the Sass
-source files.
+Эта строковая опция добавляется ко всем ссылкам из исходной карты на исходные файлы Sass.
 
-### Plugins
+### Плагины
 
-These options use JavaScript callbacks to expand the functionality of Sass
-compilation.
+Эти параметры используют обратные вызовы JavaScript для расширения функциональности компиляции Sass.
 
 #### `fiber`
 
-When using Dart Sass, **`renderSync()` is more than twice as fast as
-`render()`**, due to the overhead of asynchronous callbacks. To avoid this
-performance hit, `render()` can use the [`fibers`][fibers] package to call
-asynchronous importers from the synchronous code path. To enable this, pass the
-`Fiber` class to the `fiber` option:
+При использовании Dart Sass, **`renderSync()` более чем в два раза быстрее, чем `render()`**, из-за накладных расходов на асинхронные обратные вызовы.
+Чтобы избежать этого снижения производительности, `render()` может использовать пакет [`fibers`][fibers] для вызова асинхронных импортеров из синхронного пути кода. Чтобы включить это, передайте класс `Fiber` параметру `fiber`:
 
 [fibers]: https://www.npmjs.com/package/fibers
 
@@ -641,36 +584,30 @@ sass.render({
 });
 ```
 
-This option is allowed, but will have no effect, when using Node Sass or when
-using the `renderSync()` function.
+Эта опция разрешена, но не будет иметь никакого эффекта при использовании Node Sass или при использовании функции `renderSync()`.
 
 #### `functions`
 
-This option defines additional built-in Sass functions that are available in all
-stylesheets. It's an object whose keys are Sass function signatures and whose
-values are JavaScript functions. Each function should take the same arguments as
-its signature. If the signature takes [arbitrary arguments][], the JavaScript
-function should take a single argument.
+Этот параметр определяет дополнительные встроенные функции Sass, доступные во всех таблицах стилей.
+Это объект, ключи которого являются сигнатурами функций Sass, а значения - функциями JavaScript.
+Каждая функция должна принимать те же аргументы, что и ее подпись.
+Если подпись принимает [произвольные аргументы][arbitrary arguments], функция JavaScript
+должна принимать единственный аргумент.
 
 [arbitrary arguments]: at-rules/function#taking-arbitrary-arguments
 
-Functions are passed JavaScript representations of [Sass value types][], and
-must return the same. All functions can return synchronously, but functions
-passed to the asynchronous [`render()` function][] can also take an additional
-callback to which they can asynchronously pass the result of the function when
-it's complete.
+Функции передаются в виде JavaScript-представлений [типов значений Sass][Sass value types] и должны возвращать то же самое.
+Все функции могут возвращаться синхронно, но функции, переданные в асинхронную [][`render()` function], также могут принимать дополнительный обратный вызов, которому они могут асинхронно передавать результат функции после ее завершения.
 
 [Sass value types]: #value-types
 [`render()` function]: #render
 
-If a function synchronously throws an error, that error is reported to the
-caller of the function and stylesheet compilation fails. There's currently no
-way to asynchronously report an error.
+Если функция синхронно выдает ошибку, об этой ошибке сообщается вызывающему объекту функции, и компиляция таблицы стилей завершается ошибкой.
+В настоящее время нет возможности асинхронно сообщить об ошибке.
 
 <% heads_up do %>
-  When writing custom functions, it's important to ensure that all the arguments
-  are the types you expect. Otherwise, users' stylesheets could crash in
-  hard-to-debug ways or, worse, compile to meaningless CSS.
+  При написании пользовательских функций важно убедиться, что все аргументы имеют ожидаемые вами типы.
+  В противном случае таблицы стилей пользователей могут дать сбой из-за трудных для отладки способов или, что еще хуже, компилируются в бессмысленный CSS.
 <% end %>
 
 ```js
@@ -722,79 +659,58 @@ h1 {
 #### `importer`
 
 <% impl_status dart: true, node: '3.0.0' do %>
-  Versions of Node Sass before 3.0.0 don't support arrays of importers,
-  nor do they support importers that return `Error` objects.
+  Версии Node Sass до 3.0.0 не поддерживают массивы импортеров и не поддерживают импортеры, возвращающие объекты `Error`.
 
-  Versions of Node Sass before 2.0.0 don't support the `importer` option at all.
+  Версии Node Sass до 2.0.0 вообще не поддерживают параметр `importer`.
 <% end %>
 
 <% impl_status dart: '1.20.2', node: false, feature: "Import order" do %>
-  Versions of Dart Sass before 1.20.2 preferred resolving imports using load
-  paths ([includePaths](#includepaths)) before resolving them using custom
-  importers.
+  Версии Dart Sass до 1.20.2 предпочитали разрешать импорт с использованием путей загрузки ([includePaths](#includepaths)) перед их разрешением с помощью настраиваемых импортеров.
 
-  All versions of Node Sass currently pass imports to importers before loading
-  them relative to the file in which the `@import` appears. This behavior is
-  considered incorrect and should not be relied on because it violates the
-  principle of *locality*, which says that it should be possible to reason about
-  a stylesheet without knowing everything about how the entire system is set up.
-  If a user tries to import a stylesheet relative to another stylesheet, that
-  import should *always* work. It shouldn't be possible for some configuration
-  somewhere else to break it.
+  Все версии Node Sass в настоящее время передают импорт импортерам перед их загрузкой относительно файла, в котором появляется `@import`.
+  Такое поведение считается неправильным, и на него не следует полагаться, потому что оно нарушает принцип *локальности*, который гласит, что должна быть возможность рассуждать о таблице стилей, не зная всего о том, как настроена вся система.
+  Если пользователь пытается импортировать таблицу стилей относительно другой таблицы стилей, этот импорт должен *всегда* работать.
+  Невозможно, чтобы какая-то конфигурация где-то еще могла его сломать.
 <% end %>
 
-This option defines one or more additional handlers for loading files when a
-[`@use` rule] or an [`@import` rule][] is encountered. It can either be a single
-JavaScript function, or an array of functions. These functions are always passed
-two arguments:
+Эта опция определяет один или несколько дополнительных обработчиков для загрузки файлов, когда встречается [правило `@use`][`@use` rule] или [ правило `@import`][`@import` rule].
+Это может быть либо отдельная функция JavaScript, либо массив функций.
+Этим функциям всегда передаются два аргумента:
 
 [`@use` rule]: at-rules/use
 [`@import` rule]: at-rules/import
 
-1. The `@use` or `@import` rule's URL as a string, exactly as it appears in the
-   stylesheet.
-2. A string identifying for the stylesheet that contained the `@use` or
-   `@import`. This identifier's format depends on how that stylesheet was
-   loaded:
-   * If the stylesheet was loaded from the filesystem, it's the absolute path of
-     its file.
-   * If the stylesheet was loaded from an importer that returned its contents,
-     it's the URL of the `@use` or `@import` rule that loaded it.
-   * If the stylesheet came from the [`data` option][], it's the string
-     `"stdin"`.
+1. URL-адрес правила `@use` или `@import` в виде строки, точно такой, как он отображается в таблице стилей.
+2. Строка, идентифицирующая таблицу стилей, содержащую `@use` или `@import`. Формат этого идентификатора зависит от того, как эта таблица стилей была загружена:
+   * Если таблица стилей была загружена из файловой системы, это абсолютный путь к ее файлу.
+   * Если таблица стилей была загружена из импортера, который вернул ее содержимое, это URL-адрес правила `@use` или `@import`, которое загрузило ее.
+   * Если таблица стилей была получена из [параметра `data`][`data` option], это строка `"stdin"`.
 
-Importers must return one of the following types:
+Импортеры должны вернуть один из следующих типов:
 
-* An object with the key `contents` whose value is the contents of a stylesheet
-  (in SCSS syntax). This causes Sass to load that stylesheet's contents.
-* An object with the key `file` whose value is a path on disk. This causes Sass
-  to load that file as though it had been imported directly.
-* `null`, which indicates that it doesn't recognize the URL and another importer
-  should be tried instead.
-* An [`Error` object][], indicating that importing failed.
+* Объект с ключом `contents`, значением которого является содержимое таблицы стилей (в синтаксисе SCSS). Это заставляет Sass загружать содержимое этой таблицы стилей.
+* Объект с ключом `file`, значением которого является путь на диске. Это заставляет Sass загружать этот файл, как если бы он был импортирован напрямую.
+* `null`, что указывает на то, что он не распознает URL, и вместо этого следует попробовать другой импортер.
+* [Объект `Error`][`Error` object], указывающий на сбой импорта.
 
-All importers can return synchronously, but importers passed to the asynchronous
-[`render()` function][] can also take an additional callback to which they can
-asynchronously pass the result of the import once it's complete.
+Все импортеры могут возвращаться синхронно, но импортеры, переданные асинхронной [функции `render()`][`render()` function], также могут принимать дополнительный обратный вызов, которому они могут асинхронно передавать результат импорта после его завершения.
 
-Imports are resolved by trying, in order:
+Импорт разрешается попыткой в следующем порядке:
 
-* Loading a file relative to the file in which the `@use` or `@import` appeared.
+* Загрузка файла, относящегося к файлу, в котором появилось `@use` или `@import`.
 
-* Each custom importer.
+* Каждый пользовательский импортер.
 
-* Loading a file relative to the current working directory.
+* Загрузка файла относительно текущего рабочего каталога.
 
-* Each load path in [includePaths](#includepaths)
+* Каждый путь загрузки в [includePaths](#includepaths)
 
-* Each load path specified in the `SASS_PATH` environment variable, which
-  should be semicolon-separated on Windows and colon-separated elsewhere.
+* Каждый путь загрузки, указанный в переменной среды `SASS_PATH`, которая должна быть разделена точкой с запятой в Windows и двоеточием в другом месте.
 
 <% impl_status dart: '1.33.0', node: false, feature: "this.fromImport" %>
 
-An importer can determine whether it's being called from an `@import` rule by
-checking `this.fromImport`. This should *only* be used for determining whether
-or not to load [import-only files].
+Импортер может определить, вызывается ли он из правила `@import`, проверив `this.fromImport`.
+Его следует использовать *только* для определения, загружать или нет [файлы только для импорта][import-only files].
 
 [import-only files]: https://sass-lang.com/documentation/at-rules/import#import-only-files
 
@@ -832,54 +748,44 @@ h1 {
 });
 ```
 
-### Other
+### Остальные
 
 #### `quietDeps`
 
 <% impl_status dart: '1.35.0', node: false %>
 
-If this option is set to `true`, Sass won't print warnings that are caused by
-dependencies. A "dependency" is defined as any file that's loaded through a
-[load path] or an [importer]. Stylesheets that are imported relative to the
-entrypoint are not considered dependencies.
+Если для этой опции установлено значение `true`, Sass не будет выводить предупреждения, вызванные зависимостями.
+«Зависимость» определяется как любой файл, загруженный через [путь загрузки][load path] или [импортер][importer].
+Таблицы стилей, импортированные относительно точки входа, не считаются зависимостями.
 
 [load path]: #includepath
 
-This is useful for silencing deprecation warnings that you can't fix on your
-own. However, please *also* notify your dependencies of the deprecations so that
-they can get fixed as soon as possible!
+Это полезно для отключения предупреждений об устаревании, которые вы не можете исправить самостоятельно.
+Однако, пожалуйста, *также* сообщите своим зависимостям об устаревших версиях, чтобы их можно было исправить как можно скорее!
 
 <% heads_up do %>
-  If `render()` or `renderSync()` is called without the [`file` option], *all*
-  stylesheets it loads will be considered dependencies. Since it doesn't have a
-  path of its own, everything it loads is coming from a load path rather than a
-  relative import.
+  Если `render()` или `renderSync()` вызывается без параметра [параметра `file`][`file` option], *все* таблицы стилей, которые он загружает, будут считаться зависимостями.
+  Поскольку у него нет собственного пути, все, что он загружает, исходит из пути загрузки, а не относительного импорта.
 <% end %>
 
 #### `verbose`
 
 <% impl_status dart: '1.35.0', node: false %>
 
-By default, Dart Sass will print only five instances of the same deprecation
-warning per compilation to avoid deluging users in console noise. If you set
-`verbose` to `true`, it will instead print every deprecation warning it
-encounters.
+По умолчанию Dart Sass будет печатать только пять экземпляров одного и того же предупреждения об устаревании для каждой компиляции, чтобы не наводнять пользователей шумом консоли.
+Если вы установите для `verbose` значение `true`, вместо этого он будет печатать каждое обнаруженное предупреждение об устаревании.
 
-## Value Types
+## Типы значений
 
-In order to support [custom functions][], Sass provides access to JavaScript
-wrappers for its various [value types][]. These are all provided under the
-`types` namespace in the main Sass module.
+Для поддержки [пользовательских функций][custom functions], Sass предоставляет доступ к оболочкам JavaScript для различных [типов значений][value types]. Все они представлены в пространстве имен `types` в основном модуле Sass.
 
 [custom functions]: #functions
 [value types]: values
 
 <% heads_up do %>
-  All value types support methods that modify the value objects. Users are
-  strongly discouraged from using these methods (except for the [`Map` type][]
-  and [`List` type][] where they're necessary to create new values), because
-  they don't match the general principle that Sass values are immutable. Users
-  should construct new objects rather than modifying existing ones.
+  Все типы значений поддерживают методы, которые изменяют объекты значений.
+  Пользователям настоятельно не рекомендуется использовать эти методы (за исключением типов [`Map`][`Map` type] и [`List`][`List` type], где они необходимы для создания новых значений), поскольку они не соответствуют общему принципу, согласно которому Ценности Sass неизменны.
+  Пользователи должны создавать новые объекты, а не изменять существующие.
 
 
   [`Map` type]: #types-map
@@ -888,16 +794,15 @@ wrappers for its various [value types][]. These are all provided under the
 
 ### `types.Number`
 
-This class represents a [Sass number][].
+Этот класс представляет [числа Sass][Sass number].
 
 [Sass number]: values/numbers
 
 #### `new types.Number(value[, unit = ''])`
 
-Creates a new Sass number with the given numeric value and string unit.
-[Complex units][] are parsed from the unit string: numerator units are separated
-from denominators by a `/`. Multiple numerator and/or denominator units may be
-separated by `*`.
+Создает новый номер Sass с заданным числовым значением и строковой единицей.
+[Комплексные единицы][Complex units] анализируются из строки единиц измерения: единицы числителя отделяются от знаменателя символом `/`.
+Множественные числители и/или знаменатели могут быть разделены знаком `*`.
 
 [Complex units]: values/numbers#units
 
@@ -911,11 +816,10 @@ new sass.types.Number(10, "px*px/s*s"); // == 10px * math.div(math.div(1px, 1s),
 
 #### `number.getValue()`
 
-Returns the value of the number, ignoring units.
+Возвращает значение числа без учета единиц измерения.
 
 <% heads_up do %>
-  This means that `96px` and `1in` will return different values, even though
-  they represent the same length.
+  Это означает, что `96px` и `1in` будут возвращать разные значения, даже если они имеют одинаковую длину.
 <% end %>
 
 ```js
@@ -925,8 +829,8 @@ console.log(number.getValue()); // 10
 
 #### `number.getUnit()`
 
-Returns the units of the number as a string. Complex units are returned in the
-same format that [the constructor][new Number] accepts them.
+Возвращает единицы измерения числа в виде строки.
+Сложные единицы возвращаются в том же формате, в котором их принимает [конструктор][new Number].
 
 [new Number]: #new-types-number-value-unit
 
@@ -940,22 +844,21 @@ console.log(number.getUnit()); // "px/s"
 
 #### `number.setValue(value)`
 
-Sets the value of the number, independent of its units.
+Устанавливает значение числа независимо от его единиц измерения.
 
 #### `number.setUnit(unit)`
 
-Sets the units of the number, independent of its numeric value. Complex units
-are specified in the same format as for [the constructor][new Number].
+Устанавливает единицы измерения числа, независимо от его числового значения.
+Сложные единицы указываются в том же формате, что и [конструктор][new Number].
 
 ### `types.String`
 
-This class represents a [Sass string][].
+Этот класс представляет [строку Sass][Sass string].
 
 [Sass string]: values/strings
 
 <% heads_up do %>
-  This API currently provides no way of distinguishing between a [quoted][] and
-  [unquoted][] string.
+  Этот API в настоящее время не предоставляет возможности различать строку [в кавычках][quoted] и [без кавычек][unquoted].
 
   [quoted]: values/strings#quoted
   [unquoted]: values/strings#unquoted
@@ -963,10 +866,10 @@ This class represents a [Sass string][].
 
 #### `new types.String(value)`
 
-Creates a new unquoted Sass string with the given value.
+Создает новую строку Sass без кавычек с заданным значением.
 
 <% heads_up do %>
-  This API currently provides no way of creating a [quoted][] string.
+  В настоящее время этот API не предоставляет возможности создания строки [в кавычках][quoted].
 
   [quoted]: values/strings#quoted
 <% end %>
@@ -977,9 +880,8 @@ new sass.types.String("Arial"); // == Arial
 
 #### `string.getValue()`
 
-Returns the contents of the string. If the string contains escapes, those
-escapes are included literally if it's [unquoted][], while the values of the
-escapes are included if it's [quoted][].
+Возвращает содержимое строки.
+Если строка содержит escape-последовательности, эти escape-символы включаются буквально, если они [без кавычек][unquoted], а значения escape-символов включаются, если они [в кавычках][quoted].
 
 [unquoted]: values/strings#unquoted
 [quoted]: values/strings#quoted
@@ -1000,24 +902,22 @@ string.getValue(); // "👭"
 
 #### `string.setValue(value)`
 
-Sets the contents of the string.
+Устанавливает содержимое строки.
 
 <% heads_up do %>
-  Even if the string was originally quoted, this will cause it to become
-  unquoted.
+  Даже если строка была изначально заключена в кавычки, это приведет к тому, что она не будет заключена в кавычки.
 <% end %>
 
 ### `types.Color`
 
-This class represents a [Sass color][].
+Этот класс представляет [цвет Sass][Sass color].
 
 [Sass color]: values/colors
 
 #### `new types.Color(red, green, blue[, alpha = 1])`
 
-Creates a new Sass color with the given red, green, blue, and alpha channels.
-The red, green, and blue channels must be integers between 0 and 255
-(inclusive), and alpha must be between 0 and 1 (inclusive).
+Создает новый цвет Sass с заданными красным, зеленым, синим и альфа-каналами.
+Красный, зеленый и синий каналы должны быть целыми числами от 0 до 255 (включительно), а альфа должна быть от 0 до 1 (включительно).
 
 ```js
 new sass.types.Color(107, 113, 127); // #6b717f
@@ -1026,8 +926,7 @@ new sass.types.Color(0, 0, 0, 0); // rgba(0, 0, 0, 0)
 
 #### `new types.Color(argb)`
 
-Creates a new Sass color with alpha, red, green, and blue channels taken from
-respective two-byte chunks of a hexidecimal number.
+Создает новый цвет Sass с альфа, красным, зеленым и синим каналами, взятыми из соответствующих двухбайтовых фрагментов шестнадцатеричного числа.
 
 ```js
 new sass.types.Color(0xff6b717f); // #6b717f
@@ -1036,7 +935,7 @@ new sass.types.Color(0x00000000); // rgba(0, 0, 0, 0)
 
 #### `color.getR()`
 
-Returns the red channel of the color as an integer from 0 to 255.
+Возвращает красный канал цвета как целое число от 0 до 255.
 
 ```js
 // color is `#6b717f`.
@@ -1048,7 +947,7 @@ color.getR(); // 179
 
 #### `color.getG()`
 
-Returns the green channel of the color as an integer from 0 to 255.
+Возвращает зеленый канал цвета как целое число от 0 до 255.
 
 ```js
 // color is `#6b717f`.
@@ -1060,7 +959,7 @@ color.getG(); // 115
 
 #### `color.getB()`
 
-Returns the blue channel of the color as an integer from 0 to 255.
+Возвращает синий канал цвета как целое число от 0 до 255.
 
 ```js
 // color is `#6b717f`.
@@ -1072,7 +971,7 @@ color.getG(); // 153
 
 #### `color.getA()`
 
-Returns the alpha channel of the color as a number from 0 to 1.
+Возвращает альфа-канал цвета в виде числа от 0 до 1.
 
 ```js
 // color is `#6b717f`.
@@ -1084,51 +983,45 @@ color.getA(); // 0
 
 #### `color.setR(red)`
 
-Sets the red channel of the color. The value must be an integer between 0 and
-255 (inclusive).
+Устанавливает красный канал цвета. Значение должно быть целым числом от 0 до 255 (включительно).
 
 #### `color.setG(green)`
 
-Sets the green channel of the color. The value must be an integer between 0 and
-255 (inclusive).
+Устанавливает зеленый канал цвета. Значение должно быть целым числом от 0 до 255 (включительно).
 
 #### `color.setB(blue)`
 
-Sets the blue channel of the color. The value must be an integer between 0 and
-255 (inclusive).
+Устанавливает синий канал цвета. Значение должно быть целым числом от 0 до 255 (включительно).
 
 #### `color.setA(alpha)`
 
-Sets the alpha channel of the color. The value must be a number between 0 and 1
-(inclusive).
+Устанавливает альфа-канал цвета. Значение должно быть целым числом от 0 до 255 (включительно).
 
 ### `types.Boolean`
 
-This class represents a [Sass boolean][].
+Этот класс представляет [логическое Sass][Sass boolean].
 
 [Sass boolean]: values/booleans
 
-Custom functions should respect Sass's notion of [truthiness][] by treating
-`false` and `null` as falsey and everything else as truthy.
+Пользовательские функции должны уважать понятие [истинности][truthiness] Sass, рассматривая `false` и `null` как ложные, а все остальное как истинное.
 
 [truthiness]: at-rules/control/if#truthiness-and-falsiness
 
 <% heads_up do %>
-  Calling `new sass.types.Boolean()` is forbidden.
+  Вызов `new sass.types.Boolean()` запрещен.
 <% end %>
 
 #### `types.Boolean.TRUE`
 
-The Sass value `true`.
+Значение Sass `true`.
 
 #### `types.Boolean.FALSE`
 
-The Sass value `false`.
+Значение Sass `false`.
 
 #### `boolean.getValue()`
 
-Returns `true` if the boolean is the Sass value `true`, and false if it's the
-Sass value `false`.
+Возвращает `true`, если логическое значение является значением Sass `true`, и `false`, если это значение Sass `false`.
 
 ```js
 // boolean is `true`.
@@ -1142,25 +1035,23 @@ boolean === sass.types.Boolean.FALSE; // true
 
 ### `types.List`
 
-This class represents a [Sass list][].
+Этот класс представляет [список Sass][Sass list].
 
 [Sass list]: values/lists
 
 <% heads_up do %>
-  This list type's methods use 0-based indexing, even though within Sass lists
-  use 1-based indexing. These methods also don't support using negative numbers
-  to index backwards from the end of the list.
+  В методах этого типа списков используется индексирование на основе 0, хотя в списках Sass используется индексирование на основе 1.
+  Эти методы также не поддерживают использование отрицательных чисел для индексации в обратном направлении от конца списка.
 <% end %>
 
 #### `new types.List(length[, comma = true])`
 
-Creates a new Sass list with the given number of elements. If `comma` is true,
-the list is comma-separated; otherwise, it's space-separated.
+Создает новый список Sass с заданным количеством элементов.
+Если `comma` истинна, список разделен запятыми; в противном случае - через пробел.
 
 <% heads_up do %>
-  The initial values of the list elements are undefined. These elements must be
-  set using the [`setValue()` method][] before accessing them or passing the
-  list back to Sass.
+  Начальные значения элементов списка не определены.
+  Эти элементы должны быть установлены с помощью [метода `setValue()`][`setValue()` method] перед доступом к ним или передачей списка обратно в Sass.
 
   [`setValue()` method]: #list-setvalue-index-value
 <% end %>
@@ -1175,7 +1066,7 @@ list; // 10px, 15px, 32px
 
 #### `list.getValue(index)`
 
-Returns the element at the given (0-based) index in the list.
+Возвращает элемент по заданному (отсчитываемому от 0) индексу в списке.
 
 ```js
 // list is `10px, 15px, 32px`
@@ -1185,7 +1076,7 @@ list.getValue(2); // 32px
 
 #### `list.getSeparator()`
 
-Returns `true` if the list is comma-separated, and `false` otherwise.
+Возвращает `true`, если список разделен запятыми, и `false` в противном случае.
 
 ```js
 // list is `10px, 15px, 32px`
@@ -1197,7 +1088,7 @@ list.getSeparator(); // false
 
 #### `list.getLength()`
 
-Returns the number of elements in the list.
+Возвращает количество элементов в списке.
 
 ```js
 // list is `10px, 15px, 32px`
@@ -1209,7 +1100,7 @@ list.getLength(); // 2
 
 #### `list.setValue(index, value)`
 
-Sets the element at the given (0-based) index in the list to the given value.
+Устанавливает элемент по заданному (отсчитываемому от 0) индексу в списке к заданному значению.
 
 ```js
 // list is `10px, 15px, 32px`
@@ -1219,30 +1110,28 @@ list; // 10px, 18px, 32px
 
 #### `list.setSeparator(comma)`
 
-Sets whether the list is comma-separated.
+Устанавливает, разделяется ли список запятыми.
 
 ### `types.Map`
 
-This class represents a [Sass map][].
+Этот класс представляет [карту Sass][Sass map].
 
 [Sass map]: values/maps
 
 <% heads_up do %>
-  This map type is represented as a list of key-value pairs rather than a
-  mapping from keys to values. The only way to find the value associated with a
-  given key is to iterate through the map checking for that key.
+  Этот тип карты представлен в виде списка пар ключ-значение, а не отображения ключей в значения.
+  Единственный способ найти значение, связанное с данным ключом, - это итерация по проверке карты для этого ключа.
 
-  Maps created through this API are still forbidden from having duplicate keys.
+   Карты, созданные с помощью этого API, по-прежнему не могут иметь повторяющиеся ключи.
 <% end %>
 
 #### `new types.Map(length)`
 
-Creates a new Sass map with the given number of key/value pairs.
+Создает новую карту Sass с заданным количеством пар ключ/значение.
 
 <% heads_up do %>
-  The initial keys and values of the map are undefined. They must be set using
-  the [`setKey()` method][] and the [`setValue()` method][] before accessing
-  them or passing the map back to Sass.
+  Начальные ключи и значения карты не определены.
+  Они должны быть установлены с помощью [метода `setKey()`][`setKey()` method] и [метода `setValue()`][`setValue()` method] перед доступом к ним или передачей карты обратно в Sass.
 
   [`setKey()` method]: #map-setkey-index-key
   [`setValue()` method]: #map-setvalue-index-value
@@ -1259,7 +1148,7 @@ map; // (width: 300px, height: 100px)
 
 #### `map.getKey(index)`
 
-Returns the key in the key/value pair at the given (0-based) index in the map.
+Возвращает ключ в паре ключ/значение по заданному (отсчитываемому от 0) индексу на карте.
 
 ```js
 // map is `(width: 300px, height: 100px)`
@@ -1269,7 +1158,7 @@ map.getKey(1); // height
 
 #### `map.getValue(index)`
 
-Returns the value in the key/value pair at the given (0-based) index in the map.
+Возвращает значение в паре ключ/значение по заданному (отсчитываемому от 0) индексу на карте.
 
 ```js
 // map is `(width: 300px, height: 100px)`
@@ -1279,7 +1168,7 @@ map.getValue(1); // 100px
 
 #### `map.getLength()`
 
-Returns the number of key/value pairs in the map.
+Возвращает количество пар ключ/значение на карте.
 
 ```js
 // map is `("light": 200, "medium": 400, "bold": 600)`
@@ -1291,8 +1180,7 @@ map.getLength(); // 2
 
 #### `map.setKey(index, key)`
 
-Sets the key of the key/value pair at the given (0-based) index in the map to
-the given value.
+Устанавливает ключ пары ключ/значение по заданному (основанному на 0) индексу на карте в заданное значение.
 
 ```js
 // map is `("light": 200, "medium": 400, "bold": 600)`
@@ -1302,8 +1190,7 @@ map; // (lighter: 200, "medium": 400, "bold": 600)
 
 #### `map.setValue(index, value)`
 
-Sets the value of the key/value pair at the given (0-based) index in the map to
-the given value.
+Устанавливает значение пары ключ/значение по заданному (основанному на 0) индексу на карте в заданное значение.
 
 ```js
 // map is `("light": 200, "medium": 400, "bold": 600)`
@@ -1313,27 +1200,27 @@ map; // ("light": 200, "medium": 300, "bold": 600)
 
 ### `types.Null`
 
-This class represents the [Sass `null` value][].
+Этот класс представляет [значение Sass `null`][Sass `null` value].
 
 [Sass `null` value]: values/null
 
 <% heads_up do %>
-  Calling `new sass.types.Null()` is forbidden.
+  Вызов `new sass.types.Null()` запрещен.
 <% end %>
 
 #### `types.Null.NULL`
 
-The Sass value `null`.
+Значение Sass `null`.
 
-## Integrations
+## Интеграции
 
-Most popular Node.js build systems have integrations available for the JS API:
+Большинство популярных систем сборки Node.js имеют интеграции, доступные для JS API:
 
-* Webpack uses the [`sass-loader` package][].
-* Gulp uses the [`gulp-sass` package][].
-* Broccoli uses the [`broccoli-sass-source-maps` package][].
-* Ember uses the [`ember-cli-sass` package][].
-* Grunt uses the [`grunt-sass` package][].
+* Webpack использует [пакет `sass-loader`][`sass-loader` package].
+* Gulp использует [пакет `gulp-sass`][`gulp-sass` package].
+* Broccoli использует [пакет `broccoli-sass-source-maps`][`broccoli-sass-source-maps` package].
+* Ember использует [пакет `ember-cli-sass`][`ember-cli-sass` package].
+* Grunt использует [пакет `grunt-sass`][`grunt-sass` package].
 
 [`sass-loader` package]: https://www.npmjs.com/package/sass-loader
 [`gulp-sass` package]: https://www.npmjs.com/package/gulp-sass
