@@ -1,79 +1,62 @@
 ---
-title: "Breaking Change: Color Units"
+title: "Критическое изменение: Единицы цвета"
 introduction: >
-  In CSS, saturation and lightness parameters always require `%` units and hue
-  parameters allow any angle unit. Sass has historically ignored units for these
-  functions. We're in the process of changing that.
+  В CSS для параметров насыщенности и яркости всегда требуются единицы `%`, а для параметров оттенка - любые единицы угла.
+  Sass исторически игнорировал модули для этих функций.
+  Мы находимся в процессе изменения этого.
 ---
 
-It's important that we keep Sass's implementation of [`hsl()`] consistent with
-the CSS spec, and that we keep other Sass functions that deal with colors
-consistent with `hsl()`. One notable place where Sass has historically differed
-from the spec is the way that `hsl()` (and other color functions) handled units.
+Важно, чтобы реализация Sass [`hsl()`] соответствовала спецификации CSS, а другие функции Sass, которые работают с цветами, согласованы с `hsl()`.
+Одно примечательное место, в котором Sass исторически отличался от спецификации, - это способ, которым `hsl()` (и другие цветовые функции) обрабатывают единицы.
 
 [`hsl()`]: ../modules#hsl
 
-For hue, CSS allows any [angle unit][] (`deg`, `grad`, `rad`, or `turn`). It
-also allows a unitless number, which is interpreted as `deg`. Historically, Sass
-has allowed *any* unit, and interpreted it as `deg`. This is particularly
-problematic because it meant that the valid CSS expression `hsl(0.5turn, 100%,
-50%)` would be allowed by Sass but interpreted entirely wrong.
+Для оттенка CSS допускает любые [угловые единицы][angle unit] (`deg`, `grad`, `rad` или `turn`).
+Он также позволяет использовать безразмерное число, которое интерпретируется как `deg`.
+Исторически Sass допускал *любые* единицы измерения и интерпретировал их как `deg`.
+Это особенно проблематично, потому что это означало, что правильное выражение CSS `hsl(0.5turn, 100%, 50%)` будет разрешено Sass, но будет интерпретировано совершенно неверно.
 
 [angle unit]: https://drafts.csswg.org/css-values-4/#angles
 
-For lightness and saturation, CSS only allows `%` units. Even unitless numbers
-aren't allowed (unlike for the hue). Historically, Sass has allowed *any* unit,
-and interpreted it as `%`. You could even write `hsl(0, 100px, 50s)` and Sass
-would return the color `red`.
+Для яркости и насыщенности CSS допускает только единицы `%`.
+Даже безразмерные числа не допускаются (в отличие от оттенка).
+Исторически Sass допускал *любые* единицы измерения и интерпретировал их как `%`.
+Вы даже можете написать `hsl(0, 100px, 50s)`, и Sass вернет цвет `red`.
 
-To fix this issue and bring Sass in line with the CSS spec, we're making changes
-in multiple phases: 
+Чтобы исправить эту проблему и привести Sass в соответствие со спецификацией CSS, мы вносим изменения в несколько этапов:
 
-## Phase 1
+## Фаза 1
 
 <% impl_status dart: '1.32.0', libsass: false, ruby: false %>
 
-To begin with, we're just introducing deprecation warnings for behaviors that we
-plan to change. Specifically, Sass will emit a deprecation warning if you do any
-of the following:
+Для начала мы просто вводим предупреждения об устаревании для поведения, которое мы планируем изменить.
+В частности, Sass выдаст предупреждение об устаревании, если вы выполните одно из следующих действий:
 
-* Pass a number with a unit other than `deg` as a hue to any function. Passing a
-  unitless number is still allowed.
+* Передайте число с единицей измерения, отличной от `deg`, в качестве оттенка любой функции.
+  Передача безразмерного числа по-прежнему разрешена.
 
-* Pass a unitless number as saturation or lightness to any function.
+* Передайте безразмерное число в качестве насыщенности или яркости любой функции.
 
-* Pass a number with a unit other than `%` as saturation or lightness to any
-  function.
+* Передайте число с единицей измерения, отличной от `%`, в качестве насыщенности или яркости любой функции.
 
-Of these warnings, the first is the most important one to deal with immediately
-specifically if you're passing a number with unit `grad`, `rad`, or `turn`. This
-case will change behavior in Phase 2, which could change how your stylesheets
-render if you don't update them.
+Из этих предупреждений первое является наиболее важным, с которым нужно работать немедленно, особенно если вы передаете число с единицей измерения `grad`, `rad` или `turn`.
+Этот случай изменит поведение на Этапе 2, что может изменить способ визуализации ваших таблиц стилей, если вы их не обновите.
 
-## Phase 2
+## Фаза 2
 
 <% impl_status dart: false, libsass: false, ruby: false %>
 
-At least three months after the launch of Phase 1, we'll change the way angle
-units are handled for hue parameters to match the CSS spec. This means that
-numbers with `grad`, `rad`, or `turn` units will be converted to `deg`:
-`0.5turn` will be converted to `180deg`, `100grad` will be converted to `90deg`,
-and so on.
+По крайней мере, через три месяца после запуска Фазы 1 мы изменим способ обработки угловых единиц для параметров оттенка в соответствии со спецификацией CSS. Это означает, что числа с единицами измерения `grad`, `rad` или `turn` будут преобразованы в `deg`: `0.5turn` будут преобразованы в `180deg`, `100grad` будут преобразованы в `90deg` и скоро.
 
-Because this change is necessary to preserve CSS compatibility, according to the
-[Dart Sass compatibility policy] it will be made with only a minor version bump.
-However, it changes as little behavior as possible to ensure that Sass
-interprets all valid CSS according to the CSS spec. All other deprecated
-behavior will remain in place until Phase 3.
+Поскольку это изменение необходимо для сохранения совместимости с CSS, в соответствии с [политикой совместимости Dart Sass][Dart Sass compatibility policy] оно будет сделано только с незначительным увеличением версии.
+Однако он как можно меньше меняет поведение, чтобы гарантировать, что Sass интерпретирует весь допустимый CSS в соответствии со спецификацией CSS.
+Все остальное устаревшее поведение останется в силе до фазы 3.
 
 [Dart Sass compatibility policy]: https://github.com/sass/dart-sass#compatibility-policy
 
-## Phase 3
+## Фаза 3
 
 <% impl_status dart: false, libsass: false, ruby: false %>
 
-Finally, we'll remove all deprecated behavior by making color functions throw
-errors if they're passed any units that produced deprecation warnings in Phase
-1. Because this is a breaking change that's not strictly necessary for CSS
-compatibility, we'll land it as part of Dart Sass 2.0.0 (which we have no
-immediate plans to release).
+Наконец, мы удалим все устаревшее поведение, заставив функции цвета выдавать ошибки, если им переданы какие-либо блоки, которые выдавали предупреждения об устаревании на этапе 1.
+Поскольку это критическое изменение, которое не является строго необходимым для совместимости с CSS, мы внесем его как часть Dart Sass 2.0.0 (выпуск которой у нас нет в ближайшее время).

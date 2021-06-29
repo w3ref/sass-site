@@ -57,12 +57,12 @@ toc:
   - <code>sass:meta</code>: /documentation/modules/meta
   - <code>sass:selector</code>: /documentation/modules/selector
   - <code>sass:string</code>: /documentation/modules/string
-- Breaking Changes: /documentation/breaking-changes
+- Критические изменения: /documentation/breaking-changes
   :children:
-  - <code>/</code> as Division: /documentation/breaking-changes/slash-div
-  - Color Units: /documentation/breaking-changes/color-units
-  - Extending Compound Selectors: /documentation/breaking-changes/extend-compound
-  - CSS Variable Syntax: /documentation/breaking-changes/css-vars
+  - <code>/</code> как Деление: /documentation/breaking-changes/slash-div
+  - Единицы цвета: /documentation/breaking-changes/color-units
+  - Расширение составных селекторов: /documentation/breaking-changes/extend-compound
+  - Синтаксис переменных CSS: /documentation/breaking-changes/css-vars
 - Command Line: /documentation/cli
   :children:
   - Dart Sass: /documentation/cli/dart-sass

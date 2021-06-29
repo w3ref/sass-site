@@ -1,36 +1,26 @@
 ---
-title: Breaking Changes
+title: Критические изменения
 introduction: >
-  New versions of Sass are as backwards-compatible as possible, but sometimes
-  a breaking change is necessary. Sass needs to keep up with the evolving CSS
-  specification, and old language design mistakes occasionally need to be fixed.
+  Новые версии Sass максимально обратно совместимы, но иногда требуется серьезное изменение.
+  Sass должен идти в ногу с развивающейся спецификацией CSS, и иногда необходимо исправлять ошибки проектирования старых языков.
 overview: true
 ---
 
-Before each breaking change is released, Sass implementations will produce
-deprecation warnings for stylesheets whose behavior will change. Whenever
-possible, these warnings will include suggestions for how to update the
-deprecated styles to make them forward-compatible.
+Перед выпуском каждого критического изменения реализации Sass будут выдавать предупреждения об устаревании для таблиц стилей, поведение которых изменится.
+По возможности, эти предупреждения будут включать предложения по обновлению устаревших стилей, чтобы сделать их совместимыми с будущими версиями.
 
-Different implementations have different policies for breaking changes and
-deprecations. [Dart Sass][] will emit deprecation warnings for at least three
-months before releasing a breaking change, and will release the breaking change
-with a new major version number **unless that change is necessary for CSS
-compatibility**. CSS compatibility changes are often both non-disruptive and
-time-sensitive, so they may be released with new minor version numbers instead.
+В разных реализациях действуют разные политики в отношении критических изменений и прекращения поддержки.
+[Dart Sass][] будет выдавать предупреждения об устаревании в течение как минимум трех месяцев перед выпуском критического изменения и выпускает критическое изменение с новым номером основной версии, **если это изменение не требуется для совместимости с CSS**.
+Изменения совместимости CSS часто бывают неразрывными и чувствительными ко времени, поэтому вместо этого они могут быть выпущены с новыми дополнительными номерами версий.
 
 [Dart Sass]: /dart-sass
 
-These breaking changes are coming soon or have recently been released:
+Эти критические изменения скоро появятся или были выпущены недавно:
 
-* [`/` is changing from a division operation to a list
-  separator](breaking-changes/slash-div) beginning in Dart Sass 1.33.0.
+* [`/` заменяет операцию деления на разделитель списка](breaking-changes/slash-div), начиная с Dart Sass 1.33.0.
 
-* [Color functions are becoming more strict about
-  units](breaking-changes/color-units) beginning in Dart Sass 1.32.0.
+* [Цветовые функции становятся более строгими в отношении единиц](breaking-changes/color-units), начиная с Dart Sass 1.32.0.
 
-* [Compound selectors could not be extended](breaking-changes/extend-compound)
-  in Dart Sass 1.0.0 and Ruby Sass 4.0.0.
+* [Compound selectors could not be extended](breaking-changes/extend-compound) в Dart Sass 1.0.0 и Ruby Sass 4.0.0.
 
-* [The syntax for CSS custom property values changed](breaking-changes/css-vars)
-  in Dart Sass 1.0.0, LibSass 3.5.0, and Ruby Sass 3.5.0.
+* [Синтаксис значений пользовательских свойств CSS изменен](breaking-changes/css-vars) в Dart Sass 1.0.0, LibSass 3.5.0 и Ruby Sass 3.5.0.
