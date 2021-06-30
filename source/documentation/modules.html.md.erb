@@ -1,12 +1,9 @@
 ---
-title: Built-In Modules
+title: Встроенные модули
 introduction: >
-  Sass provides many built-in modules which contain useful functions (and the
-  occasional mixin). These modules can be loaded with the
-  [`@use` rule](at-rules/use) like any user-defined stylesheet, and their
-  functions can be called [like any other module
-  member](at-rules/use#loading-members). All built-in module URLs begin with
-  `sass:` to indicate that they're part of Sass itself.
+  Sass предоставляет множество встроенных модулей, которые содержат полезные функции (и иногда миксины).
+  Эти модули могут быть загружены с помощью [правила `@use`](at-rules/use), как любая пользовательская таблица стилей, и их функции могут быть вызваны [как любой другой участник модуля](at-rules/use#loading-members).
+  Все URL-адреса встроенных модулей начинаются с `sass:`, чтобы указать, что они являются частью самого Sass.
 overview: true
 ---
 
@@ -15,17 +12,12 @@ overview: true
 <% end %>
 
 <% heads_up do %>
-  Before the Sass module system was introduced, all Sass functions were globally
-  available at all times. Many functions still have global aliases (these are
-  listed in their documentation). The Sass team discourages their use and will
-  eventually deprecate them, but for now they remain available for compatibility
-  with older Sass versions and with LibSass (which doesn't support the module
-  system yet).
+  До того, как была представлена модульная система Sass, все функции Sass были всегда доступны глобально.
+  Многие функции по-прежнему имеют глобальные псевдонимы (они перечислены в их документации).
+  Команда Sass не рекомендует их использовать и в конечном итоге откажется от них, но пока они остаются доступными для совместимости со старыми версиями Sass и с LibSass (который еще не поддерживает модульную систему).
 
-  [A few functions][] are *only* available globally even in the new module
-  system, either because they have special evaluation behavior ([`if()`][]) or
-  because they add extra behavior on top of built-in CSS functions ([`rgb()`][]
-  and [`hsl()`][]). These will not be deprecated and can be used freely.
+  [Несколько функций][A few functions] доступны *только* глобально даже в новой модульной системе, либо потому, что у них есть особое поведение оценки ([`if()`][]), либо потому, что они добавляют дополнительное поведение поверх встроенных Функции CSS ([`rgb()`][] и [`hsl()`][]).
+  Они не будут считаться устаревшими и могут использоваться свободно.
 
   [a few functions]: #global-functions
   [`if()`]: #if
@@ -55,25 +47,21 @@ overview: true
   }
 <% end %>
 
-Sass provides the following built-in modules:
+Sass предоставляет следующие встроенные модули:
 
-* The [`sass:math` module][] provides functions that operate on [numbers][].
+* [Модуль `sass:math`][`sass:math` module] предоставляет функции, которые работают с [числами][numbers].
 
-* The [`sass:string` module][] makes it easy to combine, search, or split apart
-  [strings][].
+* [Модуль `sass:string`][`sass:string` module] упрощает объединение, поиск или разделение [строк][].
 
-* The [`sass:color` module][] generates new [colors][] based on existing ones,
-  making it easy to build color themes.
+* [Модуль `sass:color`][`sass:color` module] генерирует новые [цвета][colors] на основе существующих, что упрощает создание цветовых тем.
 
-* The [`sass:list` module][] lets you access and modify values in [lists][].
+* [Модуль `sass:list`][`sass:list` module] позволяет вам получать доступ и изменять значения в [списках][lists].
 
-* The [`sass:map` module][] makes it possible to look up the value associated
-  with a key in a [map][], and much more.
+* [Модуль `sass:map`][`sass:map` module] позволяет искать значение, связанное с ключом, в [карте]][map] и многое другое.
 
-* The [`sass:selector` module][] provides access to Sass's powerful selector
-  engine.
+* [Модуль `sass:selector`][`sass:selector` module] предоставляет доступ к мощному механизму выбора Sass.
 
-* The [`sass:meta` module][] exposes the details of Sass's inner workings.
+* [Модуль `sass:meta`][`sass:meta` module] раскрывает детали внутренней работы Sass.
 
 [`sass:math` module]: modules/math
 [numbers]: values/numbers
@@ -88,7 +76,7 @@ Sass provides the following built-in modules:
 [`sass:selector` module]: modules/selector
 [`sass:meta` module]: modules/meta
 
-## Global Functions
+## Глобальные функции
 
 <% function 'hsl($hue $saturation $lightness)',
             'hsl($hue $saturation $lightness / $alpha)',
@@ -98,40 +86,32 @@ Sass provides the following built-in modules:
             'hsla($hue, $saturation, $lightness, $alpha: 1)',
             returns: 'color' do %>
   <% impl_status dart: '1.15.0', libsass: false, ruby: false, feature: "Level 4 Syntax" do %>
-    LibSass and Ruby Sass only support the following signatures:
+    LibSass и Ruby Sass поддерживают только следующие подписи:
 
     * `hsl($hue, $saturation, $lightness)`
     * `hsla($hue, $saturation, $lightness, $alpha)`
 
-    Note that for these implementations, the `$alpha` argument is *required* if
-    the function name `hsla()` is used, and *forbidden* if the function name
-    `hsl()` is used.
+    Обратите внимание, что для этих реализаций аргумент `$alpha` *обязателен*, если используется имя функции `hsla()`, и *запрещен*, если используется имя функции `hsl()`.
   <% end %>
 
   <% impl_status dart: true, libsass: false, ruby: '3.7.0', feature: "Percent Alpha" do %>
-    LibSass and older versions of Ruby Sass don't support alpha values specified as
-    percentages.
+    LibSass и более старые версии Ruby Sass не поддерживают альфа-значения, указанные в процентах.
   <% end %>
 
-  Returns a color with the given [hue, saturation, and lightness][] and the given
-  alpha channel.
+  Возвращает цвет с заданными [оттенком, насыщенностью и яркостью][hue, saturation, and lightness] и заданным альфа-каналом.
 
   [hue, saturation, and lightness]: https://en.wikipedia.org/wiki/HSL_and_HSV
 
-  The hue is a number between `0deg` and `360deg` (inclusive) and may be
-  unitless. The saturation and lightness are numbers between `0%` and `100%`
-  (inclusive) and may *not* be unitless. The alpha channel can be specified as
-  either a unitless number between 0 and 1 (inclusive), or a percentage between
-  `0%` and `100%` (inclusive).
+  Оттенок - это число от `0deg` до `360deg` градусов (включительно) и может быть безразмерным.
+  Насыщенность и яркость - это числа от `0%` до `100%` (включительно) и могут *не* быть безразмерными.
+  Альфа-канал может быть указан либо как безразмерное число от 0 до 1 (включительно), либо как процентное соотношение между `0%` и `100%` (включительно).
 
   [unitless]: values/numbers#units
 
   <% fun_fact do %>
-    You can pass [special functions][] like `calc()` or `var()` in place of any
-    argument to `hsl()`. You can even use `var()` in place of multiple
-    arguments, since it might be replaced by multiple values! When a color
-    function is called this way, it returns an unquoted string using the same
-    signature it was called with.
+    Вы можете передать [специальные функции][special functions], такие как `calc()` или `var()` вместо любого аргумента в `hsl()`.
+    Вы даже можете использовать `var()` вместо нескольких аргументов, так как он может быть заменен несколькими значениями!
+    Когда функция цвета вызывается таким образом, она возвращает строку без кавычек, используя ту же сигнатуру, с которой она была вызвана.
 
     [special functions]: syntax/special-functions
 
@@ -143,12 +123,9 @@ Sass provides the following built-in modules:
       @debug hsla(var(--peach), 20%)  // hsla(var(--peach), 20%)
     <% end %>
   <% end %>
-  
+
   <% heads_up do %>
-    Sass's [special parsing rules][] for slash-separated values make it
-    difficult to pass variables for `$lightness` or `$alpha` when using the
-    `hsl($hue $saturation $lightness / $alpha)` signature. Consider using
-    `hsl($hue, $saturation, $lightness, $alpha)` instead.
+    [Специальные правила синтаксического анализа][special parsing rules] Sass для значений, разделенных косой чертой, затрудняют передачу переменных для `$lightness` или `$alpha` при использовании сигнатуры `hsl($hue $saturation $lightness / $alpha)`. Вместо этого рассмотрите возможность использования `hsl($hue, $saturation, $lightness, $alpha)`.
 
     [special parsing rules]: operators/numeric#slash-separated-values
   <% end %>
@@ -168,11 +145,9 @@ Sass provides the following built-in modules:
 
 
 <% function "if($condition, $if-true, $if-false)" do %>
-  Returns `$if-true` if `$condition` is [truthy][], and `$if-false` otherwise.
+  Возвращает `$if-true`, если `$condition` равно [правде][truthy] и `$if-false` в противном случае.
 
-  This function is special in that it doesn't even evaluate the argument that
-  isn't returned, so it's safe to call even if the unused argument would throw an
-  error.
+  Эта функция отличается тем, что она даже не оценивает аргумент, который не возвращается, поэтому ее можно безопасно вызывать, даже если неиспользованный аргумент вызовет ошибку.
 
   [truthy]: at-rules/control/if#truthiness-and-falsiness
 
@@ -198,38 +173,30 @@ Sass provides the following built-in modules:
             'rgba($color, $alpha)',
             returns: 'color' do %>
   <% impl_status dart: '1.15.0', libsass: false, ruby: false, feature: "Level 4 Syntax" do %>
-    LibSass and Ruby Sass only support the following signatures:
+    LibSass и Ruby Sass поддерживают только следующие подписи:
 
     * `rgb($red, $green, $blue)`
     * `rgba($red, $green, $blue, $alpha)`
     * `rgba($color, $alpha)`
 
-    Note that for these implementations, the `$alpha` argument is *required* if
-    the function name `rgba()` is used, and *forbidden* if the function name
-    `rgb()` is used.
+    Обратите внимание, что для этих реализаций аргумент `$alpha` *обязателен*, если используется имя функции `rgba()`, и *запрещен*, если используется имя функции `rgb()`.
   <% end %>
 
   <% impl_status dart: true, libsass: false, ruby: '3.7.0', feature: "Percent Alpha" do %>
-    LibSass and older versions of Ruby Sass don't support alpha values specified
-    as percentages.
+    LibSass и более старые версии Ruby Sass не поддерживают альфа-значения, указанные в процентах.
   <% end %>
 
-  If `$red`, `$green`, `$blue`, and optionally `$alpha` are passed, returns a
-  color with the given red, green, blue, and alpha channels.
+  Если переданы `$red`, `$green`, `$blue`и, необязательно, `$alpha`, возвращается цвет с указанными красным, зеленым, синим и альфа-каналами.
 
-  Each channel can be specified as either a [unitless][] number between 0 and
-  255 (inclusive), or a percentage between `0%` and `100%` (inclusive). The
-  alpha channel can be specified as either a unitless number between 0 and 1
-  (inclusive), or a percentage between `0%` and `100%` (inclusive).
+  Каждый канал может быть указан либо как число [без единиц измерения][unitless] от 0 до 255 (включительно), либо как процентное соотношение между `0%` и `100%` (включительно).
+  Альфа-канал может быть указан либо как безразмерное число от 0 до 1 (включительно), либо как процентное соотношение между `0%` и `100%` (включительно).
 
   [unitless]: values/numbers#units
 
   <% fun_fact do %>
-    You can pass [special functions][] like `calc()` or `var()` in place of any
-    argument to `rgb()`. You can even use `var()` in place of multiple
-    arguments, since it might be replaced by multiple values! When a color
-    function is called this way, it returns an unquoted string using the same
-    signature it was called with.
+    Вы можете передать [специальные функции][special functions], такие как `calc()` или `var()` вместо любого аргумента в `rgb()`.
+    Вы даже можете использовать `var()` вместо нескольких аргументов, так как он может быть заменен несколькими значениями!
+    Когда функция цвета вызывается таким образом, она возвращает строку без кавычек, используя ту же сигнатуру, с которой она была вызвана.
 
     [special functions]: syntax/special-functions
 
@@ -243,10 +210,7 @@ Sass provides the following built-in modules:
   <% end %>
 
   <% heads_up do %>
-    Sass's [special parsing rules][] for slash-separated values make it
-    difficult to pass variables for `$blue` or `$alpha` when using the
-    `rgb($red $green $blue / $alpha)` signature. Consider using
-    `rgb($red, $green, $blue, $alpha)` instead.
+    [Специальные правила синтаксического анализа][special parsing rules] Sass для значений, разделенных косой чертой, затрудняют передачу переменных для `$blue` или `$alpha` при использовании сигнатуры `rgb($red $green $blue / $alpha)`. Вместо этого рассмотрите возможность использования `rgb($red, $green, $blue, $alpha)`.
 
     [special parsing rules]: operators/numeric#slash-separated-values
   <% end %>
@@ -265,14 +229,13 @@ Sass provides the following built-in modules:
 
   ---
 
-  If `$color` and `$alpha` are passed, this returns `$color` with the given
-  `$alpha` channel instead of its original alpha channel.
+  Если переданы `$color` и `$alpha`, возвращается `$color` с заданным каналом `$alpha` вместо исходного альфа-канала.
 
   <% example(autogen_css: false) do %>
     @debug rgb(#f2ece4, 50%); // rgba(242, 236, 228, 0.5);
     @debug rgba(rgba(0, 51, 102, 0.5), 1); // #003366
     ===
-    @debug rgb(#f2ece4, 50%)  // rgba(242, 236, 228, 0.5) 
+    @debug rgb(#f2ece4, 50%)  // rgba(242, 236, 228, 0.5)
     @debug rgba(rgba(0, 51, 102, 0.5), 1)  // #003366
   <% end %>
 <% end %>

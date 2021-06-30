@@ -48,7 +48,7 @@ toc:
   - Числа: /documentation/operators/numeric
   - Строки: /documentation/operators/string
   - Логические: /documentation/operators/boolean
-- Built-In Modules: /documentation/modules
+- Встроенные модули: /documentation/modules
   :children:
   - <code>sass:color</code>: /documentation/modules/color
   - <code>sass:list</code>: /documentation/modules/list
@@ -57,15 +57,15 @@ toc:
   - <code>sass:meta</code>: /documentation/modules/meta
   - <code>sass:selector</code>: /documentation/modules/selector
   - <code>sass:string</code>: /documentation/modules/string
-- Breaking Changes: /documentation/breaking-changes
+- Критические изменения: /documentation/breaking-changes
   :children:
-  - <code>/</code> as Division: /documentation/breaking-changes/slash-div
-  - Color Units: /documentation/breaking-changes/color-units
-  - Extending Compound Selectors: /documentation/breaking-changes/extend-compound
-  - CSS Variable Syntax: /documentation/breaking-changes/css-vars
-- Command Line: /documentation/cli
+  - <code>/</code> как Деление: /documentation/breaking-changes/slash-div
+  - Единицы цвета: /documentation/breaking-changes/color-units
+  - Расширение составных селекторов: /documentation/breaking-changes/extend-compound
+  - Синтаксис переменных CSS: /documentation/breaking-changes/css-vars
+- Командная строка: /documentation/cli
   :children:
   - Dart Sass: /documentation/cli/dart-sass
   - Ruby Sass: /documentation/cli/ruby-sass
-  - Migrator: /documentation/cli/migrator
+  - Мигратор: /documentation/cli/migrator
 - JavaScript API: /documentation/js-api

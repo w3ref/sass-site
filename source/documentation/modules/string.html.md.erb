@@ -5,7 +5,7 @@ title: sass:string
 <%= partial '../snippets/built-in-module-status' %>
 
 <% function 'string.quote($string)', 'quote($string)', returns: 'string' do %>
-  Returns `$string` as a quoted string.
+  Возвращает `$string` в виде строки в кавычках.
 
   <% example(autogen_css: false) do %>
     @debug string.quote(Helvetica); // "Helvetica"
@@ -20,8 +20,7 @@ title: sass:string
 <% function 'string.index($string, $substring)',
             'str-index($string, $substring)',
             returns: 'number' do %>
-  Returns the first [index][] of `$substring` in `$string`, or `null` if
-  `$string` doesn't contain `$substring`.
+  Возвращает первый [индекс][index] из `$substring` в `$string` или `null`, если `$string` не содержит `$substring`.
 
   [index]: ../values/strings#string-indexes
 
@@ -38,7 +37,7 @@ title: sass:string
 <% function 'string.insert($string, $insert, $index)',
             'str-insert($string, $insert, $index)',
             returns: 'string' do %>
-  Returns a copy of `$string` with `$insert` inserted at [`$index`][].
+  Возвращает копию `$string` с вставкой `$insert` в [`$index`][].
 
   [`$index`]: ../values/strings#string-indexes
 
@@ -50,9 +49,8 @@ title: sass:string
     @debug string.insert("Roboto Bold", " Mono", -6)  // "Roboto Mono Bold"
   <% end %>
 
-  If of `$index` is higher than the length of `$string`, `$insert` is added to
-  the end. If `$index` is smaller than the negative length of the string,
-  `$insert` is added to the beginning.
+  Если `$index` больше, чем длина `$string`, `$insert` добавляется в конец.
+  Если `$index` меньше отрицательной длины строки, `$insert` добавляется в начало.
 
   <% example(autogen_css: false) do %>
     @debug string.insert("Roboto", " Bold", 100); // "Roboto Bold"
@@ -67,7 +65,7 @@ title: sass:string
 <% function 'string.length($string)',
             'str-length($string)',
             returns: 'number' do %>
-  Returns the number of characters in `$string`.
+  Возвращает количество символов в `$string`.
 
   <% example(autogen_css: false) do %>
     @debug string.length("Helvetica Neue"); // 14
@@ -84,8 +82,7 @@ title: sass:string
 <% function 'string.slice($string, $start-at, $end-at: -1)',
             'str-slice($string, $start-at, $end-at: -1)',
             returns: 'string' do %>
-  Returns the slice of `$string` starting at [index][] `$start-at` and ending at
-  index `$end-at` (both inclusive).
+  Возвращает фрагмент `$string`, начиная с [index][] `$start-at` и заканчивая индексом `$end-at` (оба включительно).
 
   [index]: ../values/strings#string-indexes
 
@@ -104,7 +101,7 @@ title: sass:string
 <% function 'string.to-upper-case($string)',
             'to-upper-case($string)',
             returns: 'string' do %>
-  Returns a copy of `$string` with the [ASCII][] letters converted to upper case.
+  Возвращает копию `$string` с буквами [ASCII][] преобразованными в верхний регистр.
 
   [ASCII]: https://en.wikipedia.org/wiki/ASCII
 
@@ -121,7 +118,7 @@ title: sass:string
 <% function 'string.to-lower-case($string)',
             'to-lower-case($string)',
             returns: 'string' do %>
-  Returns a copy of `$string` with the [ASCII][] letters converted to lower case.
+  Возвращает копию `$string` с буквами [ASCII][] преобразованными в нижний регистр.
 
   [ASCII]: https://en.wikipedia.org/wiki/ASCII
 
@@ -136,8 +133,7 @@ title: sass:string
 
 
 <% function 'string.unique-id()', 'unique-id()', returns: 'string' do %>
-  Returns a randomly-generated unquoted string that's guaranteed to be a valid
-  CSS identifier and to be unique within the current Sass compilation.
+  Возвращает случайно сгенерированную строку без кавычек, которая гарантированно является действительным идентификатором CSS и уникальна в рамках текущей компиляции Sass.
 
   <% example(autogen_css: false) do %>
     @debug string.unique-id(); // uabtrnzug
@@ -152,8 +148,8 @@ title: sass:string
 <% function 'string.unquote($string)',
             'unquote($string)',
             returns: 'string' do %>
-  Returns `$string` as an unquoted string. This can produce strings that aren't
-  valid CSS, so use with caution.
+  Возвращает `$string` как строку без кавычек.
+  Это может привести к появлению строк, недействительных CSS, поэтому используйте их с осторожностью.
 
   <% example(autogen_css: false) do %>
     @debug string.unquote("Helvetica"); // Helvetica

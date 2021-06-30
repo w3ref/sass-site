@@ -1,26 +1,19 @@
 ---
-title: "Breaking Change: Extending Compound Selectors"
+title: "Критическое изменение: Расширение составных селекторов"
 introduction: >
-  LibSass currently allows compound selectors like `.message.info` to be
-  [extended](../at-rules/extend), but the way it was extended doesn't match the
-  way `@extend` is meant to work.
+  LibSass в настоящее время позволяет [расширять](../at-rules/extend) составные селекторы, такие как `.message.info`, но способ его расширения не соответствует тому, как должен работать `@extend`.
 ---
 
 <% impl_status dart: true, libsass: false, ruby: false %>
 
-When one selector extends another, Sass styles all elements that match the
-extender as though they also match the class being extended. In other words, if
-you write `.heads-up {@extend .info}`, it works just like you replaced
-`class="heads-up"` in your HTML with `class="heads-up info"`.
+Когда один селектор расширяет другой, Sass стилизует все элементы, которые соответствуют расширителю, как если бы они также соответствуют расширяемому классу.
+Другими словами, если вы напишете `.heads-up {@extend .info}`, это будет работать так же, как вы заменили `class="heads-up"` в вашем HTML на `class="heads-up info"`.
 
-Following that logic, you'd expect that `.heads-up {@extend .message.info}` to
-work like replacing `class="heads-up"` with `class="heads-up info message"`. But
-that's not how it works right now in LibSass and Ruby Sass--instead of adding
-`.heads-up` to every selector that has *either `.info` or `.message`*, it only
-adds it to selectors that have *`.info.message` together*.
+Следуя этой логике, можно ожидать, что `.heads-up {@extend .message.info}` будет работать как замена `class="heads-up"` на `class="heads-up info message"`.
+Но сейчас в LibSass и Ruby Sass это работает не так - вместо добавления `.heads-up` к каждому селектору, имеющему *или `.info`, или `.message`*, он добавляет его только к селекторам, имеющим *вместе `.info.message`*.
 
 <% example(autogen_css: false) do %>
-  // These should both be extended, but they won't be.
+  // Оба они должны быть расширены, но этого не произойдет.
   .message {
     border: 1px solid black;
   }
@@ -32,7 +25,7 @@ adds it to selectors that have *`.info.message` together*.
     @extend .message.info;
   }
   ===
-  // These should both be extended, but they won't be.
+  // Оба они должны быть расширены, но этого не произойдет.
   .message
     border: 1px solid black
 
@@ -44,10 +37,9 @@ adds it to selectors that have *`.info.message` together*.
     @extend .message.info
 <% end %>
 
-To fix this issue, avoid more confusion, and keep the implementation clean and
-efficient the ability to extend compound selectors is unsupported in Dart Sass
-and will be removed in a future version of LibSass. For compatibility, users
-should extend each simple selector separately instead:
+Чтобы решить эту проблему, избегайте путаницы и сохраняйте чистоту и эффективность реализации.
+Возможность расширения составных селекторов не поддерживается в Dart Sass и будет удалена в будущей версии LibSass.
+Для совместимости пользователи должны расширять каждый простой селектор отдельно:
 
 <% example do %>
   .message {
@@ -73,15 +65,12 @@ should extend each simple selector separately instead:
 <% end %>
 
 <% heads_up do %>
-  Because Sass doesn't know the details of the HTML the CSS is going to style,
-  any `@extend` might need to generate extra selectors that won't apply to your
-  HTML in particular. This is especially true when switching away from extending
-  compound selectors.
-  
-  Most of the time, these extra selectors won't cause any problems, and will
-  only add a couple extra bytes to gzipped CSS. But some stylesheets might be
-  relying more heavily on the old behavior. In that case, we recommend replacing
-  the compound selector with a [placeholder selector][].
+  Поскольку Sass не знает деталей HTML, который будет стилизован CSS, любой `@extend` может потребовать создания дополнительных селекторов, которые не будут применяться, в частности, к вашему HTML.
+  Это особенно верно при отказе от расширенных составных селекторов.
+
+  В большинстве случаев эти дополнительные селекторы не вызовут никаких проблем и добавят только пару дополнительных байтов в сжатый CSS.
+  Но некоторые таблицы стилей могут больше полагаться на старое поведение.
+  В этом случае мы рекомендуем заменить составной селектор на [селектор-заполнитель][placeholder selector].
 
   [placeholder selector]: ../style-rules/placeholder-selectors
 
@@ -91,7 +80,7 @@ should extend each simple selector separately instead:
       border: 1px solid black;
       font-size: 1.5rem;
     }
-    
+
     .heads-up {
       // Instead of `.message.info`.
       @extend %message-info;
@@ -102,7 +91,7 @@ should extend each simple selector separately instead:
       border: 1px solid black
       font-size: 1.5rem
 
-    
+
     .heads-up
       // Instead of `.message.info`.
       @extend %message-info

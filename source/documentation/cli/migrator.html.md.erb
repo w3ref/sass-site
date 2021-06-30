@@ -1,17 +1,14 @@
 ---
-title: "Migrator"
+title: "Мигратор"
 table_of_contents: true
 introduction: >
-  The Sass migrator automatically updates your Sass files to help you move on to
-  the latest and greatest version of the language. Each of its commands migrates
-  a single feature, to give you as much control as possible over what you update
-  and when.
+  Мигратор Sass автоматически обновляет ваши файлы Sass, чтобы помочь вам перейти на последнюю и лучшую версию языка.
+  Каждая из его команд переносит отдельную функцию, чтобы вы могли максимально контролировать, что и когда обновлять.
 ---
 
-## Usage
+## Применение
 
-To use the Sass migrator, tell it [which migration][] you want to run and what
-Sass files you want to migrate:
+Чтобы использовать Sass migrator, сообщите ему [какую миграцию][which migration] вы хотите запустить и какие файлы Sass вы хотите перенести:
 
 [which migration]: #migrations
 
@@ -19,12 +16,9 @@ Sass files you want to migrate:
 sass-migrator <migration> <entrypoint.scss...>
 ```
 
-By default, the migrator will only change files that you explicitly pass on the
-command line. Passing the [`--migrate-deps` option][] tells the migrator to also
-change all the stylesheets that are loaded using the [`@use` rule][],
-[`@forward` rule][], or [`@import` rule][]. And if you want to do a test run to
-see what changes will be made without actually saving them, you can pass
-<code>[--dry-run][] [--verbose][]</code> (or `-nv` for short).
+По умолчанию мигратор изменяет только файлы, которые вы явно передаете в командной строке.
+Передача [параметра `--migrate-deps`][`--migrate-deps` option] указывает мигратору также изменить все таблицы стилей, которые загружаются с использованием [правила `@use`][`@use` rule], [правила `@forward`][`@forward` rule] или [правила `@import`][`@import` rule].
+А если вы хотите выполнить тестовый запуск, чтобы увидеть, какие изменения будут внесены без их фактического сохранения, вы можете передать <code>[--dry-run][] [--verbose][]</code> (или `-nv` для краткости).
 
 [`--migrate-deps` option]: #migrate-deps
 [`@use` rule]: ../at-rules/use
@@ -35,24 +29,20 @@ see what changes will be made without actually saving them, you can pass
 
 <%= partial 'code-snippets/example-module-migrator' %>
 
-## Installation
+## Установка
 
-You can install the Sass migrator from most of the same places that you can
-install [Dart Sass](/dart-sass):
+Вы можете установить Sass migrator почти из тех же мест, где вы можете установить [Dart Sass](/dart-sass):
 
-### Standalone
+### Автономный
 
-You can install the Sass migrator on Windows, Mac, or Linux by downloading the
-package for your operating system [from GitHub][] and [adding it to your
-`PATH`][].
+Вы можете установить Sass migrator в Windows, Mac или Linux, загрузив пакет для своей операционной системы [из GitHub][] и [добавив его в свой `PATH`][adding it to your `PATH`].
 
 [from GitHub]: <%= release_url(:migrator) %>
 [adding it to your `PATH`]: https://katiek2.github.io/path-doc/
 
 ### npm
 
-If you use Node.js, you can also install the Sass migrator using [npm][] by
-running
+Если вы используете Node.js, вы также можете установить Sass мигратор с помощью [npm][], запустив
 
 [npm]: https://www.npmjs.com
 
@@ -62,8 +52,7 @@ npm install -g sass-migrator
 
 ### Chocolatey
 
-If you use [the Chocolatey package manager][] for Windows, you can install the
-Sass migrator by running
+Если вы используете [диспетчер пакетов Chocolatey][the Chocolatey package manager] для Windows, вы можете установить Sass migrator, запустив
 
 [the Chocolatey package manager]: https://chocolatey.org
 
@@ -73,8 +62,7 @@ choco install sass-migrator
 
 ### Homebrew
 
-If you use [the Homebrew package manager][] for Mac OS X, you can install Dart
-Sass by running
+Если вы используете [менеджер пакетов Homebrew][the Homebrew package manager] для Mac OS X, вы можете установить Dart Sass, запустив
 
 [the Homebrew package manager]: https://brew.sh
 
@@ -82,16 +70,13 @@ Sass by running
 brew install sass/sass/migrator
 ```
 
-## Global Options
+## Глобальные опции
 
-These options are available for all migrators.
+Эти параметры доступны для всех мигрантов.
 
 ### `--migrate-deps`
 
-This option (abbreviated `-d`) tells the migrator to change not just the
-stylesheets that are explicitly passed on the command line, but also any
-stylesheets that they depend on using the [`@use` rule][], [`@forward` rule][],
-or [`@import` rule][].
+Эта опция (сокращенно `-d`) указывает мигратору изменять не только таблицы стилей, которые явно передаются в командной строке, но также любые таблицы стилей, от которых они зависят, используя [правило `@use`][`@use` rule], [правило `@forward`][`@forward` rule] или [правило `@import`][`@import` rule].
 
 ```shellsession
 $ sass-migrator module --verbose style.scss
@@ -104,10 +89,7 @@ Migrating _grid.scss
 ```
 
 <% heads_up do %>
-  The [module migrator][] assumes that any stylesheet that is depended on using
-  a [`@use` rule][] or a [`@forward` rule][] has already been migrated to the
-  module system, so it won't attempt to migrate them, even when the
-  `--migrate-deps` option is passed.
+  [Мигратор модулей][module migrator] предполагает, что любая таблица стилей, зависящая от использования [правила `@use`][`@use` rule] или [правило `@forward`][`@forward` rule] уже была перенесена в систему модулей, поэтому он не будет пытаться перенести их, даже если передана опция `--migrate-deps`.
 
   [module migrator]: #module
   [`@use` rule]: ../at-rules/use
@@ -116,22 +98,19 @@ Migrating _grid.scss
 
 ### `--load-path`
 
-This option (abbreviated `-I`) tells the migrator a [load path][] where it
-should look for stylesheets. It can be passed multiple times to provide multiple
-load paths. Earlier load paths will take precedence over later ones.
+Эта опция (сокращенно `-I`) сообщает мигратору [путь загрузки][load path], где он должен искать таблицы стилей.
+Его можно передавать несколько раз, чтобы обеспечить несколько путей загрузки.
+Более ранние пути загрузки имеют приоритет над более поздними.
 
-Dependencies loaded from load paths are assumed to be third-party libraries, so
-the migrator will not migrate them even when the [`--migrate-deps` option][] is
-passed.
+Предполагается, что зависимости, загруженные из путей загрузки, являются сторонними библиотеками, поэтому мигратор не будет их переносить, даже если передан [параметр `--migrate-deps`][`--migrate-deps` option].
 
 [load path]: ../at-rules/use#load-paths
 
 ### `--dry-run`
 
-This flag (abbreviated `-n`) tells the migrator not to save any changes to
-disk. It instead prints the list of files that it would have changed. This is
-commonly paired with the [`--verbose` option][] to print the contents of the
-changes that would have been made as well.
+Этот флаг (сокращенно `-n`) говорит мигратору не сохранять никаких изменений на диск.
+Вместо этого он печатает список файлов, которые он мог бы изменить.
+Обычно это используется вместе с [параметром `--verbose`][`--verbose` option] для вывода содержимого изменений, которые также были бы внесены.
 
 [`--verbose` option]: #verbose
 
@@ -147,10 +126,9 @@ _grid.scss
 
 #### `--no-unicode`
 
-This flag tells the Sass migrator only to emit ASCII characters to the terminal
-as part of error messages. By default, or if `--unicode` is passed, the migrator
-will emit non-ASCII characters for these messages. This flag does not affect the
-CSS output.
+Этот флаг указывает программе миграции Sass только передавать на терминал символы ASCII как часть сообщений об ошибках.
+По умолчанию или если передан `--unicode`, средство миграции будет выдавать для этих сообщений символы, отличные от ASCII.
+Этот флаг не влияет на вывод CSS.
 
 ```shellsession
 $ sass-migrator --no-unicode module style.scss
@@ -171,15 +149,12 @@ Migration failed!
 
 ### `--verbose`
 
-This flag (abbreviated `-v`) tells the migrator to print extra information to
-the console. By default, it just prints the name of files that are changed, but
-when combined with the [`--dry-run` option][] it also prints those files' new
-contents.
+Этот флаг (сокращенно `-v`) указывает мигратору вывести дополнительную информацию на консоль.
+По умолчанию он просто печатает имена файлов, которые были изменены, но в сочетании с [параметром `--dry-run`][`--dry-run` option] он также печатает новое содержимое этих файлов.
 
 [`--dry-run` option]: #dry-run
 
-<%# Indent this because otherwise the table-of-contents generator interprets
-the `===` as a heading. %>
+<%# Сделайте отступ, потому что в противном случае генератор оглавления интерпретирует `===` как заголовок. %>
 
     $ sass-migrator module --verbose --dry-run style.scss
     Dry run. Logging migrated files instead of overwriting...
@@ -197,53 +172,41 @@ the `===` as a heading. %>
     $ sass-migrator module --verbose style.scss
     Migrating style.scss
 
-## Migrations
+## Миграции
 
-### Module
+### Модуль
 
-This migration converts stylesheets that use the old [`@import` rule][] to load
-dependencies so that they use the Sass module system via the [`@use` rule][]
-instead. It doesn't just naïvely change `@import`s to `@use`s—it updates
-stylesheets intelligently so that they keep working the same way they did
-before, including:
+Эта миграция преобразует таблицы стилей, которые используют старое [правило `@import`][`@import` rule] для загрузки зависимостей, так что они вместо этого используют систему модулей Sass через [правило `@use`][`@use` rule]. Он не просто наивно меняет `@import` на `@use` — он разумно обновляет таблицы стилей, чтобы они продолжали работать так же, как и раньше, в том числе::
 
-* Adding namespaces to uses of members (variables, mixins, and functions) from
-  other modules.
+* Добавление пространств имен для использования участников (переменных, миксинов и функций) из других модулей.
 
-* Adding new `@use` rules to stylesheets that were using members without
-  importing them.
+* Добавление новых правил `@use` в таблицы стилей, которые использовали элементы, без их импорта.
 
-* Converting overridden default variables to [`with` clauses][].
+* Преобразование переопределенных переменных по умолчанию в [предложения `with`][`with` clauses].
 
   [`with` clauses]: ../at-rules/use#configuration
 
-* Automatically removing `-` and `_` prefixes from members that are used from
-  other files (because otherwise they'd be considered [private][] and could only
-  be used in the module they're declared).
+* Автоматическое удаление префиксов `-` и `_` из участников, которые используются из других файлов (потому что в противном случае они будут считаться [частными][private] и могут использоваться только в том модуле, который они объявлены).
 
   [private]: ../at-rules/use#private-members
 
-* Converting [nested imports][] to use the [`meta.load-css()` mixin][] instead.
+* Преобразование [вложенного импорта][nested imports] для использования вместо него [миксины `meta.load-css()`][`meta.load-css()` mixin].
 
   [nested imports]: ../at-rules/import#nesting
   [`meta.load-css()` mixin]: ../modules/meta#load-css
 
 <% heads_up do %>
-  Because the module migrator may need to modify both member definitions *and*
-  member names, it's important to either run it with the [`--migrate-deps`
-  option][] or ensure that you pass it all the stylesheets in your package or
-  application.
+  Поскольку переносчику модуля может потребоваться изменить определения участников *и* имена участников, важно либо запустить его с [параметром `--migrate-deps`][`--migrate-deps` option], либо убедиться, что вы передали ему все таблицы стилей в вашем пакете, либо заявление.
 
   [`--migrate-deps` option]: #migrate-deps
 <% end %>
 
 <%= partial 'code-snippets/example-module-migrator' %>
 
-#### Loading Dependencies
+#### Загрузка зависимостей
 
-The module migrator needs to be able to read all of the stylesheets depended on
-by the ones it's migrating, even if the [`--migrate-deps` option][] is not
-passed. If the migrator fails to find a dependency, you'll get an error.
+Мигратор модуля должен иметь возможность читать все таблицы стилей, зависящие от тех, которые он мигрирует, даже если [параметр `--migrate-deps`][`--migrate-deps` option] не передан.
+Если мигратору не удается найти зависимость, вы получите сообщение об ошибке.
 
 ```shellsession
 $ ls .
@@ -259,12 +222,9 @@ Migration failed!
 $ sass-migrator --load-path node_modules module style.scss
 ```
 
-If you use a [load path][] when compiling your stylesheets, make sure to pass
-that to the migrator using the [`--load-path` option][].
+Если вы используете [путь загрузки][load path] при компиляции таблиц стилей, не забудьте передать его в программу миграции с помощью [параметра `--load-path`][`--load-path` option].
 
-Unfortunately, the migrator does not support custom importers, but it does have
-built-in support for resolving URLs starting with `~` by searching in
-`node_modules`, similar to [what Webpack supports][].
+К сожалению, переносчик не поддерживает настраиваемые импортеры, но он имеет встроенную поддержку для разрешения URL-адресов, начинающихся с `~`, путем поиска в `node_modules`, аналогично [что поддерживает Webpack][what Webpack supports].
 
 [load path]: ../at-rules/use#load-paths
 [`--load-path` option]: #load-path
@@ -272,15 +232,11 @@ built-in support for resolving URLs starting with `~` by searching in
 
 #### `--remove-prefix`
 
-This option (abbreviated `-p`) takes an identifier prefix to remove from the
-beginning of all variable, mixin, and function names when they're migrated.
-Members that don't start with this prefix will remain unchanged.
+Эта опция (сокращенно `-p`) принимает префикс идентификатора, который удаляется из начала всех имен переменных, миксинов и функций при их переносе.
+Участники, которые не начинаются с этого префикса, останутся без изменений.
 
-The [`@import` rule][] put all top-level members in one global scope, so when it
-was the standard way of loading stylesheets, everyone was incentivized to add
-prefixes to all their member names to avoid accidentally redefining some other
-stylesheet's. The module system solves this problem, so it's useful to
-automatically strip those old prefixes now that they're unnecessary.
+[Правило `@import`][`@import` rule] помещает все элементы верхнего уровня в одну глобальную область видимости, поэтому, когда это был стандартный способ загрузки таблиц стилей, каждый был мотивирован добавлять префиксы ко всем именам своих участников, чтобы избежать случайного переопределения некоторых других таблиц стилей.
+Модульная система решает эту проблему, поэтому теперь полезно автоматически удалять старые префиксы, когда они не нужны.
 
 ```shellsession
 $ cat style.scss
@@ -300,40 +256,31 @@ $ cat style.scss
 }
 ```
 
-When you pass this option, the migrator will also generate an [import-only
-stylesheet][] that [forwards][] all the members with the prefix added back, to
-preserve backwards-compatibility for users who were importing the library.
+Когда вы передаете эту опцию, мигратор также сгенерирует [таблицу стилей только для импорта][import-only stylesheet], которая [пересылает][forwards] всех участников с добавленным префиксом обратно, чтобы сохранить обратную совместимость для пользователей, которые импортировали библиотеку.
 
 [import-only stylesheet]: ../at-rules/import#import-only-files
 [forwards]: ../at-rules/forward
 
-This option may be passed multiple times, or with multiple values separated by
-commas. Each prefix will be removed from any members that have it. If a member
-matches multiple prefixes, the longest matching prefix will be removed.
+Этот параметр может передаваться несколько раз или с несколькими значениями, разделенными запятыми.
+Каждый префикс будет удален из всех участников, у которых он есть.
+Если член соответствует нескольким префиксам, будет удален самый длинный совпадающий префикс.
 
 #### `--forward`
 
-This option tells the migrator which members to forward using the [`@forward`
-rule][]. It supports the following settings:
+Эта опция сообщает мигратору, какие элементы перенаправлять с помощью [правила `@forward`][`@forward` rule].
+Он поддерживает следующие настройки:
 
-* `none` (the default) doesn't forward any members.
+* `none` (по умолчанию) не пересылает участников.
 
-* `all` forwards all members except those that started with `-` or `_` in the
-  original stylesheet, since that was commonly used to mark a package-private
-  member before the module system was introduced.
+* `all` перенаправляет все элементы, кроме тех, которые начинались с `-` или `_` в исходной таблице стилей, поскольку это обычно использовалось для обозначения закрытого члена пакета до того, как была введена модульная система.
 
-* `prefixed` forwards only members that begin with the prefix passed to the
-  [`--remove-prefix` option][]. This option may only be used in conjunction with
-  the `--remove-prefix` option.
+* `prefixed` пересылает только те элементы, которые начинаются с префикса, переданного в [параметр `--remove-prefix`][`--remove-prefix` option]. Этот параметр можно использовать только вместе с параметром `--remove-prefix`.
 
   [`--remove-prefix` option]: #remove-prefix
 
-All files that are passed explicitly on the command line will forward members
-that are transitively loaded by those files using the `@import` rule. Files
-loaded using the [`--migrate-deps` option][] will not forward any new members.
-This option is particularly useful when migrating a Sass library, because it
-ensures that users of that library will still be able to access all the members
-it defines.
+Все файлы, которые явно передаются в командной строке, будут перенаправлять элементы, которые транзитивно загружаются этими файлами с использованием правила `@import`.
+Файлы, загруженные с использованием [параметра `--migrate-deps`][`--migrate-deps` option], не будут пересылать новых участников.
+Этот параметр особенно полезен при миграции библиотеки Sass, поскольку он гарантирует, что пользователи этой библиотеки по-прежнему будут иметь доступ ко всем членам, которые она определяет.
 
 ```shellsession
 $ cat _index.scss
@@ -347,32 +294,26 @@ $ cat _index.scss
 @forward "components";
 ```
 
-### Namespace
+### Пространство имен
 
-This migration allows you to easily change the [namespaces][] of the `@use`
-rules in a stylesheet. This is useful if the namespaces that the module migrator
-generates to resolve conflicts are non-ideal, or if you don't want to use the
-default namespace that Sass determines based on the rule's URL.
+Эта миграция позволяет вам легко изменять [пространства имен][namespaces] правил `@use` в таблице стилей.
+Это полезно, если пространства имен, которые модуль миграции генерирует для разрешения конфликтов, не идеальны, или если вы не хотите использовать пространство имен по умолчанию, которое Sass определяет на основе URL-адреса правила.
 
 [namespaces]: ../at-rules/use#choosing-a-namespace
 
 #### `--rename`
 
-You can tell the migrator which namespace(s) you want it to change by passing
-expressions to the `--rename` option.
+Вы можете указать мигратору, какие пространства имен вы хотите изменить, передав выражения в параметр `--rename`.
 
-These expressions are of the form `<old-namespace> to <new-namespace>` or
-`url <rule-url> to <new-namespace>`. In these expressions, `<old-namespace>` and
-`<rule-url>` are [regular expressions][] which match against the entirety of the
-existing namespace or the `@use` rule's URL, respectively.
+Эти выражения имеют форму от `<old-namespace> до <new-namespace>` или `url <rule-url> до <new-namespace>`.
+В этих выражениях, `<old-namespace>` и `<rule-url>` являются [регулярными выражениями][regular expressions], которые совпадают со всем существующим пространством имен или URL-адресом правила `@use`, соответственно.
 
 [regular expressions]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
 
-For simple use cases, this just looks like `--rename 'old to new'`, which would
-rename a `@use` rule with the namespace `old` to instead be `new`.
+Для простых случаев использования это выглядит как `--rename 'old to new'`, которое переименовало бы правило `@use` с пространством имен `old` в `new`.
 
-However, you can also do this to accomplish more complicated renames. For
-instance, say that you previously had a stylesheet that looked like this:
+Однако вы также можете сделать это для выполнения более сложных переименований.
+Например, предположим, что ранее у вас была таблица стилей, которая выглядела так:
 
 ```scss
 @import "components/button/lib/mixins";
@@ -381,8 +322,7 @@ instance, say that you previously had a stylesheet that looked like this:
 // ...
 ```
 
-Since all of these URLs would have the default namespace `mixins` when migrated
-to `@use` rules, the module migrator may end up generating something like this:
+Поскольку все эти URL-адреса будут иметь пространство имен по умолчанию `mixins` при миграции на правила `@use`, модуль миграции модуля может в конечном итоге сгенерировать что-то вроде этого:
 
 ```scss
 @use "components/button/lib/mixins" as button-lib-mixins;
@@ -391,12 +331,10 @@ to `@use` rules, the module migrator may end up generating something like this:
 // ...
 ```
 
-This is valid code since the namespaces don't conflict, but they're way more
-complicated than they need to be. The relevant part of the URL is the component
-name, so we can use the namespace migrator to extract that part out.
+Это допустимый код, поскольку пространства имен не конфликтуют, но они намного сложнее, чем должны быть.
+Соответствующая часть URL-адреса - это имя компонента, поэтому мы можем использовать средство миграции пространства имен для извлечения этой части.
 
-If we run the namespace migrator with
-`--rename 'url components/(\w+)/lib/mixins to \1'`, we'll end up with:
+Если мы запустим средство переноса пространства имен с помощью `--rename 'url components/(\w+)/lib/mixins to \1'`, мы получим:
 
 ```scss
 @use "components/button/lib/mixins" as button;
@@ -405,28 +343,18 @@ If we run the namespace migrator with
 // ...
 ```
 
-The rename script here says to find all of the `@use` rules whose URLs look like
-`components/(\w+)/lib/mixins` (`\w+` in a regular expression means to match any
-word of one or more characters). The `\1` in the output clause means to
-substitute in the contents of the first set of parentheses in the regular
-expression (called a [group][]).
+Сценарий переименования здесь говорит, что нужно найти все правила `@use` URL-адреса которых выглядят как `components/(\w+)/lib/mixins` (`\w+` в регулярном выражении означает соответствие любому слову из одного или нескольких символов).
+`\1` в предложении вывода означает замену содержимого первого набора круглых скобок в регулярном выражении (вызываемом [группа][group]).
 
 [group]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Ranges
 
-If you wish to apply multiple renames, you can pass the `--rename` option
-multiple times, or separate them with a semicolon or a line break. Only the
-first rename that applies to a given rule will be used, so you could pass
-something like `--rename 'a to b; b to a'` to swap the namespaces `a` and `b`.
+Если вы хотите применить несколько переименований, вы можете передать параметр `--rename` несколько раз или разделить их точкой с запятой или разрывом строки.
+Будет использовано только первое переименование, применимое к данному правилу, поэтому вы можете передать что-то вроде `--rename 'a to b; b to a'`, чтобы поменять местами пространства имён `a` и `b`.
 
 #### `--force`
 
-By default, if two or more `@use` rules have the same namespace after the
-migration, the migrator will fail, and no changes will be made.
+По умолчанию, если два или более правил `@use` имеют одно и то же пространство имен после миграции, мигратор завершится ошибкой и никакие изменения не будут внесены.
 
-In this case, you'll usually want to adjust your `--rename` script to avoid
-creating conflicts, but if you'd prefer to force the migration, you can instead
-pass `--force`.
+В этом случае вы обычно хотите изменить свой сценарий `--rename`, чтобы избежать конфликтов, но если вы предпочитаете принудительную миграцию, вы можете вместо этого передать `--force`.
 
-With `--force`, if any conflicts are encountered, the first `@use` rule will
-get its preferred namespace, while subsequent `@use` rules with the same
-preferred namespace will instead have a numerical suffix added to them.
+С помощью `--force`, если возникают какие-либо конфликты, первое правило `@use` получит свое предпочтительное пространство имен, тогда как последующие правила `@use` с тем же предпочтительным пространством имен вместо этого будут иметь добавленный числовой суффикс.
