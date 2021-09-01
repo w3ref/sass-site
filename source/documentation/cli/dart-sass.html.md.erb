@@ -387,6 +387,17 @@ Error: Incompatible units em and px.
 $ sass --quiet style.scss style.css
 ```
 
+#### `--quiet-deps`
+
+This flag tells Sass not to emit deprecation warnings that come from
+dependencies. It considers any file that's transitively imported through a [load
+path] to be a "dependency". This flag doesn't affect the [`@warn` rule] or the
+[`@debug` rule].
+
+```shellsession
+$ sass --load-path=node_modules --quiet-deps style.scss style.css
+```
+
 #### `--trace`
 
 Этот флаг сообщает Sass о необходимости распечатать полную трассировку стека Dart или JavaScript при обнаружении ошибки.

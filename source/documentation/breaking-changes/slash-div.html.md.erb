@@ -77,16 +77,18 @@ introduction: >
 
 <% example do %>
   @use "sass:list";
+  @use "sass:math";
 
   .item3 {
-    $row: list.slash(span divide(6, 2), 7);
+    $row: list.slash(span math.div(6, 2), 7);
     grid-row: $row;
   }
   ===
-  @use "sass:list";
+  @use "sass:list"
+  @use "sass:math"
 
   .item3
-    $row: list.slash(span divide(6, 2), 7)
+    $row: list.slash(span math.div(6, 2), 7)
     grid-row: $row
   ===
   .item3 {

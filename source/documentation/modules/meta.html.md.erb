@@ -169,12 +169,19 @@ title: sass:meta
 <% end %>
 
 
-<% function 'meta.function-exists($name)',
+<% function 'meta.function-exists($name, $module: null)',
             'function-exists($name)',
             returns: 'boolean' do %>
   Возвращает, определена ли функция с именем `$name`, либо как встроенная, либо как определяемая пользователем функция.
 
+  If `$module` is passed, this also checks the module named `$module` for the
+  function definition. `$module` must be a string matching the namespace of a
+  [`@use` rule][] in the current file.
+
   <% example(autogen_css: false) do %>
+    @use "sass:math";
+
+    @debug meta.function-exists("div", "math"); // true
     @debug meta.function-exists("scale-color"); // true
     @debug meta.function-exists("add"); // false
 
@@ -183,6 +190,9 @@ title: sass:meta
     }
     @debug meta.function-exists("add"); // true
     ===
+    @use "sass:math"
+
+    @debug meta.function-exists("div", "math")  // true
     @debug meta.function-exists("scale-color")  // true
     @debug meta.function-exists("add")  // false
 
