@@ -1,0 +1,1 @@
+$(document).keydown(function(t){t.shiftKey||t.altKey||t.ctrlKey||t.metaKey||191!=t.which&&83!=t.which||"INPUT"===t.target.tagName||($("input.search").focus(),t.preventDefault())});
