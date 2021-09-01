@@ -389,10 +389,9 @@ $ sass --quiet style.scss style.css
 
 #### `--quiet-deps`
 
-This flag tells Sass not to emit deprecation warnings that come from
-dependencies. It considers any file that's transitively imported through a [load
-path] to be a "dependency". This flag doesn't affect the [`@warn` rule] or the
-[`@debug` rule].
+Этот флаг указывает Sass не выдавать предупреждения об устаревании, исходящие от зависимостей.
+Он рассматривает любой файл, который транзитивно импортирован через [путь загрузки][load path], как «зависимость».
+Этот флаг не влияет на [правило `@warn`][`@warn` rule] или [правило `@debug`][`@debug` rule].
 
 ```shellsession
 $ sass --load-path=node_modules --quiet-deps style.scss style.css

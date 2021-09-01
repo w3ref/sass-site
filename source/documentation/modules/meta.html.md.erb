@@ -174,9 +174,8 @@ title: sass:meta
             returns: 'boolean' do %>
   Возвращает, определена ли функция с именем `$name`, либо как встроенная, либо как определяемая пользователем функция.
 
-  If `$module` is passed, this also checks the module named `$module` for the
-  function definition. `$module` must be a string matching the namespace of a
-  [`@use` rule][] in the current file.
+  Если передан `$module`, это также проверяет модуль с именем `$module` на предмет определения функции.
+  `$module` должен быть строкой, соответствующей пространству имен [правила `@use`][`@use` rule] в текущем файле.
 
   <% example(autogen_css: false) do %>
     @use "sass:math";
