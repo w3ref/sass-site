@@ -75,19 +75,33 @@ introduction: >
       font-weight: 400
 <% end %>
 
-## `calc()`, `clamp()`, `element()`, `progid:...()`, and `expression()`
+## `element()`, `progid:...()`, and `expression()`
 
-<% impl_status dart: "1.31.0", libsass: false, ruby: false, feature: "clamp()" do %>
-  LibSass, Ruby Sass и более старые версии Dart Sass рассматривают `clamp()` как [простую функцию CSS][plain CSS function], а не поддерживают в ней специальный синтаксис.
+<% impl_status dart: "<1.40.0", libsass: false, ruby: false, feature: "calc()" do %>
+  LibSass, Ruby Sass и версии Dart Sass до 1.40.0 анализируют `calc()`
+  как специальную синтаксическую функцию, такую как `element()`.
 
-  [plain CSS function]: ../at-rules/function#plain-css-functions
+  Dart Sass 1.40.0 версии и более поздних анализирует `calc()` как [calculation].
+
+  [calculation]: ../values/calculations
 <% end %>
 
-Функции [`calc()`], [`clamp()`] и [`element()`] определены в спецификации CSS.
-Поскольку математические выражения `calc()` конфликтуют с арифметикой Sass, а идентификаторы `element()` могут быть проанализированы как цвета, они нуждаются в специальном анализе.
+<% impl_status dart: ">=1.31.0 <1.40.0", libsass: false, ruby: false, feature: "clamp()" do %>
+  LibSass, Ruby Sass и версии Dart Sass до 1.31.0 анализируют `clamp()`
+  как [простую функцию CSS][plain CSS function], а не поддерживают в ней специальный синтаксис.
 
-[`calc()`]: https://developer.mozilla.org/en-US/docs/Web/CSS/calc
-[`clamp()`]: https://developer.mozilla.org/en-US/docs/Web/CSS/clamp
+  [plain CSS function]: ../at-rules/function#plain-css-functions
+
+  Версии Dart Sass между 1.31.0 и 1.40.0 анализируют `clamp()`
+  как специальную синтаксическую функцию, такую как `element()`.
+
+  Dart Sass 1.40.0 версии и более поздних анализирует `clamp()` как [calculation].
+
+  [calculation]: ../values/calculations
+<% end %>
+
+Функция [`element()`] определена в спецификации CSS, и поскольку ее идентификаторы могут быть проанализированы как цвета, они нуждаются в специальном анализе.
+
 [`element()`]: https://developer.mozilla.org/en-US/docs/Web/CSS/element
 
 [`expression()`][] и функции, начинающиеся с [`progid:`][] являются устаревшими функциями Internet Explorer, которые используют нестандартный синтаксис.
@@ -99,92 +113,18 @@ introduction: >
 Sass допускает *любой текст* в этих вызовах функций, включая вложенные круглые скобки. Ничто не интерпретируется как выражение SassScript, за исключением того, что [интерполяция][interpolation] может использоваться для вставки динамических значений.
 
 <% example do %>
-  @use "sass:math";
+  $logo-element: logo-bg;
 
   .logo {
-    $width: 800px;
-    width: $width;
-    position: absolute;
-    left: calc(50% - #{math.div($width, 2)});
-    top: 0;
+    background: element(##{$logo-element});
   }
   ===
-  @use "sass:math"
+  $logo-element: logo-bg
 
   .logo
-    $width: 800px
-    width: $width
-    position: absolute
-    left: calc(50% - #{math.div($width, 2)})
-    top: 0
+    background: element(##{$logo-element})
   ===
   .logo {
-    width: 800px;
-    position: absolute;
-    left: calc(50% - 400px);
-    top: 0;
-  }
-<% end %>
-
-## `min()` и `max()`
-
-<% impl_status dart: "1.11.0", libsass: false, ruby: false do %>
-  LibSass и Ruby Sass в настоящее время *всегда* воспринимает `min()` и `max()` как функции Sass. Чтобы создать простой вызов CSS `min()` или `max()` для этих реализаций, вы можете написать что-то вроде `unquote("min(#{$padding}, env(safe-area-inset-left))")` вместо.
-<% end %>
-
-CSS добавил поддержку [функций `min()` и `max()`][`min()` and `max()` functions] в Values и Units Level 4, откуда они были быстро приняты Safari [для поддержки iPhoneX][to support the iPhoneX]. Но Sass поддерживал свои собственные функции [`min()`][] и [`max()`][] задолго до этого, и он должен был быть обратно совместимым со всеми существующими таблицами стилей. Это привело к необходимости особой синтаксической смекалки.
-
-[`min()` and `max()` functions]: https://drafts.csswg.org/css-values-4/#calc-notation
-[to support the iPhoneX]: https://webkit.org/blog/7929/designing-websites-for-iphone-x/
-[`min()`]: ../modules/math#min
-[`max()`]: ../modules/math#max
-
-Если вызов функции `min()` или `max()` является допустимым простым CSS, он будет скомпилирован в вызов CSS `min()` или `max()`. "Обычный CSS" включает вложенные вызовы [`calc()`][], [`env()`][], [`var()`][], `min()` или `max()`, также как и [интерполяция][interpolation]. Однако, как только какая-либо часть вызова содержит функцию SassScript, например [переменные][variables] или [вызовы функций][function calls], вместо этого она анализируется как вызов основной функции Sass `min()` или `max()`.
-
-[`env()`]: https://developer.mozilla.org/en-US/docs/Web/CSS/env
-[`var()`]: https://developer.mozilla.org/en-US/docs/Web/CSS/var
-
-<!-- TODO(nweiz): auto-generate this CSS once we're compiling with Dart Sass -->
-
-<% example do %>
-  $padding: 12px;
-
-  .post {
-    // Поскольку эти вызовы max() не используют никаких функций Sass,
-    // кроме интерполяции, они компилируются в вызовы CSS max().
-    padding-left: max(#{$padding}, env(safe-area-inset-left));
-    padding-right: max(#{$padding}, env(safe-area-inset-right));
-  }
-
-  .sidebar {
-    // Поскольку они ссылаются на переменную Sass без интерполяции,
-    // они вызывают встроенную в Sass функцию max().
-    padding-left: max($padding, 20px);
-    padding-right: max($padding, 20px);
-  }
-  ===
-  $padding: 12px
-
-  .post
-    // Поскольку эти вызовы max() не используют никаких функций Sass,
-    // кроме интерполяции, они компилируются в вызовы CSS max().
-    padding-left: max(#{$padding}, env(safe-area-inset-left))
-    padding-right: max(#{$padding}, env(safe-area-inset-right))
-
-
-  .sidebar
-    // Поскольку они ссылаются на переменную Sass без интерполяции,
-    // они вызывают встроенную в Sass функцию max().
-    padding-left: max($padding, 20px)
-    padding-right: max($padding, 20px)
-  ===
-  .post {
-    padding-left: max(12px, env(safe-area-inset-left));
-    padding-right: max(12px, env(safe-area-inset-right));
-  }
-
-  .sidebar {
-    padding-left: 20px;
-    padding-right: 20px;
+    background: element(#logo-bg);
   }
 <% end %>

@@ -264,6 +264,11 @@ $ sass --embed-source-map sass/style.scss css.style.css
 
 [`--update` flag]: #update
 
+Sass watches only the directories that you pass as-is on the command line,
+parent directories of filenames you pass on the command line, and load paths. It
+does not watch additional directories based on a file's `@import`/`@use`/
+`@forward` rules.
+
 ```shellsession
 $ sass --watch themes:public/css
 Compiled themes/light.scss to public/css/light.css.
