@@ -5,13 +5,18 @@ on:
     branches: [main-ru]
 
 jobs:
-  build_and_deploy:
-    name: Build & Deploy
+  unit_tests:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ruby-version: ['2.5.3']
+
     steps:
-      - uses: actions/checkout@v1
-      - name: Build & Deploy to GitHub Pages
-        with:
-          REMOTE_BRANCH: gh-pages
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        uses: w3ref/middleman-gh-pages-action@sass
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with: {node-version: 16}
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby-version }}
+        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+    - run: bundle exec rake test
