@@ -20,14 +20,14 @@ introduction: >
 Вместо этого деление будет записано с использованием новой функции `math.div()`.
 Эта функция будет вести себя точно так же, как сегодня `/`.
 
-This deprecation does not affect uses of `/` inside `calc()` expressions.
+Это устаревание не влияет на использование `/` внутри выражений `calc()`.
 
 <% example do %>
   @use "sass:math";
 
   // Future Sass, пока не работает!
   .item3 {
-    $row: span math.div(6, 2) / 7; // A two-element slash-separated list.
+    $row: span math.div(6, 2) / 7; // Список из двух элементов, разделенных косой чертой.
     grid-row: $row;
   }
   ===
@@ -35,7 +35,7 @@ This deprecation does not affect uses of `/` inside `calc()` expressions.
 
   // Future Sass, пока не работает!
   .item3
-    $row: span math.div(6, 2) / 7 // A two-element slash-separated list.
+    $row: span math.div(6, 2) / 7 // Список из двух элементов, разделенных косой чертой.
     grid-row: $row
   ===
   .item3 {
