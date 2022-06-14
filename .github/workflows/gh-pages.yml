@@ -11,10 +11,6 @@ env:
 jobs:
   release:
     runs-on: ubuntu-latest
-    if:
-      github.event_name == 'push' &&
-        github.ref == 'refs/heads/main-ru' &&
-        github.repository == 'w3ref/sass-site'
 
     steps:
     - uses: actions/checkout@v2
