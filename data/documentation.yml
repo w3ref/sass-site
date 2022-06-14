@@ -40,6 +40,7 @@ toc:
   - Карты: /documentation/values/maps
   - <code>true</code> и <code>false</code>: /documentation/values/booleans
   - <code>null</code>: /documentation/values/null
+  - Расчеты: /documentation/values/calculations
   - Функции: /documentation/values/functions
 - Операторы: /documentation/operators
   :children:

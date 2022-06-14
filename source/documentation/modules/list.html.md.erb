@@ -93,9 +93,10 @@ title: sass:list
   Если это `auto` (по умолчанию), возвращаемый список будет использовать тот же разделитель, что и `$list` (или `space`, если `$list` не имеет разделителя).
   Другие значения не допускаются.
 
-  Если `$bracketed` имеет значение `true`, возвращаемый список заключен в квадратные скобки.
-  Если это `false`, в возвращаемом списке нет скобок. Если это `auto` (по умолчанию), возвращаемый список будет заключен в квадратные скобки, если `$list1` имеет значение.
-  Другие значения не допускаются.
+  Если для `$bracketed` установлено значение `auto` (по умолчанию), возвращаемый список будет заключен в скобки, если установлен `$list1`.
+  В противном случае возвращаемый список будет иметь квадратные скобки, если `$bracketed` равно [truthy], и без скобок, если `$bracketed` равно falsey.
+
+  [truthy]: /documentation/values/booleans#truthiness-and-falsiness
 
   <% example(autogen_css: false) do %>
     @debug list.join(10px 20px, 30px 40px); // 10px 20px 30px 40px
@@ -200,9 +201,9 @@ title: sass:list
   <% end %>
 
   <% example(autogen_css: false) do %>
-    @debug list.slash(1px, 50px, 100px); // 10px / 50px / 100px
+    @debug list.slash(1px, 50px, 100px); // 1px / 50px / 100px
     ===
-    @debug list.slash(1px, 50px, 100px)  // 10px / 50px / 100px
+    @debug list.slash(1px, 50px, 100px)  // 1px / 50px / 100px
   <% end %>
 <% end %>
 
