@@ -2,7 +2,8 @@ name: CI-ru
 
 on:
   push:
-    branches: [main-ru]
+    branches: [main-ru, "feature.*"]
+  pull_request:
 
 env:
   RUBY_VERSION: 2.5.3
