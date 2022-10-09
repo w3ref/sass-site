@@ -526,6 +526,20 @@ title: sass:math
 
   Если `$limit` является числом больше или равным 1, возвращает случайное целое число от 1 до `$limit`.
 
+  <% heads_up do %>
+    `random()` ignores units in `$limit`. [This behavior is deprecated] and
+    `random($limit)` will return a random integer with the same units as the
+    `$limit` argument.
+
+    [This behavior is deprecated]: ../breaking-changes/random-with-units
+
+    <% example(autogen_css: false) do %>
+      @debug math.random(100px); // 42
+      ===
+      @debug math.random(100px)  // 42
+    <% end %>
+  <% end %>
+
   <% example(autogen_css: false) do %>
     @debug math.random(10); // 4
     @debug math.random(10000); // 5373

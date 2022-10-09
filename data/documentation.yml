@@ -1,72 +1,77 @@
 toc:
-- Синтаксис: /documentation/syntax
-  :children:
-  - Парсинг таблицы стилей: /documentation/syntax/parsing
-  - Структура таблицы стилей: /documentation/syntax/structure
-  - Комментарии: /documentation/syntax/comments
-  - Специальные функции: /documentation/syntax/special-functions
-- Правила стиля: /documentation/style-rules
-  :children:
-  - Объявления свойств: /documentation/style-rules/declarations
-  - Родительский селектор: /documentation/style-rules/parent-selector
-  - Селекторы-заполнители: /documentation/style-rules/placeholder-selectors
-- Переменные: /documentation/variables
-- Интерполяция: /documentation/interpolation
-- At-Правила: /documentation/at-rules
-  :children:
-  - <code>@use</code>: /documentation/at-rules/use
-  - <code>@forward</code>: /documentation/at-rules/forward
-  - <code>@import</code>: /documentation/at-rules/import
-  - <code>@mixin</code> and <code>@include</code>: /documentation/at-rules/mixin
-  - <code>@function</code>: /documentation/at-rules/function
-  - <code>@extend</code>: /documentation/at-rules/extend
-  - <code>@error</code>: /documentation/at-rules/error
-  - <code>@warn</code>: /documentation/at-rules/warn
-  - <code>@debug</code>: /documentation/at-rules/debug
-  - <code>@at-root</code>: /documentation/at-rules/at-root
-  - Управление потоком: /documentation/at-rules/control
+  - Синтаксис: /documentation/syntax
     :children:
-    - <code>@if</code> and <code>@else</code>: /documentation/at-rules/control/if
-    - <code>@each</code>: /documentation/at-rules/control/each
-    - <code>@for</code>: /documentation/at-rules/control/for
-    - <code>@while</code>: /documentation/at-rules/control/while
-  - Из CSS: /documentation/at-rules/css
-- Значения: /documentation/values
-  :children:
-  - Числа: /documentation/values/numbers
-  - Строки: /documentation/values/strings
-  - Цвета: /documentation/values/colors
-  - Списки: /documentation/values/lists
-  - Карты: /documentation/values/maps
-  - <code>true</code> и <code>false</code>: /documentation/values/booleans
-  - <code>null</code>: /documentation/values/null
-  - Расчеты: /documentation/values/calculations
-  - Функции: /documentation/values/functions
-- Операторы: /documentation/operators
-  :children:
-  - Равенства: /documentation/operators/equality
-  - Отношения: /documentation/operators/relational
-  - Числа: /documentation/operators/numeric
-  - Строки: /documentation/operators/string
-  - Логические: /documentation/operators/boolean
-- Встроенные модули: /documentation/modules
-  :children:
-  - <code>sass:color</code>: /documentation/modules/color
-  - <code>sass:list</code>: /documentation/modules/list
-  - <code>sass:map</code>: /documentation/modules/map
-  - <code>sass:math</code>: /documentation/modules/math
-  - <code>sass:meta</code>: /documentation/modules/meta
-  - <code>sass:selector</code>: /documentation/modules/selector
-  - <code>sass:string</code>: /documentation/modules/string
-- Критические изменения: /documentation/breaking-changes
-  :children:
-  - <code>/</code> как Деление: /documentation/breaking-changes/slash-div
-  - Единицы цвета: /documentation/breaking-changes/color-units
-  - Расширение составных селекторов: /documentation/breaking-changes/extend-compound
-  - Синтаксис переменных CSS: /documentation/breaking-changes/css-vars
-- Командная строка: /documentation/cli
-  :children:
-  - Dart Sass: /documentation/cli/dart-sass
-  - Ruby Sass: /documentation/cli/ruby-sass
-  - Мигратор: /documentation/cli/migrator
-- JavaScript API: /documentation/js-api
+      - Парсинг таблицы стилей: /documentation/syntax/parsing
+      - Структура таблицы стилей: /documentation/syntax/structure
+      - Комментарии: /documentation/syntax/comments
+      - Специальные функции: /documentation/syntax/special-functions
+  - Правила стиля: /documentation/style-rules
+    :children:
+      - Объявления свойств: /documentation/style-rules/declarations
+      - Родительский селектор: /documentation/style-rules/parent-selector
+      - Селекторы-заполнители: /documentation/style-rules/placeholder-selectors
+  - Переменные: /documentation/variables
+  - Интерполяция: /documentation/interpolation
+  - At-Правила: /documentation/at-rules
+    :children:
+      - <code>@use</code>: /documentation/at-rules/use
+      - <code>@forward</code>: /documentation/at-rules/forward
+      - <code>@import</code>: /documentation/at-rules/import
+      - <code>@mixin</code> and <code>@include</code>: /documentation/at-rules/mixin
+      - <code>@function</code>: /documentation/at-rules/function
+      - <code>@extend</code>: /documentation/at-rules/extend
+      - <code>@error</code>: /documentation/at-rules/error
+      - <code>@warn</code>: /documentation/at-rules/warn
+      - <code>@debug</code>: /documentation/at-rules/debug
+      - <code>@at-root</code>: /documentation/at-rules/at-root
+      - Управление потоком: /documentation/at-rules/control
+        :children:
+          - <code>@if</code> and <code>@else</code>: /documentation/at-rules/control/if
+          - <code>@each</code>: /documentation/at-rules/control/each
+          - <code>@for</code>: /documentation/at-rules/control/for
+          - <code>@while</code>: /documentation/at-rules/control/while
+      - Из CSS: /documentation/at-rules/css
+  - Значения: /documentation/values
+    :children:
+      - Числа: /documentation/values/numbers
+      - Строки: /documentation/values/strings
+      - Цвета: /documentation/values/colors
+      - Списки: /documentation/values/lists
+      - Карты: /documentation/values/maps
+      - <code>true</code> и <code>false</code>: /documentation/values/booleans
+      - <code>null</code>: /documentation/values/null
+      - Расчеты: /documentation/values/calculations
+      - Функции: /documentation/values/functions
+  - Операторы: /documentation/operators
+    :children:
+      - Равенства: /documentation/operators/equality
+      - Отношения: /documentation/operators/relational
+      - Числа: /documentation/operators/numeric
+      - Строки: /documentation/operators/string
+      - Логические: /documentation/operators/boolean
+  - Встроенные модули: /documentation/modules
+    :children:
+      - <code>sass:color</code>: /documentation/modules/color
+      - <code>sass:list</code>: /documentation/modules/list
+      - <code>sass:map</code>: /documentation/modules/map
+      - <code>sass:math</code>: /documentation/modules/math
+      - <code>sass:meta</code>: /documentation/modules/meta
+      - <code>sass:selector</code>: /documentation/modules/selector
+      - <code>sass:string</code>: /documentation/modules/string
+  - Критические изменения: /documentation/breaking-changes
+    :children:
+      - Строгие унарные операторы: /documentation/breaking-changes/strict-unary
+      - Случайно с единицами измерения: /documentation/breaking-changes/random-with-units
+      - Недопустимые комбинаторы: /documentation/breaking-changes/bogus-combinators
+      - Медиа-запросы, уровень 4: /documentation/breaking-changes/media-logic
+      - <code>/</code> как Деление: /documentation/breaking-changes/slash-div
+      - Единицы цвета: /documentation/breaking-changes/color-units
+      - <code>-moz-document</code>: /documentation/breaking-changes/moz-document
+      - Расширение составных селекторов: /documentation/breaking-changes/extend-compound
+      - Синтаксис переменных CSS: /documentation/breaking-changes/css-vars
+  - Командная строка: /documentation/cli
+    :children:
+      - Dart Sass: /documentation/cli/dart-sass
+      - Ruby Sass: /documentation/cli/ruby-sass
+      - Мигратор: /documentation/cli/migrator
+  - JavaScript API: /documentation/js-api

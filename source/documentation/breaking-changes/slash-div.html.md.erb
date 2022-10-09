@@ -52,6 +52,8 @@ introduction: >
 Оператор `/` пока еще выполняет деление, но при этом также выводит предупреждение об устаревании.
 Пользователи должны переключить все подразделения на использование `math.div()`.
 
+<%= partial '../snippets/silence-deprecations' %>
+
 <% example(autogen_css: false) do %>
   @use "sass:math";
 
