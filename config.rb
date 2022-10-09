@@ -26,6 +26,8 @@ set :markdown, fenced_code_blocks: true,
                smartypants: true,
                footnotes: true,
                with_toc_data: true
+# Disable warnings
+Haml::TempleEngine.disable_option_validator!
 Haml::Filters::Markdown.options.merge! fenced_code_blocks: true,
                                        autolink: true
 set :markdown_engine, :redcarpet
