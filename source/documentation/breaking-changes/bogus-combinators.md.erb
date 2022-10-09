@@ -1,30 +1,27 @@
 ---
-title: "Breaking Change: Invalid Combinators"
+title: "Критическое изменение: Недопустимые комбинаторы"
 introduction: >
-  Sass has historically been very permissive about the use of leading, trailing,
-  and repeated combinators in selectors. These combinators are being deprecated
-  except where they're useful for nesting.
+  Исторически Sass очень снисходительно относился к использованию начальных,
+  конечных и повторяющихся комбинаторов в селекторах.
+  Эти комбинаторы устарели, за исключением случаев, когда они полезны для вложения.
 ---
 
-Sass has historically supported three invalid uses of combinators:
+Sass исторически поддерживал три недопустимых использования комбинаторов:
 
-* Leading combinators, as in `+ .error {color: red}`.
+* Ведущие комбинаторы, как в `+ .error {color: red}`.
 
-* Trailing combinators, as in `.error + {color: red}`.
+* Завершающие комбинаторы, как в `.error + {color: red}`.
 
-* Repeated combiantors, as in `div > > .error {color: red}`.
+* Повторяющиеся комбинаторы, как в `div > > .error {color: red}`.
 
-None of these are valid CSS, and all of them will cause browsers to ignore the
-style rule in question. Supporting them added a substantial amount of complexity
-to Sass's implementation, and made it particularly difficult to fix various bugs
-related to the `@extend` rule. As such, we [made the decision] to remove support
-for these uses.
+Ни один из них не является допустимым CSS, и все они заставят браузеры игнорировать рассматриваемое правило стиля.
+Их поддержка значительно усложнила реализацию Sass и особенно усложнила исправление различных ошибок, связанных с правилом `@extend`.
+Таким образом, мы [приняли решение][made the decision] прекратить поддержку этих видов использования.
 
 [made the decision]: https://github.com/sass/sass/issues/3340
 
-**There is one major exception**: leading and trailing combinators may still be
-used for nesting purposes. For example, the following is still very much
-supported:
+**Есть одно существенное исключение**: начальные и конечные комбинаторы все еще могут использоваться для целей вложенности.
+Например, следующее все еще очень поддерживается:
 
 <% example do %>
   .sidebar > {
@@ -38,26 +35,18 @@ supported:
       color: red
 <% end %>
 
-Sass will only produce an error if a selector still has a leading or trailing
-combinator _after nesting is resolved_. Repeated combinators, on the other hand,
-will always be errors.
+Sass выдаст ошибку только в том случае, если селектор все еще имеет начальный или конечный комбинатор _после разрешения вложенности_.
+С другой стороны, повторяющиеся комбинаторы всегда будут ошибками.
 
-To make sure existing stylesheets who (likely accidentally) contain invalid
-combinators, we'll support a transition period until the next major release of
-Dart Sass.
+Чтобы убедиться, что существующие таблицы стилей, которые (вероятно случайно) содержат недопустимые комбинаторы, мы будем поддерживать переходный период до следующего основного выпуска Dart Sass.
 
-## Transition Period
+## Переходный период
 
 <% impl_status dart: '1.54.0', libsass: false, ruby: false %>
 
-First, we'll emit deprecation warnings for all double combinators, as well as
-leading or trailing combinators that end up in selectors after nesting is
-resolved.
+Во-первых, мы будем выдавать предупреждения об устаревании для всех двойных комбинаторов, а также ведущих или конечных комбинаторов, которые попадают в селекторы после разрешения вложенности.
 
 <%= partial '../snippets/silence-deprecations' %>
 
-In addition, we'll immediately start omitting selectors that we know to be
-invalid CSS from the compiled CSS, with one exception: we _won't_ omit selectors
-that begin with a leading combinator, since they may be used from a nested
-`@import` rule or `meta.load-css()` mixin. However, we don't encourage this
-pattern and will drop support for it in Dart Sass 2.0.0.
+Кроме того, мы сразу начнем исключать из скомпилированного CSS селекторы, которые, как мы знаем, являются недействительными, за одним исключением: мы _не будем_ пропускать селекторы, начинающиеся с ведущего комбинатора, поскольку они могут использоваться из вложенного `@import` правило или миксин `meta.load-css()`.
+Однако мы не поддерживаем этот шаблон и прекратим его поддержку в Dart Sass 2.0.0.

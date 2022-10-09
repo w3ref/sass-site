@@ -1,12 +1,12 @@
 ---
-title: "Breaking Change: Strict Unary Operators"
+title: "Критическое изменение: строгие унарные операторы"
 introduction: >
-  Sass has historically allowed `-` and `+` to be used in ways that make it
-  ambiguous whether the author intended them to be a binary or unary operator.
-  This confusing syntax is being deprecated.
+  Sass исторически разрешал использовать `-` и `+` таким образом,
+  чтобы было неоднозначно, предназначал ли автор их как бинарный или унарный оператор.
+  Этот запутанный синтаксис устарел.
 ---
 
-How is this property compiled?
+Как составляется это свойство?
 
 <% example(autogen_css: false) do %>
   $size: 10px;
@@ -21,40 +21,31 @@ How is this property compiled?
     margin: 15px -$size
 <% end %>
 
-Some users might say "the `-` is attached to `$size`, so it should be `margin:
-20px -10px`". Others might say "the `-` is between `20px` and `$size`, so it
-should be `margin: 5px`." Sass currently agrees with the latter opinion, but the
-real problem is that it's so confusing in the first place! This is a natural but
-unfortunate consequence of CSS's space-separated list syntax combined with
-Sass's arithmetic syntax.
+Некоторые пользователи могут сказать: "что `-` присоединен к `$size`, так что это должно быть `margin: 20px -10px`". Другие могут сказать, "что `-` находится между `20px` и `$size`, поэтому должно быть `margin: 5px`."
+Sass в настоящее время согласен с последним мнением, но реальная проблема в том, что оно сбивает с толку!
+Это естественное, но досадное следствие синтаксиса списков, разделенных пробелами, в CSS в сочетании с арифметическим синтаксисом Sass.
 
-That's why we're moving to make this an error. In the future, if you want to use
-a binary `-` or `+` operator (that is, one that subtracts or adds two numbers),
-you'll need to put whitespace on both sides or on neither side:
+Вот почему мы пытаемся сделать это ошибкой. В будущем, если вы захотите использовать двоичный оператор `-` или `+` (то есть тот, который вычитает или складывает два числа), вам нужно будет поставить пробелы с обеих сторон или ни с одной стороны:
 
-* Valid: `15px - $size`
-* Valid: `(15px)-$size`
-* Invalid: `15px -$size`
+* Валидно: `15px - $size`
+* Валидно: `(15px)-$size`
+* Невалидно: `15px -$size`
 
-If you want to use a unary `-` or `+` operator as part of a space-separated
-list, you'll (still) need to wrap it in parentheses:
+Если вы хотите использовать унарный оператор `-` или `+` как часть списка, разделенного пробелами, вам (по-прежнему) нужно заключить его в круглые скобки:
 
-* Valid: `15px (-$size)`
+* Валидно: `15px (-$size)`
 
-## Transition Period
+## Переходный период
 
 <% impl_status dart: '1.55.0', libsass: false, ruby: false %>
 
-We'll make this an error in Dart Sass 2.0.0, but until then it'll just emit a
-deprecation warning.
+Мы сделаем это ошибкой в Dart Sass 2.0.0, но до тех пор он будет просто выдавать предупреждение об устаревании.
 
 <%= partial '../snippets/silence-deprecations' %>
 
-## Automatic Migration
+## Автоматическая миграция
 
-You can use [the Sass migrator] to automatically update your stylesheets to add
-a space after any `-` or `+` operators that need it, which will preserve the
-existing behavior of these stylesheets.
+Вы можете использовать [мигратор Sass][the Sass migrator] для автоматического обновления ваших таблиц стилей, чтобы добавить пробел после любых операторов `-` или `+`, которые в нем нуждаются, что сохранит существующее поведение этих таблиц стилей.
 
 [the Sass migrator]: https://github.com/sass/migrator#readme
 

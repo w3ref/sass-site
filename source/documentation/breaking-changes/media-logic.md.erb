@@ -1,32 +1,30 @@
 ---
-title: "Breaking Change: Media Queries Level 4"
+title: "Критическое изменение: Медиа-запросы, уровень 4"
 introduction: >
-  Sass is adding support for the CSS Media Queries Level 4 specification, but
-  this conflicts with some Sass-specific syntax. That syntax is deprecated to
-  ensure that Sass remains fully CSS-compatible.
+  Sass добавляет поддержку спецификации CSS Media Queries Level 4,
+  но это противоречит некоторому синтаксису Sass.
+  Этот синтаксис устарел, чтобы гарантировать полную совместимость Sass с CSS.
 ---
 
-Because Sass supports almost any Sass expression in parenthesized media
-conditions, there are a few constructs that could be broken by adding full
-support for Media Queries Level 4. Specifically:
+Поскольку Sass поддерживает практически любое выражение Sass в медиа-условиях в скобках,
+есть несколько конструкций, которые можно нарушить, добавив полную поддержку медиа-запросов уровня 4.
+В частности:
 
-* `@media (not (foo))` was historically interpreted by Sass as meaning
-  `@media (#{not (foo)})`, and so compiled to `@media (false)`.
+* `@media (not (foo))` исторически интерпретировалось Sass как означающее
+  `@media (#{not (foo)})`, и поэтому скомпилировано в `@media (false)`.
 
-* `@media ((foo) and (bar))` and `@media ((foo) or (bar))` were similarly
-  interpreted as SassScript's logical operators, compiling to `@media (bar)` and
-  `@media (foo)` respectively.
+* `@media ((foo) and (bar))` и `@media ((foo) or (bar))`
+  интерпретировались аналогичным образом как логические операторы SassScript,
+  компилируясь в `@media (bar)` и `@media (foo)` соответственно.
 
-Fortunately, these are unlikely to come up in practice.
+К счастью, на практике они вряд ли появятся.
 
-## Transition Period
+## Переходный период
 
 <% impl_status dart: '1.54.0', libsass: false, ruby: false %>
 
-First, we'll emit deprecation warnings for the previous ambiguous cases. These
-will have suggestions for how to preserve the existing behavior or how to use
-the new CSS syntax.
+Во-первых, мы будем выдавать предупреждения об устаревании для предыдущих неоднозначных случаев.
+У них будут предложения о том, как сохранить существующее поведение или как использовать новый синтаксис CSS.
 
-Once the deprecation warnings have been out for at least three months, we'll
-release a version that exclusively interprets these ambiguous cases according to
-the CSS spec.
+Как только предупреждения об устаревании будут отсутствовать в течение как минимум трех месяцев,
+мы выпустим версию, которая интерпретирует эти неоднозначные случаи исключительно в соответствии со спецификацией CSS.

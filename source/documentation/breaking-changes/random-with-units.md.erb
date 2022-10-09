@@ -1,17 +1,14 @@
 ---
-title: "Breaking Change: Random With Units"
+title: "Критическое изменение: Случайно с единицами измерения"
 introduction: >
-  The `random()` function will no longer ignore units on the `$limit` argument
-  in a future version. Passing a `$limit` with units is deprecated to ensure the
-  compilation results don't change once the new behavior lands.
+  Функция `random()` больше не будет игнорировать единицы в аргументе `$limit` в будущей версии.
+  Передача `$limit` с единицами измерения устарела, чтобы гарантировать,
+  что результаты компиляции не изменятся после появления нового поведения.
 ---
 
-[The `random()` function] has historically ignored units in `$limit` and
-returned a unitless value. For example `random(100px)` would drop "px" and
-return a value like `42`.
+[Функция `random()`][The `random()` function] исторически игнорировала единицы в `$limit` и возвращала безразмерное значение. Например, `random(100px)` отбросит "px" и вернет значение, подобное `42`.
 
-A future implementation of Dart Sass will stop ignoring units for the `$limit`
-argument and return a random integer with the same units.
+Будущая реализация Dart Sass перестанет игнорировать единицы для аргумента `$limit` и будет возвращать случайное целое число с теми же единицами измерения.
 
 [The `random()` function]: ../modules/math#random
 
@@ -23,15 +20,11 @@ argument and return a random integer with the same units.
   @debug math.random(100px)  // 42px
 <% end %>
 
-## Transition Period
+## Переходный период
 
 <% impl_status dart: '1.54.5', libsass: false, ruby: false %>
 
-First, the Sass compiler will emit a deprecation warning for previous uses of
-`random()` when the `$limit` argument has units. The warning will suggest a way
-to preserve the existing behavior and another way that emulates the future
-implementation.
+Во-первых, компилятор Sass выдаст предупреждение об устаревании для предыдущего использования `random()`, когда аргумент `$limit` имеет единицы измерения.
+Предупреждение предложит способ сохранить существующее поведение и другой способ, эмулирующий будущую реализацию.
 
-In Dart 2.0.0 passing a `$limit` number with units will be an error, and then in
-a future minor release the `random()` function will return a random integer the
-same units as `$limit`.
+В Dart 2.0.0 передача числа `$limit` с единицами измерения будет ошибкой, а затем в будущем второстепенном выпуске функция `random()` будет возвращать случайное целое число в тех же единицах, что и `$limit`.
