@@ -7,7 +7,7 @@ require "rack/contrib/not_found"
 require "rack/contrib/try_static"
 
 # Make sure we don't force SSL on domains that don't have SSL certificates.
-use Rack::Conditional, proc {|env| env["SERVER_NAME"] == "sass-lang.com"}, Rack::SSL
+use Rack::Conditional, proc {|env| env["SERVER_NAME"] == "sass-lang.su"}, Rack::SSL
 
 use Rack::Deflater
 
