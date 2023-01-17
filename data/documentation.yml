@@ -65,7 +65,7 @@ toc:
       - Недопустимые комбинаторы: /documentation/breaking-changes/bogus-combinators
       - Медиа-запросы, уровень 4: /documentation/breaking-changes/media-logic
       - <code>/</code> как Деление: /documentation/breaking-changes/slash-div
-      - Единицы цвета: /documentation/breaking-changes/color-units
+      - Функциональные единицы: /documentation/breaking-changes/function-units
       - <code>-moz-document</code>: /documentation/breaking-changes/moz-document
       - Расширение составных селекторов: /documentation/breaking-changes/extend-compound
       - Синтаксис переменных CSS: /documentation/breaking-changes/css-vars

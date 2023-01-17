@@ -1,14 +1,16 @@
 ---
 title: "Критическое изменение: Медиа-запросы, уровень 4"
 introduction: >
-  Sass добавляет поддержку спецификации CSS Media Queries Level 4,
-  но это противоречит некоторому синтаксису Sass.
-  Этот синтаксис устарел, чтобы гарантировать полную совместимость Sass с CSS.
+  Sass has added support for the CSS Media Queries Level 4 specification. This
+  originally conflicted with some Sass-specific syntax, so this syntax was
+  deprecated and is now interpreted according to the CSS standard.
 ---
 
-Поскольку Sass поддерживает практически любое выражение Sass в медиа-условиях в скобках,
-есть несколько конструкций, которые можно нарушить, добавив полную поддержку медиа-запросов уровня 4.
-В частности:
+<% impl_status dart: '1.56.0', libsass: false, ruby: false %>
+
+Because Sass supports almost any Sass expression in parenthesized media
+conditions, there were a few constructs whose meaning was changed by adding full
+support for Media Queries Level 4. Specifically:
 
 * `@media (not (foo))` исторически интерпретировалось Sass как означающее
   `@media (#{not (foo)})`, и поэтому скомпилировано в `@media (false)`.
@@ -17,14 +19,12 @@ introduction: >
   интерпретировались аналогичным образом как логические операторы SassScript,
   компилируясь в `@media (bar)` и `@media (foo)` соответственно.
 
-К счастью, на практике они вряд ли появятся.
+Fortunately, these came up very infrequently in practice.
 
 ## Переходный период
 
 <% impl_status dart: '1.54.0', libsass: false, ruby: false %>
 
-Во-первых, мы будем выдавать предупреждения об устаревании для предыдущих неоднозначных случаев.
-У них будут предложения о том, как сохранить существующее поведение или как использовать новый синтаксис CSS.
-
-Как только предупреждения об устаревании будут отсутствовать в течение как минимум трех месяцев,
-мы выпустим версию, которая интерпретирует эти неоднозначные случаи исключительно в соответствии со спецификацией CSS.
+First, we emitted deprecation warnings for the previous ambiguous cases. These
+will have suggestions for how to preserve the existing behavior or how to use
+the new CSS syntax.
