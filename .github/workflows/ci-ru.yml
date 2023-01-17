@@ -13,21 +13,21 @@ jobs:
   release:
     runs-on: ubuntu-latest
 
-  steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
-      with:
-        node-version: ${{ env.NODE_VERSION }}
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: ${{ env.RUBY_VERSION }}
-        bundler-cache: true
-    - run: bundle install & bundle exec rake sass:import & bundle exec middleman build
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ env.RUBY_VERSION }}
+          bundler-cache: true
+      - run: bundle install & bundle exec rake sass:import & bundle exec middleman build
 
-    - name: Deploy
-      uses: ppeaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./build
-        cname: sass-lang.su
-        allow_empty_commit: true
+      - name: Deploy
+        uses: ppeaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build
+          cname: sass-lang.su
+          allow_empty_commit: true
