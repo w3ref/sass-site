@@ -10,7 +10,8 @@ env:
   NODE_VERSION: 16
 
 jobs:
-  release:
+  build:
+    name: Build website
     runs-on: ubuntu-latest
 
     steps:
@@ -22,10 +23,12 @@ jobs:
         with:
           ruby-version: ${{ env.RUBY_VERSION }}
           bundler-cache: true
-      - run: bundle install & bundle exec rake sass:import & bundle exec middleman build
+      - run: bundle install
+      - run: bundle exec rake sass:import
+      - run: bundle exec middleman build
 
       - name: Deploy
-        uses: ppeaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build
